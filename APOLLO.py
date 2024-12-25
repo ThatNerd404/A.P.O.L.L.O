@@ -17,7 +17,7 @@ class Apollo():
             
                 self.listen()
                 if self.user_input == "quit" or self.user_input == "cancel" or self.user_input == "deactivate":
-                    self.speak("Powering ")
+                    self.speak("Powering Off")
                     break
                 
                 else:
