@@ -2,6 +2,7 @@ import numpy
 import pyttsx3
 import speech_recognition as sr 
 import openai
+import sys
 
 class Apollo():
     def __init__(self):
@@ -18,7 +19,7 @@ class Apollo():
                 self.listen()
                 if self.user_input == "quit" or self.user_input == "cancel" or self.user_input == "deactivate":
                     self.speak("Powering Off")
-                    break
+                    sys.exit()
                 
                 else:
                     self.speak(f"User said: {self.user_input}")
@@ -34,7 +35,7 @@ class Apollo():
         try:
             self.user_input = self.audio_recognizer.recognize_google(self.audio)
             
-        except sr.UnknownValueError:
+        except sr.UnknownValueError: #? in the event I don't say something
             self.speak("Sorry, I didn't understand that.")
             
     def speak(self, speech):
