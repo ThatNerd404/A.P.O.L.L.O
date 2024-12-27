@@ -1,8 +1,11 @@
 import numpy
 import pyttsx3
 import speech_recognition as sr 
-import openai
+import transformers
 import sys
+
+#TODO: increase microphone sensitivity
+#TODO: look into hugging face transformers tutorial
 
 class Apollo():
     def __init__(self):
@@ -17,7 +20,10 @@ class Apollo():
         while self.app_is_running:
             
                 self.listen()
-                if self.user_input == "quit" or self.user_input == "cancel" or self.user_input == "deactivate":
+                if self.user_input == None:
+                    self.speak("Sorry, I didn't understand that.")
+                    
+                elif self.user_input == "quit" or self.user_input == "cancel" or self.user_input == "deactivate":
                     self.speak("Powering Off")
                     sys.exit()
                 
@@ -29,15 +35,14 @@ class Apollo():
     
     def listen(self):
         with sr.Microphone() as source:
-            self.speak("Listening. Hurry up!")
+            self.speak("Listening...")
             self.audio = self.audio_recognizer.listen(source)
         
         try:
             self.user_input = self.audio_recognizer.recognize_google(self.audio)
             
         except sr.UnknownValueError: #? in the event I don't say something
-            self.speak("Sorry, I didn't understand that.")
-            
+            self.user_input = None            
     def speak(self, speech):
         self.voices = self.engine.getProperty('voices')
         self.engine.setProperty('voice',self.voices[0].id) #? sets voice to gender 0 for male 1 for female
