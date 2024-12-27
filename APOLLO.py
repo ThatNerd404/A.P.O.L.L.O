@@ -4,8 +4,6 @@ import speech_recognition as sr
 import transformers
 import sys
 
-#TODO: increase microphone sensitivity
-#TODO: look into hugging face transformers tutorial
 
 class Apollo():
     def __init__(self):
@@ -42,7 +40,11 @@ class Apollo():
             self.user_input = self.audio_recognizer.recognize_google(self.audio)
             
         except sr.UnknownValueError: #? in the event I don't say something
-            self.user_input = None            
+            self.user_input = None
+            
+        except sr.RequestError as e: #! turn off internet to check if this works
+            self.user_input = f"Could not request results from Google Speech Recognition service; {e}" 
+                       
     def speak(self, speech):
         self.voices = self.engine.getProperty('voices')
         self.engine.setProperty('voice',self.voices[0].id) #? sets voice to gender 0 for male 1 for female
