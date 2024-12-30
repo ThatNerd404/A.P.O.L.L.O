@@ -1,35 +1,30 @@
-import numpy
-import pyttsx3
-import speech_recognition as sr 
-from transformers import pipeline #! cant use this at all until we get tensorflow 
-#! or pytorch which we still can't use as they havent been updated to 3.13.0 yet
-import sys
-
+from Settings import *
 
 class Apollo():
     def __init__(self):
         self.app_is_running = True
-        self.audio_recognizer = sr.Recognizer()
-        self.engine = pyttsx3.init()
-        self.deactivation_words = ["quit.","quit", "quit!", "quit?",
-                                   "deactivate.", "deactivate", "deactivate!", "deactivate?",
-                                   "cancel.", "cancel", "cancel!", "cancel?"]
         self.speak(f"Hello, I am APOLLO! I am your voice assistant! Ask away!")
-        self.main_loop()
         
-    def main_loop(self):
+        
+    def run(self):
         while self.app_is_running:
             
                 self.listen()
-                if self.user_input == "":
-                    self.speak("Sorry, I didn't hear you.")
-                    
-                elif self.user_input.lower().strip() in self.deactivation_words:
+            
+                if self.user_voice.lower().strip() in deactivation_words:
                     self.speak("Powering Off")
-                    sys.exit()
+                    break
+                elif self.user_voice == "":
+                    self.speak("Sorry, I didn't hear you.")
                 
                 else:
-                    self.speak(f"User said: {self.user_input}")
+                    self.speak(f"User said:{self.user_voice}")
+                    self.speech_sentiment = sentiment_analysis(self.user_voice)[0]["label"]
+                    if self.speech_sentiment == "POSITIVE":
+                        self.speak("And that's very positive!")
+                        
+                    elif self.speech_sentiment == "NEGATIVE":
+                        self.speak("And that's pretty negative!")
                 
     def math(self):
         pass
@@ -38,24 +33,18 @@ class Apollo():
         with sr.Microphone() as source:
             self.speak("Listening...")
             
-            self.audio_recognizer.adjust_for_ambient_noise(source,0.1)
-            self.audio = self.audio_recognizer.listen(source)
+            audio_recognizer.adjust_for_ambient_noise(source,0.5)
+            self.audio = audio_recognizer.listen(source, timeout=10)
         
-        try:
-            self.user_input = self.audio_recognizer.recognize_whisper(self.audio) #? uses whisper which doesnt need internet to work and is really accurate
-            
-        except sr.UnknownValueError: #? in the event I don't say something
-            self.user_input = None
-            
-        except sr.RequestError as e: #! turn off internet to check if this works
-            self.user_input = f"Could not request results from Google Speech Recognition service; {e}" 
-                       
+            try:
+                self.user_voice = audio_recognizer.recognize_whisper(self.audio) #? uses whisper which doesnt need internet to work and is really accurate
+    
+            except sr.WaitTimeoutError:
+                print("Timeout. Try speaking again.")
+                
     def speak(self, speech):
-        self.voices = self.engine.getProperty('voices')
-        self.engine.setProperty('voice',self.voices[0].id) #? sets voice to gender 0 for male 1 for female
-        self.engine.setProperty('volume',1.0) #? sets voice from 100 (1.0) to 1 (0.01)
         print(speech)
-        self.engine.say(speech)
-        self.engine.runAndWait()
-        self.engine.stop()
+        tts_engine.say(speech)
+        tts_engine.runAndWait()
+        tts_engine.stop()
         
