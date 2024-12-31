@@ -19,10 +19,7 @@ deactivation_words = ["quit.","quit", "quit!", "quit?",
 "deactivate.", "deactivate", "deactivate!", "deactivate?",
 "cancel.", "cancel", "cancel!", "cancel?"]
 
-model_name = "distilgpt2"
-model = AutoModelForSequenceClassification.from_pretrained(model_name)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-sentiment_analysis = pipeline("sentiment-analysis", model="distilgpt2", tokenizer=tokenizer)
+#sentiment_analysis = pipeline("sentiment-analysis", model="distilgpt2")
 chatbot = pipeline(model="facebook/blenderbot-400M-distill")
 #conversation = "What's up!"
 #print(conversation)

@@ -13,13 +13,17 @@ class Apollo_ChatBot():
         self.listen()
         conversation = self.user_voice
         while True:
+            if self.user_voice.lower().strip() in deactivation_words:
+                self.speak("Powering Off...")
+                break
+            self.speak("Thinking...")
             conversation = chatbot(conversation)[0]['generated_text']
             self.speak(conversation)
             self.listen()
             conversation = self.user_voice
             if self.user_voice.lower().strip() in deactivation_words:
                 self.speak("Powering Off...")
-                sys.exit()
+                break
             else:
                 continue
             
@@ -30,14 +34,22 @@ class Apollo_ChatBot():
         with sr.Microphone() as source:
             self.speak("Listening...")
             
-            audio_recognizer.adjust_for_ambient_noise(source,0.5)
-            self.audio = audio_recognizer.listen(source, timeout=10)
-        
+            
             try:
+                audio_recognizer.adjust_for_ambient_noise(source,0.5)
+                self.audio = audio_recognizer.listen(source, timeout=10)
+        
                 self.user_voice = audio_recognizer.recognize_whisper(self.audio) #? uses whisper which doesnt need internet to work and is really accurate
-    
+                if self.user_voice == "":
+                    self.speak("I'm sorry I didn't hear you?")
+                    self.listen()
+                else:
+                    pass
+                
             except sr.WaitTimeoutError:
-                print("Timeout. Try speaking again.")
+                self.speak("I'm sorry I didn't hear you?")
+                print("waittime error")
+                self.listen()
                 
     def speak(self, speech):
         print(speech)

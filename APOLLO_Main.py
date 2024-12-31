@@ -17,38 +17,10 @@ class Apollo_Main():
                 
                 elif self.user_voice == "":
                     self.speak("Sorry, I didn't hear you.")
-                    
-                elif self.user_voice.lower().strip() == "conversation mode.":
-                    self.Conversation()
-                    
+    
                 else:
                     self.speak(f"User said:{self.user_voice}")
 
-                    self.speech_sentiment = sentiment_analysis(self.user_voice)[0]["label"]
-                    
-                    if self.speech_sentiment == "LABEL_0": #? Sentiment = Positive
-                        self.speak("And that's very positive!")
-                        
-                    elif self.speech_sentiment == "LABEL_1": #? Sentiment = Negative
-                        self.speak("And that's pretty negative!")
-
-    def Conversation(self):
-        self.speak("Alright let's talk!")
-        self.listen()
-        conversation = self.user_voice
-        while True:
-            conversation = chatbot(conversation)[0]['generated_text']
-            self.speak(conversation)
-            self.listen()
-            conversation = self.user_voice
-            if self.user_voice.lower().strip() in deactivation_words:
-                self.speak("Leaving Conversation Mode...")
-                sys.exit()
-            else:
-                continue
-            
-        
-    
     def listen(self):
         with sr.Microphone() as source:
             self.speak("Listening...")
