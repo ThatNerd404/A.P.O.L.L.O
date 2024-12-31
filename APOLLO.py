@@ -18,17 +18,17 @@ class Apollo():
                     self.speak("Sorry, I didn't hear you.")
                 
                 else:
+                    
                     self.speak(f"User said:{self.user_voice}")
+
                     self.speech_sentiment = sentiment_analysis(self.user_voice)[0]["label"]
-                    if self.speech_sentiment == "POSITIVE":
+                    
+                    if self.speech_sentiment == "LABEL_0": #? Sentiment = Positive
                         self.speak("And that's very positive!")
                         
-                    elif self.speech_sentiment == "NEGATIVE":
+                    elif self.speech_sentiment == "LABEL_1": #? Sentiment = Negative
                         self.speak("And that's pretty negative!")
-                
-    def math(self):
-        pass
-    
+
     def listen(self):
         with sr.Microphone() as source:
             self.speak("Listening...")
