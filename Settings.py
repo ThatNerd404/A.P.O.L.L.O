@@ -4,6 +4,7 @@ import speech_recognition as sr
 from transformers import pipeline 
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
+
 tts_engine = pyttsx3.init()
 voices = tts_engine.getProperty('voices')
 tts_engine.setProperty('voice',voices[0].id) #? sets voice to gender 0 for male 1 for female

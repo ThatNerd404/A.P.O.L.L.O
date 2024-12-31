@@ -48,7 +48,7 @@ class Apollo_ChatBot():
                 
             except sr.WaitTimeoutError:
                 self.speak("I'm sorry I didn't hear you?")
-                print("waittime error")
+                print("Wait time Error")
                 self.listen()
                 
     def speak(self, speech):
