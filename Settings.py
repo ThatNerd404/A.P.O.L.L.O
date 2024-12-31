@@ -1,3 +1,4 @@
+import sys
 import pyttsx3
 import speech_recognition as sr 
 from transformers import pipeline 
@@ -17,8 +18,14 @@ audio_recognizer.dynamic_energy_threshold = True
 deactivation_words = ["quit.","quit", "quit!", "quit?",
 "deactivate.", "deactivate", "deactivate!", "deactivate?",
 "cancel.", "cancel", "cancel!", "cancel?"]
+
 model_name = "distilgpt2"
 model = AutoModelForSequenceClassification.from_pretrained(model_name)
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 sentiment_analysis = pipeline("sentiment-analysis", model="distilgpt2", tokenizer=tokenizer)
+chatbot = pipeline(model="facebook/blenderbot-400M-distill")
+#conversation = "What's up!"
+#print(conversation)
+#conversation =  chatbot(conversation)
+#print(conversation)
 #question_answering = pipeline("question-answering", model="distilgpt2")

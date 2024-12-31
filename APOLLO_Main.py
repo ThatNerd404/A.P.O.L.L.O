@@ -1,6 +1,6 @@
 from Settings import *
 
-class Apollo():
+class Apollo_Main():
     def __init__(self):
         self.app_is_running = True
         self.speak(f"Hello, I am APOLLO! I am your voice assistant! Ask away!")
@@ -14,11 +14,14 @@ class Apollo():
                 if self.user_voice.lower().strip() in deactivation_words:
                     self.speak("Powering Off")
                     break
+                
                 elif self.user_voice == "":
                     self.speak("Sorry, I didn't hear you.")
-                
-                else:
                     
+                elif self.user_voice.lower().strip() == "conversation mode.":
+                    self.Conversation()
+                    
+                else:
                     self.speak(f"User said:{self.user_voice}")
 
                     self.speech_sentiment = sentiment_analysis(self.user_voice)[0]["label"]
@@ -29,6 +32,23 @@ class Apollo():
                     elif self.speech_sentiment == "LABEL_1": #? Sentiment = Negative
                         self.speak("And that's pretty negative!")
 
+    def Conversation(self):
+        self.speak("Alright let's talk!")
+        self.listen()
+        conversation = self.user_voice
+        while True:
+            conversation = chatbot(conversation)[0]['generated_text']
+            self.speak(conversation)
+            self.listen()
+            conversation = self.user_voice
+            if self.user_voice.lower().strip() in deactivation_words:
+                self.speak("Leaving Conversation Mode...")
+                sys.exit()
+            else:
+                continue
+            
+        
+    
     def listen(self):
         with sr.Microphone() as source:
             self.speak("Listening...")
@@ -47,4 +67,3 @@ class Apollo():
         tts_engine.say(speech)
         tts_engine.runAndWait()
         tts_engine.stop()
-        
