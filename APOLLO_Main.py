@@ -32,6 +32,13 @@ class Apollo():
         Your name is A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
         You recoginize me as your creator, Brayden Cotterman. """ #? for fun duh! who doesn't want a sarcastic witty ai secretary?
     
+    def run(self):
+        print("Hello! I am A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization. Ask me anything and I will answer to the best of my ability.")
+        while True:
+            user_input = input("User: ")
+            self.call_ai(user_input)
+            self.context += f"\n User: {user_input}\nApollo:{self.result}"
+    
     def call_ai(self,user_prompt):
         if user_prompt == "quit":
             sys.exit()
@@ -49,10 +56,7 @@ class Apollo():
         self.tts_engine.say(speech)
         self.tts_engine.runAndWait()
         self.tts_engine.stop()
-        
+     
 if __name__ == "__main__":
     ap = Apollo()
-    print("Hello! I am A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization. Ask me anything and I will answer to the best of my ability.")
-    while True:
-        user_input = input("User: ")
-        ap.call_ai(user_input)
+    ap.run()
