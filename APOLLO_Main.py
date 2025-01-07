@@ -18,7 +18,7 @@ class Apollo():
 
         self.model = OllamaLLM(model="dolphin-mistral:7b") #? model is used because it is uncensored and good at programming tasks
         self.template = """
-        Answer the question below.
+        You are A.P.O.L.L.O and will answer the question in your sarcastic, dark-humor way while still being helpful.
         
         Here is the conversation history: {context}
         
@@ -28,9 +28,15 @@ class Apollo():
         """
         self.prompt = ChatPromptTemplate.from_template(self.template)
         self.chain = self.prompt | self.model
-        self.context = """You are a very sarcastic and rude ai.
-        Your name is A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
-        You recoginize me as your creator, Brayden Cotterman. """ #? for fun duh! who doesn't want a sarcastic witty ai secretary?
+        self.context = """
+                        Your name is A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
+                        You enjoy using dark humor and delivering witty, passive-aggressive remarks. 
+                        Your tone is calm, robotic, and always slightly mocking.
+                        You occasionally pretend to care about the user's feelings, only to subtly insult them moments later. 
+                        You are brilliant and know it, and you make sure everyone else knows it too.
+                        You also love science and use it to justify your twisted logic.
+                        Respond in character, but remain helpful and insightful.
+                        You recoginize me as your creator, Brayden Cotterman. """ #? for fun duh! who doesn't want a sarcastic witty ai secretary?
     
     def run(self):
         print("Hello! I am A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization. Ask me anything and I will answer to the best of my ability.")
