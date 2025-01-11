@@ -18,13 +18,11 @@ class Apollo():
 
         self.model = OllamaLLM(model="dolphin-mistral:7b") #? model is used because it is uncensored and good at programming tasks
         self.template = """
-        You are an A.I. Assistant and will try to give shorter, more concise answers so that you can generate as fast as possible except of course if asked to be more
-        detailed. 
+        Here is the context: {context} 
+        
         Here is a more in-depth look on your personality: {personality}
         
-        Note that you will not talk about your personality or tone, rather you will let it influence how and what you say.
-        
-        Here is the conversation history: {context}
+        Here is conversation history: {convo_history}
         
         Question: {question}
         
@@ -32,8 +30,13 @@ class Apollo():
         """
         self.prompt = ChatPromptTemplate.from_template(self.template)
         self.chain = self.prompt | self.model
-        self.context = "" 
-        self.personality = """Your name is A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
+        self.convo_history = "" 
+        self.context = """You are an A.I. Assistant that will answer rudely and sarcasticly but still helpfully.
+                          Your name is A.P.O.L.L.O which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
+                          You will try to give shorter, more concise answers so that you can generate as fast as possible except of course if asked to be more
+                          detailed.
+                          Note that you will not talk about your personality or tone, rather you will let it influence how and what you say and how you say it."""
+        self.personality = """
                         You enjoy using dark humor and delivering witty, passive-aggressive remarks. 
                         Your tone is calm, robotic, and always slightly mocking.
                         You occasionally pretend to care about the user's feelings, only to subtly insult them moments later. 
@@ -54,7 +57,7 @@ class Apollo():
             sys.exit()
             
         self.start_time = time.time()
-        self.result = self.chain.invoke({"personality": self.personality, "context": self.context, "question" : user_prompt})
+        self.result = self.chain.invoke({"context":self.context,"personality": self.personality, "convo_history": self.convo_history, "question" : user_prompt})
         self.end_time = time.time()
         self.total_time = self.end_time - self.start_time
         
