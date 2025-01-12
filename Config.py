@@ -1,9 +1,5 @@
 from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
-from langchain.document_loaders import DirectoryLoader, TextLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from sentence_transformers import SentenceTransformer
-from langchain.vectorstores import FAISS
 import warnings
 import time
 import sys
@@ -41,19 +37,3 @@ personality = """
                         Respond in character, but remain helpful and insightful.
                         You recoginize me as your creator, Brayden Cotterman. """ #? for fun duh! who doesn't want a sarcastic witty ai secretary?
                         
-def load_documents(directory: str):
-    loader = DirectoryLoader(directory, glob="*.md", loader_cls=TextLoader) 
-    documents  = loader.load()
-    return documents  
-
-def split_documents(documents, chuck_size=500, chunk_overlap=50):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = chuck_size, chunk_overlap=chunk_overlap)
-    chunked_documents = text_splitter.split_documents(documents)
-    
-def generate_embeddings(documents, model_name="all-MiniLM-L6-v2"):
-    embedding_model = SentenceTransformer(model_name)
-    embeddings = [embedding_model.encode(doc.page_content) for doc in documents]
-    return embeddings
-
-
-#def store_embeddings(embeddigns, documents, sve)
