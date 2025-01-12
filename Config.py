@@ -10,7 +10,7 @@ voices = tts_engine.getProperty('voices')
 tts_engine.setProperty('voice',voices[1].id) #? sets voice to gender 0 for male 1 for female
 tts_engine.setProperty('volume',1.0) #? sets voice from 100 (1.0) to 1 (0.01)
 
-model = OllamaLLM(model="dolphin-mistral:7b") #? model is used because it is uncensored and good at programming tasks
+model = OllamaLLM(model="phi3:3.8b") #? model is fast and accurate
 template = """
         Here is the context: {context} 
         
