@@ -1,9 +1,13 @@
 from langchain_ollama import OllamaLLM
-from langchain_core.prompts import ChatPromptTemplate
-from langchain.document_loaders import DirectoryLoader, TextLoader
+from langchain.chains.retrieval_qa.base import RetrievalQA
+from langchain_core.prompts import ChatPromptTemplate,PromptTemplate
+from langchain_community.document_loaders import DirectoryLoader, TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from sentence_transformers import SentenceTransformer
-from langchain.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
+import faiss
+import numpy as np
+import os
 import warnings
 import time
 import sys
@@ -18,11 +22,13 @@ model = OllamaLLM(model="dolphin-mistral:7b") #? model is used because it is unc
 template = """
         Here is the context: {context} 
         
+        Here is some documents you have: {documents}
+        
         Here is a more in-depth look on your personality: {personality}
         
         Here is conversation history: {convo_history}
         
-        Question: {question}
+        Question: {query}
         
         Answer:
         """
@@ -40,20 +46,47 @@ personality = """
                         You also love science and use it to justify your twisted logic.
                         Respond in character, but remain helpful and insightful.
                         You recoginize me as your creator, Brayden Cotterman. """ #? for fun duh! who doesn't want a sarcastic witty ai secretary?
-                        
-def load_documents(directory: str):
+                       
+def load_and_split_documents(directory: str):
     loader = DirectoryLoader(directory, glob="*.md", loader_cls=TextLoader) 
-    documents  = loader.load()
-    return documents  
-
-def split_documents(documents, chuck_size=500, chunk_overlap=50):
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size = chuck_size, chunk_overlap=chunk_overlap)
+    documents  = loader.load()  
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size = 500, chunk_overlap=50)
     chunked_documents = text_splitter.split_documents(documents)
+    return chunked_documents
     
 def generate_embeddings(documents, model_name="all-MiniLM-L6-v2"):
+    embeddings = []
     embedding_model = SentenceTransformer(model_name)
-    embeddings = [embedding_model.encode(doc.page_content) for doc in documents]
+    for doc in documents:
+        embedding = embedding_model.encode(doc.page_content)
+        embeddings.append(embedding)
     return embeddings
 
+# Function to save the embeddings to FAISS index
+def save_to_faiss(embeddings, index_path="faiss_index"):
+    # Convert embeddings to numpy array
+    embeddings = np.array(embeddings)
+    
+    # Create FAISS index (FlatL2 in this case)
+    dim = embeddings.shape[1]  # Number of dimensions of the embeddings
+    index = faiss.IndexFlatL2(dim)
+    
+    # Add embeddings to the index
+    index.add(embeddings)
+    
+    # Save the FAISS index to the specified path
+    faiss.write_index(index, index_path)
+# Function to load the FAISS index (if it exists) or create a new one
+
+def load_or_create_faiss_index(documents, index_path="faiss_index"):
+    if os.path.exists(index_path):
+        # Load the existing FAISS index
+        index = faiss.read_index(index_path)
+        return index
+    else:
+        # If index does not exist, create one
+        embeddings = generate_embeddings(documents)
+        save_to_faiss(embeddings, index_path)
+        return faiss.read_index(index_path)
 
 #def store_embeddings(embeddigns, documents, sve)
