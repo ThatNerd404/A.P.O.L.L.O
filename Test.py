@@ -6,7 +6,9 @@ from langchain.chains import RetrievalQA
 from langchain_ollama import OllamaLLM
 import os
 
+# Initialize the Ollama LLM model
 model = OllamaLLM(model="dolphin-mistral:7b")
+
 # Step 1: Load documents
 loader = DirectoryLoader("Documents/", glob="*.md")
 documents = loader.load()
@@ -15,14 +17,13 @@ documents = loader.load()
 embeddings = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 chroma_db_path = "chroma_db"
 if not os.path.exists(chroma_db_path):
-    # If not, create the Chroma vectorstore
-    vectorstore = Chroma.from_documents(documents, embedding=embeddings, persist_directory=chroma_db_path)
-    # Persist the vectorstore to disk)
-    # Save the vectorstore to disk
-    vectorstore.persist()
+    # If the Chroma vectorstore doesn't exist, create it
+    vectorstore = Chroma.from_documents(documents, embedding=embeddings.embed, persist_directory=chroma_db_path)
+    vectorstore.persist()  # Save the vectorstore to disk
 else:
-    # If the vectorstore exists, load it
-    vectorstore = Chroma(persist_directory=chroma_db_path)
+    # If the Chroma vectorstore exists, load it
+    vectorstore = Chroma(persist_directory=chroma_db_path, embedding_function=embeddings)
+
 # Step 3: Setup the retrieval-based tool
 retrieval_chain = RetrievalQA.from_chain_type(
     llm=model,
