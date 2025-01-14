@@ -96,7 +96,9 @@ class Apollo:
             print(score)
             if score > threshold:
                 relevant_docs.append(result.page_content)
-        print(relevant_docs)
+            else:
+                relevant_docs = []
+
         return relevant_docs
 
     def call_ai(self, user_prompt):
