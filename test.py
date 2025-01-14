@@ -24,22 +24,30 @@ embedding_model = "all-MiniLM-L6-v2"
 embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
 
 # Load and Split Documents
+
+
 def load_documents(directory):
-    loader = DirectoryLoader(directory)  # Adjust directory to your document folder
+    # Adjust directory to your document folder
+    loader = DirectoryLoader(directory)
     raw_documents = loader.load()
     text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     documents = text_splitter.split_documents(raw_documents)
     return documents
 
 # Create FAISS Vector Store
+
+
 def create_faiss_store(documents):
     texts = [doc.page_content for doc in documents]
-    metadatas = [{"source": doc.metadata.get("source", "")} for doc in documents]
+    metadatas = [{"source": doc.metadata.get(
+        "source", "")} for doc in documents]
     vector_store = FAISS.from_texts(texts, embeddings, metadatas=metadatas)
     return vector_store
 
+
 # Load documents and initialize the vector store
-documents = load_documents("Documents")  # Replace with your document folder path
+# Replace with your document folder path
+documents = load_documents("Documents")
 vector_store = create_faiss_store(documents)
 
 # Prompt Template
@@ -69,6 +77,8 @@ Respond in character, but remain helpful and insightful. You recognize your crea
 """
 
 # Apollo Class
+
+
 class Apollo:
     def __init__(self):
         self.convo_history = ""
@@ -76,9 +86,9 @@ class Apollo:
         self.model = OllamaLLM(model="phi3:3.8b")
         self.vector_store = vector_store
         self.chain = self.prompt | self.model
-        
+
     def get_relevant_context(self, query):
-        
+
         results = self.vector_store.similarity_search_with_score(query, k=3)
         relevant_docs = []
         threshold = 3
@@ -88,6 +98,7 @@ class Apollo:
                 relevant_docs.append(result.page_content)
         print(relevant_docs)
         return relevant_docs
+
     def call_ai(self, user_prompt):
         if user_prompt == "quit":
             sys.exit()
@@ -96,7 +107,7 @@ class Apollo:
 
         # Fetch relevant context from FAISS
         relevant_documents = self.get_relevant_context(user_prompt)
-        
+
         # Generate response
         self.result = self.chain.invoke({
             "context": context,
@@ -105,7 +116,7 @@ class Apollo:
             "convo_history": self.convo_history,
             "question": user_prompt
         })
-        
+
         self.end_time = time.time()
         self.total_time = self.end_time - self.start_time
 
@@ -125,6 +136,7 @@ class Apollo:
             user_input = input("User: ")
             self.call_ai(user_input)
             self.convo_history += f"\nUser: {user_input}\nApollo: {self.result}"
+
 
 if __name__ == "__main__":
     ap = Apollo()
