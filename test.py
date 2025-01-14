@@ -91,14 +91,8 @@ class Apollo:
 
         results = self.vector_store.similarity_search_with_score(query, k=3)
         relevant_docs = []
-        threshold = 3
         for result, score in results:
-            print(score)
-            if score > threshold:
-                relevant_docs.append(result.page_content)
-            else:
-                relevant_docs = []
-
+            relevant_docs.append(result.page_content)
         return relevant_docs
 
     def call_ai(self, user_prompt):
