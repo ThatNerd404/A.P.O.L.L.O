@@ -20,7 +20,7 @@ class Apollo:
 
         results = self.vector_store.similarity_search_with_score(query, k=3)
         relevant_docs = []
-        for result, score in results:  # TODO: later take in score to try to calculate if the score is below a certain threshold to determine if the documents are even needed
+        for result, score in results:
             relevant_docs.append(result.page_content)
         return relevant_docs
 
@@ -30,14 +30,11 @@ class Apollo:
 
         self.start_time = time.time()
 
-        # Fetch relevant context from FAISS
         relevant_documents = self.get_relevant_context(user_prompt)
 
-        # Generate response
         self.result = self.chain.invoke({
             "context": context,
             "documents": relevant_documents,
-            "personality": personality,
             "convo_history": self.convo_history,
             "question": user_prompt
         })
