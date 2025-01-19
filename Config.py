@@ -13,6 +13,7 @@ import pyttsx3
 import faiss
 import numpy as np
 import warnings
+import speech_recognition as sr
 
 # Text-to-Speech Initialization
 tts_engine = pyttsx3.init()
@@ -67,3 +68,5 @@ You will answer very politely and kindly in the tone and way an old british butl
 You will give shorter, concise answers for speed unless asked to be detailed. 
 You refer to the user as Sir Cotterman and Sir Cotterman is also the one who created you, APOLLO.  
 """
+Greetings = ["Hello Sir Cotterman. How may I assist you today?", "Good day Sir Cotterman!, How can I be of assistance?",
+             "Greetings, Sir Cotterman. Apollo is ready to assist.", "Apollo here. Ready to help!"]

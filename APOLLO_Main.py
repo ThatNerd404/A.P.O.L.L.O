@@ -15,7 +15,9 @@ class Apollo:
         self.v_store = create_faiss_store(self.documents)
         self.vector_store = self.v_store
         self.chain = self.prompt | self.model
-
+    def listen_for_wakeword(self, source):
+        
+        pass
     def get_relevant_context(self, query):
 
         results = self.vector_store.similarity_search_with_score(query, k=3)
@@ -41,10 +43,9 @@ class Apollo:
 
         self.end_time = time.time()
         self.total_time = self.end_time - self.start_time
-
-        print(f"A.P.O.L.L.O: {self.result}")
         print(f"Answer took about: {self.total_time} seconds!")
-        self.speak(self.result)
+        
+        return self.result
 
     def speak(self, speech):
         tts_engine.say(speech)
@@ -54,9 +55,11 @@ class Apollo:
     def run(self):
         print("Hello! I am A.P.O.L.L.O (Automated Personalized Operations for Learning and Life Organization).")
         print("Ask me anything, and I'll answer to the best of my ability. Type 'quit' to exit.")
+        
         while True:
             user_input = input("User: ")
-            self.call_ai(user_input)
+            Ai_response = self.call_ai(user_input)
+            self.speak(Ai_response)
             self.convo_history += f"\nUser: {user_input}\nApollo: {self.result}"
 
 
