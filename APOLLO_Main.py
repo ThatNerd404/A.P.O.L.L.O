@@ -34,23 +34,28 @@ class Apollo:
 
             except sr.UnknownValueError:
                 pass
-
+            
+            except sr.WaitTimeoutError:
+                pass
     def listen_and_respond(self, source):
         while True:
             try:
                 audio = audio_recognizer.listen(source, timeout=5)
-                print("Listening...")
                 user_audio = audio_recognizer.recognize_whisper(audio)
                 print(f"Apollo heard: {user_audio}")
 
-                if "quit" in user_audio:
+                if "quit" in user_audio.lower():
                     sys.exit()
+
                 elif not user_audio:
-                    continue
+                    print("Silence found, shutting up, listening for wake word ...")
+                    self.listen_for_wakeword(source)
+
                 elif not audio:
                     print("Silence found, shutting up, listening for wake word ...")
                     self.listen_for_wakeword(source)
 
+                self.speak("Processing Request")
                 Ai_response = self.call_ai(user_audio)
                 print(Ai_response)
                 self.speak(Ai_response)
@@ -100,9 +105,6 @@ class Apollo:
         tts_engine.stop()
 
     def run(self):
-        print("Hello! I am A.P.O.L.L.O (Automated Personalized Operations for Learning and Life Organization).")
-        print("Ask me anything, and I'll answer to the best of my ability. Type 'quit' to exit.")
-
         while True:
             with sr.Microphone() as source:
                 self.listen_for_wakeword(source)

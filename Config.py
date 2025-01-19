@@ -30,7 +30,7 @@ embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
 
 audio_recognizer = sr.Recognizer()
 audio_recognizer.energy_threshold = 200 #? sets how loud do I have to speak to start picking it up 
-audio_recognizer.pause_threshold = 1.0
+audio_recognizer.pause_threshold = 2.0
 audio_recognizer.dynamic_energy_threshold = True
 
 # Load and Split Documents
