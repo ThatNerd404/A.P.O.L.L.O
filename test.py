@@ -1,4 +1,4 @@
-from sentence_transformers import SentenceTransformer
+'''from sentence_transformers import SentenceTransformer
 from langchain_community.vectorstores import FAISS
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.schema import Document
@@ -133,7 +133,21 @@ class Apollo:
             self.call_ai(user_input)
             self.convo_history += f"\nUser: {user_input}\nApollo: {self.result}"
 
-
+'''
 if __name__ == "__main__":
-    ap = Apollo()
-    ap.run()
+    import pyttsx3
+
+    # Initialize the engine
+    engine = pyttsx3.init()
+
+    # Retrieve available voices
+    voices = engine.getProperty('voices')
+
+    # Set to a male British voice (update 'Microsoft George' to match your output)
+    for voice in voices:
+        print(voice.id)
+
+
+    # Test the voice
+    #engine.say("Hello, I am a British male voice. How can I assist you today?")
+    #engine.runAndWait()

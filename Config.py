@@ -14,6 +14,7 @@ import faiss
 import numpy as np
 import warnings
 import speech_recognition as sr
+import random
 
 # Text-to-Speech Initialization
 tts_engine = pyttsx3.init()
@@ -25,6 +26,12 @@ tts_engine.setProperty('volume', 1.0)
 # Embedding Model and FAISS Setup
 embedding_model = "all-MiniLM-L6-v2"
 embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
+
+
+audio_recognizer = sr.Recognizer()
+audio_recognizer.energy_threshold = 200 #? sets how loud do I have to speak to start picking it up 
+audio_recognizer.pause_threshold = 1.0
+audio_recognizer.dynamic_energy_threshold = True
 
 # Load and Split Documents
 
