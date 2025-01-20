@@ -22,19 +22,23 @@ Loading Animation:
 # After phase 4 take break to chill and just focus more on pixel art and website!
 
 ## Goals for phase 5
-- [ ] more prompt engineering
-- [ ] more bug fixing 
-- [ ] add more documents to load (pep 8 docs so I can always have my code be formatted )
+- [x] more prompt engineering
+- [x] more bug fixing 
+- [x] add more documents to load (pep 8 docs so I can always have my code be formatted )
 ## Goals for phase 6
-- [ ] give it an activation phrase and background listening 
-- [ ] figure out threading programming and see if that can help with optimizing the speed of the program
-- [ ] try to see if I can change the voice to sumn else
+- [x] give it an activation phrase and background listening 
+- [ ] try to see if I can change the voice to sumn else (british voice with george)
+- [ ] work on making similarity score work better and add more notes
 ## Goals for phase 7
+- [ ] more bug fixing 
+	- [ ] make wake word be able to be heard faster
 - [ ] add new commands to let it do certain tasks like:
 	- [ ] play music
 	- [ ] take notes
 	- [ ] set alarms / reminders
+
 ## Goals for final phase
+- [ ] figure out threading programming to implement it into the pet.
 - [ ] combine with desktop pet and deploy on computer
 - [ ] optimize speed better
 
@@ -42,9 +46,10 @@ Loading Animation:
 - [x] Figure out langchain
 - [ ] Read "Langchain in Action"
 - [ ] read this https://realpython.com/async-io-python/
-- [ ] make relevant document score thing go with range of 0-1 not 0-infinity
+- [ ] make relevant document score thing go with range of 0-1 not 0-infinity aka make it into cosine distance
 - [ ] take score to make it not grab documents if below a certain relevance threshold
 - [ ] turn `get_relevant_documents():` into a part of the chain invoking thing maybe?
+- [ ] make it so apollo can get interrupted
 - [ ] look into the different libraries that I will need for the project
 	- [x] `SpeechRecognition` for speech recognintion,
 	- [x] `spaCy`, `NLTK`, or pre-trained models like OpenAI's GPT (via transformers) for natural language processing,

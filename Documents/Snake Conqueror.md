@@ -1,0 +1,1 @@
+It will be a piece of me planting a flag (with my logo, once I figure out what that is) in a defeated snake. This will represent me learning python and overcoming it.

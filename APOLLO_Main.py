@@ -78,6 +78,7 @@ class Apollo:
         relevant_docs = []
         for result, score in results:
             relevant_docs.append(result.page_content)
+            print(score)
         return relevant_docs
 
     def call_ai(self, user_prompt):
