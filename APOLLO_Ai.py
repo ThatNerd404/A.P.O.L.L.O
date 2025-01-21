@@ -5,6 +5,10 @@ warnings.filterwarnings(
     message="torch.nn.utils.weight_norm is deprecated in favor of torch.nn.utils.parametrizations.weight_norm.",
 )
 
+warnings.filterwarnings(
+    "ignore",
+     category=FutureWarning, module="whisper"
+) #? has a warning to update to future verison but we can't so we keep this hear to ignore it
 
 class Apollo:
     def __init__(self):
