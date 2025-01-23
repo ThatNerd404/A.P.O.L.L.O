@@ -16,7 +16,7 @@ class Apollo:
 
         self.convo_history = ""
         self.prompt = ChatPromptTemplate.from_template(template)
-        self.model = OllamaLLM(model="phi3:3.8b")
+        self.model = OllamaLLM(model="llama3.2:1b")
         self.documents = load_and_split_documents("Documents")
         self.v_store = create_faiss_store(self.documents)
         self.vector_store = self.v_store
@@ -78,7 +78,7 @@ class Apollo:
     def get_relevant_context(self, query):
 
         # ? speed goes down the more k (the amount of chunks grabbed) goes up
-        results = self.vector_store.similarity_search_with_score(query, k=1)
+        results = self.vector_store.similarity_search_with_score(query, k=3)
         relevant_docs = []
         for result, score in results:
             relevant_docs.append(result.page_content)

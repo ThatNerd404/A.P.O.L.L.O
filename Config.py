@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer
 from langchain_community.vectorstores import FAISS
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 from langchain.schema import Document
 from langchain_community.document_loaders import DirectoryLoader
 from langchain.text_splitter import CharacterTextSplitter
@@ -15,6 +15,8 @@ import numpy as np
 import warnings
 import speech_recognition as sr
 import random
+
+#! Remember to make sure Ollama Model is even running
 
 # Text-to-Speech Initialization
 tts_engine = pyttsx3.init()
