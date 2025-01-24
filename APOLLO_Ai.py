@@ -90,14 +90,17 @@ class Apollo:
         self.start_time = time.time()
 
         relevant_documents = self.get_relevant_context(user_prompt)
-
-        result = self.chain.invoke({
+        try:
+            result = self.chain.invoke({
             "context": context,
             "documents": relevant_documents,
             "convo_history": self.convo_history,
             "question": user_prompt
-        })
-
+            }) 
+        except Exception as e:
+            print(f"Error: {e}")
+            result = f"It seems an error has occured in formulating a response. Perhaps try ensuring Ollama is running?"
+            
         self.end_time = time.time()
         self.total_time = self.end_time - self.start_time
 
