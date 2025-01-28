@@ -9,7 +9,7 @@ from langchain_ollama import OllamaLLM
 
 import time
 import sys
-import pyttsx3
+import pyttsx4
 import faiss
 import numpy as np
 import warnings
@@ -19,7 +19,7 @@ import random
 #! Remember to make sure Ollama Model is even running
 
 # Text-to-Speech Initialization
-tts_engine = pyttsx3.init()
+tts_engine = pyttsx4.init()
 voices = tts_engine.getProperty('voices')
 # Female voice is 1 male voice is 0
 tts_engine.setProperty('voice', voices[0].id)
@@ -42,7 +42,7 @@ def load_and_split_documents(directory):
     # Adjust directory to your document folder
     loader = DirectoryLoader(directory)
     raw_documents = loader.load()
-    text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
     documents = text_splitter.split_documents(raw_documents)
     return documents
 
