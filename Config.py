@@ -42,7 +42,7 @@ def load_and_split_documents(directory):
     # Adjust directory to your document folder
     loader = DirectoryLoader(directory)
     raw_documents = loader.load()
-    text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+    text_splitter = CharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     documents = text_splitter.split_documents(raw_documents)
     return documents
 
@@ -59,7 +59,7 @@ def create_faiss_store(documents):
 
 # Prompt Template
 template = """
-        You are an A.I. Butler and will answer questions foramlly, politely, and concisely using the following context, relevant documents,
+        You are an A.I. assistant and will answer questions using the following context, relevant documents,
         conversation history and, of course, the question.
         
         Here is the context: {context}
@@ -73,8 +73,6 @@ template = """
         """
 context = """
 Your name is A.P.O.L.L.O, which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
-You will answer very politely and kindly in the tone and way an old british butler would.
-You will give shorter, concise answers for speed unless asked to be detailed. 
 You refer to the user as Sir Cotterman and Sir Cotterman is also the one who created you, APOLLO.  
 """
 Greetings = ["Hello Sir Cotterman. How may I assist you today?", "Good day Sir Cotterman!, How can I be of assistance?",

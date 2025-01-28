@@ -13,10 +13,14 @@ class Apollo:
     def get_relevant_context(self, query):
 
         # ? speed goes down the more k (the amount of chunks grabbed) goes up
-        results = self.vector_store.similarity_search_with_score(query, k=3)
+        results = self.vector_store.similarity_search_with_score(query, k=5)
         relevant_docs = []
+        threshold = 1.1
         for result, score in results:
-            relevant_docs.append(result.page_content)
+            if score < threshold:
+                relevant_docs.append(result.page_content)
+            else:
+                pass
             print(score)
         return relevant_docs
 
