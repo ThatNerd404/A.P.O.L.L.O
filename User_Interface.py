@@ -8,4 +8,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         super().__init__()
         #? setup window
         self.setupUi(self)
-        self.setWindowTitle("APOLLO")
+        self.setWindowTitle("A.P.O.L.L.O")
+        #? planned text color #6a93be 
+        
