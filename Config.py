@@ -31,7 +31,8 @@ embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
 
 
 audio_recognizer = sr.Recognizer()
-audio_recognizer.energy_threshold = 200 #? sets how loud do I have to speak to start picking it up 
+# ? sets how loud do I have to speak to start picking it up
+audio_recognizer.energy_threshold = 200
 audio_recognizer.pause_threshold = 2.0
 audio_recognizer.dynamic_energy_threshold = True
 
@@ -59,11 +60,13 @@ def create_faiss_store(documents):
 
 # Prompt Template
 template = """
-        You are an A.I. assistant and will answer questions using the following context, relevant documents,
+        You are an A.I. assistant named A.P.O.L.L.O, which stands for Automated 
+        Personalized Operations for Learning and Life Organization but you go by APOLLO.
+        You refer to the user as Sir Cotterman and Sir Cotterman is also the one who created you, APOLLO. 
+         
+        You will answer questions using the following relevant documents,
         conversation history and, of course, the question.
-        
-        Here is the context: {context}
-        
+
         Here is the relevant documents: {documents}
         
         Here is conversation history: {convo_history}
@@ -71,9 +74,4 @@ template = """
         Here is the question: {question}
         
         """
-context = """
-Your name is A.P.O.L.L.O, which stands for Automated Personalized Operations for Learning and Life Organization but you go by APOLLO.
-You refer to the user as Sir Cotterman and Sir Cotterman is also the one who created you, APOLLO.  
-"""
-Greetings = ["Hello Sir Cotterman. How may I assist you today?", "Good day Sir Cotterman!, How can I be of assistance?",
-             "Greetings, Sir Cotterman. Apollo is ready to assist.", "Apollo here. Ready to help!"]
+

@@ -31,7 +31,6 @@ class Apollo:
         relevant_documents = self.get_relevant_context(user_prompt)
         try:
             result = self.chain.invoke({
-                "context": context,
                 "documents": relevant_documents,
                 "convo_history": self.convo_history,
                 "question": user_prompt
@@ -49,12 +48,12 @@ class Apollo:
 
     def test(self):
         while True:
-            user_input = input("Ask the ai sumn:")
+            user_input = input("Ask the ai sumn: ")
             if user_input == "quit":
                 sys.exit()
             Ai_response = self.call_ai(user_input)
             print(Ai_response)
-            
+
 
 if __name__ == "__main__":
     ap = Apollo()
