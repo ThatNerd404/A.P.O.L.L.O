@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from PySide6.QtCore import QThread
+from PySide6.QtGui import QMovie
 from APOLLO_MainWindow import Ui_MainWindow
 from PySide6.QtWidgets import QWidget, QMainWindow, QPushButton
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
@@ -19,7 +19,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
-
+        self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
+        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+        self.Apollo_Sprite_idle_animation.start()
         self.Send_Button.clicked.connect(self.ask_ollama)
 
     def ask_ollama(self):
@@ -45,6 +47,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # print("JSON Payload:", json.dumps(json_data, indent=2))
 
         self.network_manager.post(request, byte_data)
+        self.Apollo_Sprite_loading_animation = QMovie("Assets\Apollo_Loading.gif")
+        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
+        self.Apollo_Sprite_loading_animation.start()
 
     def handle_response(self, reply: QNetworkReply):
         '''Handles the response from ollama and puts it in the chat display'''
@@ -60,3 +65,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         self.Send_Button.setEnabled(True)
         self.Input_Field.clear()
+        self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
+        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+        self.Apollo_Sprite_idle_animation.start()
