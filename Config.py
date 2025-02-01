@@ -15,7 +15,7 @@ import numpy as np
 import warnings
 import speech_recognition as sr
 import random
-
+import subprocess
 #! Remember to make sure Ollama Model is even running
 
 # Text-to-Speech Initialization
