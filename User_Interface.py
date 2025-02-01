@@ -19,6 +19,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
+        self.convo_history = ""
         self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
@@ -37,7 +38,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         json_data = {
             "model": "llama3.2:1b",
-            "prompt": self.prompt,
+            "prompt": f"""Previous conversation: {self.convo_history}
+                          Current prompt: {self.prompt}""",
         }
 
         byte_data = QByteArray(json.dumps(json_data).encode("utf-8"))
@@ -65,7 +67,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Response_Display.append(
             f"User: {self.prompt}\nAPOLLO: {full_response.strip()}\nResponse given in {self.total_time} seconds!")
         # print("✅ Response received:", full_response.strip())
-
+        self.convo_history += f"User: {self.prompt}\nAPOLLO: {full_response.strip()}\n"
         self.Send_Button.setEnabled(True)
         self.Input_Field.clear()
         self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
