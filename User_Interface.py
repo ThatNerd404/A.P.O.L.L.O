@@ -6,7 +6,7 @@ from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkRe
 from PySide6.QtCore import QUrl, QByteArray, QJsonDocument
 import subprocess
 import json
-
+import time
 
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -28,7 +28,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         '''Grabs prompt form input field and sends it to the ollama server'''
         self.prompt = self.Input_Field.toPlainText()
         self.Send_Button.setEnabled(False)
-
+        self.start_time = time.time()
+        
         url = QUrl("http://127.0.0.1:11434/api/generate")
         request = QNetworkRequest(url)
         request.setHeader(QNetworkRequest.ContentTypeHeader,
@@ -59,8 +60,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         response = response_data.strip().split("\n")
         full_response = "".join(json.loads(
             resp)["response"] for resp in response)
+        self.end_time = time.time()
+        self.total_time = round(self.end_time - self.start_time)
         self.Response_Display.append(
-            f"User: {self.prompt}\nAPOLLO: {full_response.strip()}\n")
+            f"User: {self.prompt}\nAPOLLO: {full_response.strip()}\nResponse given in {self.total_time} seconds!")
         # print("✅ Response received:", full_response.strip())
 
         self.Send_Button.setEnabled(True)
@@ -68,3 +71,4 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
+        
