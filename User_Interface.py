@@ -8,6 +8,7 @@ import subprocess
 import json
 import time
 
+
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self):
         '''Sets up the window and connects buttons'''
@@ -30,7 +31,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.query = self.Input_Field.toPlainText()
         self.Send_Button.setEnabled(False)
         self.start_time = time.time()
-        
+
         url = QUrl("http://127.0.0.1:11434/api/generate")
         request = QNetworkRequest(url)
         request.setHeader(QNetworkRequest.ContentTypeHeader,
@@ -53,7 +54,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # print("JSON Payload:", json.dumps(json_data, indent=2))
 
         self.network_manager.post(request, byte_data)
-        self.Apollo_Sprite_loading_animation = QMovie("Assets\Apollo_Loading.gif")
+        self.Apollo_Sprite_loading_animation = QMovie(
+            "Assets\Apollo_Loading.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
         self.Apollo_Sprite_loading_animation.start()
 
@@ -76,4 +78,3 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
-        
