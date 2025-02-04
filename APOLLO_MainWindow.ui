@@ -41,6 +41,7 @@ background-color: #4666a3 ;
    <property name="styleSheet">
     <string notr="true">QWidget {
 background-color: #4666a3 ;
+color: #98c5de;
 }</string>
    </property>
    <widget class="QWidget" name="verticalLayoutWidget">
@@ -95,7 +96,11 @@ background-color: #4666a3 ;
        <property name="styleSheet">
         <string notr="true">QTextBrowser {
 background-color: #243169;
-color: 6a93be}</string>
+border-color:#98c5de;
+border-style: solid;
+border-width: 10px;
+border-radius: 10px;
+}</string>
        </property>
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -109,6 +114,9 @@ color: 6a93be}</string>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="openLinks">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -125,6 +133,11 @@ p, li { white-space: pre-wrap; }
          <width>1000</width>
          <height>150</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPlainTextEdit {
+background-color: #243169
+}</string>
        </property>
        <property name="horizontalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOff</enum>
@@ -195,6 +208,37 @@ p, li { white-space: pre-wrap; }
     <property name="scaledContents">
      <bool>false</bool>
     </property>
+   </widget>
+   <widget class="QComboBox" name="Model_Chooser">
+    <property name="geometry">
+     <rect>
+      <x>980</x>
+      <y>530</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="currentText">
+     <string>General</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <item>
+     <property name="text">
+      <string>General</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Tutoring</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>Coding</string>
+     </property>
+    </item>
    </widget>
   </widget>
  </widget>

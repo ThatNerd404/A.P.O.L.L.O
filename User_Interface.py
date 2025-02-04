@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from PySide6.QtGui import QMovie
+from PySide6.QtGui import QMovie, QFont, QFontDatabase
 from APOLLO_MainWindow import Ui_MainWindow
 from PySide6.QtWidgets import QWidget, QMainWindow, QPushButton
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
@@ -12,9 +12,7 @@ import time
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self):
         '''Sets up the window and connects buttons'''
-
         super().__init__()
-
         self.setupUi(self)
         self.setWindowTitle("A.P.O.L.L.O")
 
