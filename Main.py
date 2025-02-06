@@ -1,6 +1,7 @@
-import sys
 from PySide6 import QtWidgets
 from User_Interface import UserInterface
+import sys
+import subprocess
 
 
 def main():
@@ -11,7 +12,12 @@ def main():
 
 
 if __name__ == "__main__":
+    # ? makes it not print to screen when starting process
+    ollama_server = subprocess.Popen(
+        ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     main()
+    ollama_server.terminate()
+
 '''    pass
 import requests
 

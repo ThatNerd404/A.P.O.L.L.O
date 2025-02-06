@@ -42,6 +42,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           You will answer questions with context from the conversation history and, of course, the user's question.
                           Conversation History: {self.convo_history}
                           Question: {self.query}""",
+            "stream": True
         }
 
         byte_data = QByteArray(json.dumps(json_data).encode("utf-8"))
@@ -61,15 +62,21 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         '''Handles the response from ollama and puts it in the chat display'''
         error_message = reply.errorString()
         status_code = reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
-        response_data = reply.readAll().data().decode("utf-8")
-        response = response_data.strip().split("\n")
-        full_response = "".join(json.loads(
-            resp)["response"] for resp in response)
+
+        if error_message == QNetworkReply.NoError:
+            response_data = reply.readAll().data().decode("utf-8")
+            response = response_data.strip().split("\n")
+            full_response = "".join(json.loads(
+                resp)["response"] for resp in response)
+        else:
+            full_response = f"An error has occured: {error_message}\nStatus code: {status_code}"
+
         self.end_time = time.time()
         self.total_time = round(self.end_time - self.start_time)
         self.Response_Display.append(
             f"User: {self.query}\nAPOLLO: {full_response.strip()}\nResponse given in {self.total_time} seconds!")
         # print("✅ Response received:", full_response.strip())
+
         self.convo_history += f"User: {self.query}\nAPOLLO: {full_response.strip()}\n"
         self.Send_Button.setEnabled(True)
         self.Input_Field.clear()
