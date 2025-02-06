@@ -23,6 +23,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         self.Send_Button.clicked.connect(self.ask_ollama)
+        self.prompt = f"""You are a helpful AI assisant named APOLLO.
+                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You will answer questions with context from the conversation history and, of course, the user's question.
+                          Conversation History: {self.convo_history}
+                          Question: {self.query}"""
 
     def ask_ollama(self):
         '''Grabs prompt form input field and sends it to the ollama server'''
@@ -37,11 +42,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         json_data = {
             "model": "llama3.2:1b",
-            "prompt": f"""You are a helpful AI assisant named APOLLO.
-                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
-                          You will answer questions with context from the conversation history and, of course, the user's question.
-                          Conversation History: {self.convo_history}
-                          Question: {self.query}""",
+            "prompt": self.prompt,
             "stream": True
         }
 
@@ -63,7 +64,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         error_message = reply.errorString()
         status_code = reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
 
-        if error_message == QNetworkReply.NoError:
+        if status_code == 200:
             response_data = reply.readAll().data().decode("utf-8")
             response = response_data.strip().split("\n")
             full_response = "".join(json.loads(
