@@ -13,9 +13,9 @@ def main():
 
 if __name__ == "__main__":
     # ? makes it not print to screen when starting process
-    #ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    # ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     main()
-    #ollama_server.kill()
+    # ollama_server.kill()
 
 '''import requests
 
@@ -29,22 +29,7 @@ json_data = {
 response = requests.post(url, json=json_data, stream=True)
 for line in response.iter_lines():
     print("Response:", line)'''
-'''    pass
-import requests
 
-url = "http://localhost:11434/api/generate"
-headers = {"Content-Type": "application/json"}
-data = {
-    "model": "llama3.2:1b",  # Ensure this model is available
-    "prompt": "Hello"
-}
-
-try:
-    response = requests.post(url, json=data, headers=headers)
-    print(response.status_code)  # Should be 200
-    print(response.text)  # Output response
-except requests.exceptions.RequestException as e:
-    print(f"Error: {e}")'''
 # * command to turn ui files into py files: pyside6-uic APOLLO_Mainwindow.ui > APOLLO_MainWindow.py make sure to be in powershell
 # * command to turn py files into exe files: pyinstaller --onefile -w pytoexe.py
 #! remember to change encoding of the  ui-to-py files to utf-8 EVERY SINGLE TIME

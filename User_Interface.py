@@ -50,11 +50,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         byte_data = QByteArray(json.dumps(json_data).encode("utf-8"))
 
-        # ✅ Print debugging information
-        # print(f"Sending request to {url.toString()}")
-        # print("Request Headers:", request.rawHeaderList())
-        # print("JSON Payload:", json.dumps(json_data, indent=2))
-
         self.reply = self.network_manager.post(request, byte_data)
         self.reply.readyRead.connect(self.handle_response)
 
@@ -72,12 +67,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             QNetworkRequest.HttpStatusCodeAttribute)
         raw_data = self.reply.readAll().data().decode()
 
-    # ✅ Debug: Print received raw chunk
-        # print(f"Raw chunk received: {repr(raw_data)}")
+        self.partial_json_buffer += raw_data
 
-        self.partial_json_buffer += raw_data  # Accumulate chunks
-
-    # ✅ Process each complete JSON object in the buffer
         while "\n" in self.partial_json_buffer:
             line, self.partial_json_buffer = self.partial_json_buffer.split(
                 "\n", 1)
@@ -86,7 +77,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             if not line:
                 continue
 
-            if line:  # Ignore empty lines
+            if line:
                 try:
                     json_obj = json.loads(line)
 
