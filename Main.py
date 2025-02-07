@@ -13,11 +13,22 @@ def main():
 
 if __name__ == "__main__":
     # ? makes it not print to screen when starting process
-    ollama_server = subprocess.Popen(
-        ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    #ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     main()
-    ollama_server.terminate()
+    #ollama_server.kill()
 
+'''import requests
+
+url = "http://127.0.0.1:11434/api/generate"
+json_data = {
+    "model": "llama3.2:1b",
+    "prompt": "Hello",
+    "stream": True
+}
+
+response = requests.post(url, json=json_data, stream=True)
+for line in response.iter_lines():
+    print("Response:", line)'''
 '''    pass
 import requests
 

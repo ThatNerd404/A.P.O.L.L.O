@@ -18,16 +18,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
-        self.convo_history = ""
+
         self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         self.Send_Button.clicked.connect(self.ask_ollama)
-        self.prompt = f"""You are a helpful AI assisant named APOLLO.
-                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
-                          You will answer questions with context from the conversation history and, of course, the user's question.
-                          Conversation History: {self.convo_history}
-                          Question: {self.query}"""
+        self.partial_json_buffer = ""
+        self.query = ""
+        self.convo_history = ""
 
     def ask_ollama(self):
         '''Grabs prompt form input field and sends it to the ollama server'''
@@ -42,7 +40,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         json_data = {
             "model": "llama3.2:1b",
-            "prompt": self.prompt,
+            "prompt": f"""You are a helpful AI assisant named APOLLO.
+                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You will answer questions with context from the conversation history and, of course, the user's question.
+                          Conversation History: {self.convo_history}
+                          Question: {self.query}""",
             "stream": True
         }
 
@@ -53,34 +55,58 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # print("Request Headers:", request.rawHeaderList())
         # print("JSON Payload:", json.dumps(json_data, indent=2))
 
-        self.network_manager.post(request, byte_data)
+        self.reply = self.network_manager.post(request, byte_data)
+        self.reply.readyRead.connect(self.handle_response)
+
         self.Apollo_Sprite_loading_animation = QMovie(
             "Assets\Apollo_Loading.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
         self.Apollo_Sprite_loading_animation.start()
 
-    def handle_response(self, reply: QNetworkReply):
+        self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
+
+    def handle_response(self):
         '''Handles the response from ollama and puts it in the chat display'''
-        error_message = reply.errorString()
-        status_code = reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
+        error_message = self.reply.errorString()
+        status_code = self.reply.attribute(
+            QNetworkRequest.HttpStatusCodeAttribute)
+        raw_data = self.reply.readAll().data().decode()
 
-        if status_code == 200:
-            response_data = reply.readAll().data().decode("utf-8")
-            response = response_data.strip().split("\n")
-            full_response = "".join(json.loads(
-                resp)["response"] for resp in response)
-        else:
-            full_response = f"An error has occured: {error_message}\nStatus code: {status_code}"
+    # ✅ Debug: Print received raw chunk
+        # print(f"Raw chunk received: {repr(raw_data)}")
 
-        self.end_time = time.time()
-        self.total_time = round(self.end_time - self.start_time)
-        self.Response_Display.append(
-            f"User: {self.query}\nAPOLLO: {full_response.strip()}\nResponse given in {self.total_time} seconds!")
-        # print("✅ Response received:", full_response.strip())
+        self.partial_json_buffer += raw_data  # Accumulate chunks
 
-        self.convo_history += f"User: {self.query}\nAPOLLO: {full_response.strip()}\n"
-        self.Send_Button.setEnabled(True)
-        self.Input_Field.clear()
-        self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
-        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
-        self.Apollo_Sprite_idle_animation.start()
+    # ✅ Process each complete JSON object in the buffer
+        while "\n" in self.partial_json_buffer:
+            line, self.partial_json_buffer = self.partial_json_buffer.split(
+                "\n", 1)
+            line = line.strip()
+
+            if not line:
+                continue
+
+            if line:  # Ignore empty lines
+                try:
+                    json_obj = json.loads(line)
+
+                    if "response" in json_obj:
+                        self.Response_Display.insertPlainText(
+                            json_obj["response"])  # ✅ Stream output
+                        self.Response_Display.ensureCursorVisible()
+                    # ✅ If "done" is True, finalize response
+                    if json_obj.get("done", False):
+                        self.Send_Button.setEnabled(True)
+                        self.Input_Field.clear()
+                        self.end_time = time.time()
+                        self.total_time = round(
+                            self.end_time - self.start_time)
+                        self.Apollo_Sprite_idle_animation = QMovie(
+                            "Assets\Apollo_Idle.gif")
+                        self.Apollo_Sprite.setMovie(
+                            self.Apollo_Sprite_idle_animation)
+                        self.Apollo_Sprite_idle_animation.start()
+                        self.convo_history += self.Response_Display.toPlainText()
+
+                except json.JSONDecodeError as e:
+                    print("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
