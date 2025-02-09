@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
                            QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QPlainTextEdit,
-                               QPushButton, QSizePolicy, QTextBrowser, QVBoxLayout,
-                               QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
+                               QPlainTextEdit, QPushButton, QSizePolicy, QTextBrowser,
+                               QVBoxLayout, QWidget)
 
 
 class Ui_MainWindow(object):
@@ -37,6 +37,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"QWidget {\n"
                                          "background-color: #4666a3 ;\n"
+                                         "color: #98c5de;\n"
                                          "}")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
@@ -60,10 +61,15 @@ class Ui_MainWindow(object):
         self.Response_Display.setMaximumSize(QSize(800, 421))
         self.Response_Display.setStyleSheet(u"QTextBrowser {\n"
                                             "background-color: #243169;\n"
-                                            "color: 6a93be}")
+                                            "border-color:#98c5de;\n"
+                                            "border-style: solid;\n"
+                                            "border-width: 10px;\n"
+                                            "border-radius: 10px;\n"
+                                            "}")
         self.Response_Display.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.Response_Display.setHorizontalScrollBarPolicy(
             Qt.ScrollBarAlwaysOff)
+        self.Response_Display.setOpenLinks(True)
 
         self.verticalLayout.addWidget(self.Response_Display)
 
@@ -71,6 +77,9 @@ class Ui_MainWindow(object):
         self.Input_Field.setObjectName(u"Input_Field")
         self.Input_Field.setMinimumSize(QSize(800, 0))
         self.Input_Field.setMaximumSize(QSize(1000, 150))
+        self.Input_Field.setStyleSheet(u"QPlainTextEdit {\n"
+                                       "background-color: #243169\n"
+                                       "}")
         self.Input_Field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.Input_Field.setBackgroundVisible(False)
         self.Input_Field.setCenterOnScroll(False)
@@ -96,11 +105,18 @@ class Ui_MainWindow(object):
         self.Apollo_Sprite.setGeometry(QRect(900, 160, 280, 360))
         self.Apollo_Sprite.setPixmap(QPixmap(u"Assets/Apollo_Idle.gif"))
         self.Apollo_Sprite.setScaledContents(False)
+        self.Model_Chooser = QComboBox(self.centralwidget)
+        self.Model_Chooser.addItem("")
+        self.Model_Chooser.addItem("")
+        self.Model_Chooser.addItem("")
+        self.Model_Chooser.setObjectName(u"Model_Chooser")
+        self.Model_Chooser.setGeometry(QRect(980, 530, 141, 61))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
 
         self.Send_Button.setDefault(False)
+        self.Model_Chooser.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -118,4 +134,13 @@ class Ui_MainWindow(object):
             "MainWindow", u"Ask your question here!", None))
         self.Send_Button.setText("")
         self.Apollo_Sprite.setText("")
+        self.Model_Chooser.setItemText(
+            0, QCoreApplication.translate("MainWindow", u"General", None))
+        self.Model_Chooser.setItemText(
+            1, QCoreApplication.translate("MainWindow", u"Tutoring", None))
+        self.Model_Chooser.setItemText(
+            2, QCoreApplication.translate("MainWindow", u"Coding", None))
+
+        self.Model_Chooser.setCurrentText(
+            QCoreApplication.translate("MainWindow", u"General", None))
     # retranslateUi
