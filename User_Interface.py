@@ -30,6 +30,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def ask_ollama(self):
         '''Grabs prompt form input field and sends it to the ollama server'''
         self.query = self.Input_Field.toPlainText()
+        self.Input_Field.clear()
         self.Send_Button.setEnabled(False)
         self.start_time = time.time()
 
@@ -88,7 +89,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     # ✅ If "done" is True, finalize response
                     if json_obj.get("done", False):
                         self.Send_Button.setEnabled(True)
-                        self.Input_Field.clear()
+                        
                         self.end_time = time.time()
                         self.total_time = round(
                             self.end_time - self.start_time)
