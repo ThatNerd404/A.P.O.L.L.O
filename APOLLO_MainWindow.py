@@ -15,9 +15,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
                            QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QLabel, QMainWindow,
-                               QPlainTextEdit, QPushButton, QSizePolicy, QTextBrowser,
-                               QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QGroupBox, QHBoxLayout,
+                               QLabel, QMainWindow, QPlainTextEdit, QPushButton,
+                               QSizePolicy, QTextBrowser, QVBoxLayout, QWidget)
 
 
 class Ui_MainWindow(object):
@@ -41,8 +41,9 @@ class Ui_MainWindow(object):
                                          "}")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(70, 0, 802, 671))
+        self.verticalLayoutWidget.setGeometry(QRect(70, 0, 822, 671))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.Title_Label = QLabel(self.verticalLayoutWidget)
@@ -57,7 +58,7 @@ class Ui_MainWindow(object):
 
         self.Response_Display = QTextBrowser(self.verticalLayoutWidget)
         self.Response_Display.setObjectName(u"Response_Display")
-        self.Response_Display.setMinimumSize(QSize(800, 0))
+        self.Response_Display.setMinimumSize(QSize(820, 0))
         self.Response_Display.setMaximumSize(QSize(800, 421))
         self.Response_Display.setStyleSheet(u"QTextBrowser {\n"
                                             "background-color: #243169;\n"
@@ -71,7 +72,8 @@ class Ui_MainWindow(object):
             Qt.ScrollBarAlwaysOff)
         self.Response_Display.setOpenLinks(True)
 
-        self.verticalLayout.addWidget(self.Response_Display)
+        self.verticalLayout.addWidget(
+            self.Response_Display, 0, Qt.AlignHCenter)
 
         self.Input_Field = QPlainTextEdit(self.verticalLayoutWidget)
         self.Input_Field.setObjectName(u"Input_Field")
@@ -86,9 +88,24 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.Input_Field)
 
-        self.Send_Button = QPushButton(self.verticalLayoutWidget)
+        self.groupBox = QGroupBox(self.verticalLayoutWidget)
+        self.groupBox.setObjectName(u"groupBox")
+        self.groupBox.setMinimumSize(QSize(0, 68))
+        self.groupBox.setMaximumSize(QSize(250, 100))
+        self.groupBox.setStyleSheet(u"QGroupBox {\n"
+                                    "border-color:#98c5de;\n"
+                                    "border-style: solid;\n"
+                                    "border-width: 0px;\n"
+                                    "border-radius: 10px;}")
+        self.groupBox.setFlat(True)
+        self.groupBox.setCheckable(False)
+        self.horizontalLayout = QHBoxLayout(self.groupBox)
+        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.Send_Button = QPushButton(self.groupBox)
         self.Send_Button.setObjectName(u"Send_Button")
-        self.Send_Button.setMaximumSize(QSize(1000, 1000))
+        self.Send_Button.setMaximumSize(QSize(128, 1000))
         self.Send_Button.setAutoFillBackground(False)
         icon = QIcon()
         icon.addFile(u"Assets/Apollo_Send_Button.png", QSize(),
@@ -98,11 +115,26 @@ class Ui_MainWindow(object):
         self.Send_Button.setAutoDefault(False)
         self.Send_Button.setFlat(True)
 
-        self.verticalLayout.addWidget(self.Send_Button, 0, Qt.AlignHCenter)
+        self.horizontalLayout.addWidget(self.Send_Button)
+
+        self.Refresh_Button = QPushButton(self.groupBox)
+        self.Refresh_Button.setObjectName(u"Refresh_Button")
+        self.Refresh_Button.setMaximumSize(QSize(64, 64))
+        icon1 = QIcon()
+        icon1.addFile(u"Assets/Refresh_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
+        self.Refresh_Button.setIcon(icon1)
+        self.Refresh_Button.setIconSize(QSize(64, 64))
+        self.Refresh_Button.setFlat(True)
+
+        self.horizontalLayout.addWidget(self.Refresh_Button)
+
+        self.verticalLayout.addWidget(
+            self.groupBox, 0, Qt.AlignHCenter | Qt.AlignVCenter)
 
         self.Apollo_Sprite = QLabel(self.centralwidget)
         self.Apollo_Sprite.setObjectName(u"Apollo_Sprite")
-        self.Apollo_Sprite.setGeometry(QRect(900, 160, 280, 360))
+        self.Apollo_Sprite.setGeometry(QRect(910, 130, 280, 360))
         self.Apollo_Sprite.setPixmap(QPixmap(u"Assets/Apollo_Idle.gif"))
         self.Apollo_Sprite.setScaledContents(False)
         self.Model_Chooser = QComboBox(self.centralwidget)
@@ -110,7 +142,7 @@ class Ui_MainWindow(object):
         self.Model_Chooser.addItem("")
         self.Model_Chooser.addItem("")
         self.Model_Chooser.setObjectName(u"Model_Chooser")
-        self.Model_Chooser.setGeometry(QRect(980, 530, 141, 61))
+        self.Model_Chooser.setGeometry(QRect(990, 510, 141, 61))
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -132,7 +164,9 @@ class Ui_MainWindow(object):
                                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
         self.Input_Field.setPlaceholderText(QCoreApplication.translate(
             "MainWindow", u"Ask your question here!", None))
+        self.groupBox.setTitle("")
         self.Send_Button.setText("")
+        self.Refresh_Button.setText("")
         self.Apollo_Sprite.setText("")
         self.Model_Chooser.setItemText(
             0, QCoreApplication.translate("MainWindow", u"General", None))

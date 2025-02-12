@@ -49,11 +49,14 @@ color: #98c5de;
      <rect>
       <x>70</x>
       <y>0</y>
-      <width>802</width>
+      <width>822</width>
       <height>671</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
      <item alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="Title_Label">
        <property name="maximumSize">
@@ -79,11 +82,11 @@ color: #98c5de;
        </property>
       </widget>
      </item>
-     <item>
+     <item alignment="Qt::AlignHCenter">
       <widget class="QTextBrowser" name="Response_Display">
        <property name="minimumSize">
         <size>
-         <width>800</width>
+         <width>820</width>
          <height>0</height>
         </size>
        </property>
@@ -153,39 +156,114 @@ background-color: #243169
        </property>
       </widget>
      </item>
-     <item alignment="Qt::AlignHCenter">
-      <widget class="QPushButton" name="Send_Button">
+     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+      <widget class="QGroupBox" name="groupBox">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>68</height>
+        </size>
+       </property>
        <property name="maximumSize">
         <size>
-         <width>1000</width>
-         <height>1000</height>
+         <width>250</width>
+         <height>100</height>
         </size>
        </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
+       <property name="styleSheet">
+        <string notr="true">QGroupBox {
+border-color:#98c5de;
+border-style: solid;
+border-width: 0px;
+border-radius: 10px;}</string>
        </property>
-       <property name="text">
+       <property name="title">
         <string/>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>Assets/Apollo_Send_Button.png</normaloff>Assets/Apollo_Send_Button.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>128</width>
-         <height>64</height>
-        </size>
-       </property>
-       <property name="autoDefault">
-        <bool>false</bool>
-       </property>
-       <property name="default">
-        <bool>false</bool>
        </property>
        <property name="flat">
         <bool>true</bool>
        </property>
+       <property name="checkable">
+        <bool>false</bool>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="Send_Button">
+          <property name="maximumSize">
+           <size>
+            <width>128</width>
+            <height>1000</height>
+           </size>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Assets/Apollo_Send_Button.png</normaloff>Assets/Apollo_Send_Button.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>128</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="autoDefault">
+           <bool>false</bool>
+          </property>
+          <property name="default">
+           <bool>false</bool>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="Refresh_Button">
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Assets/Refresh_Button.png</normaloff>Assets/Refresh_Button.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -193,8 +271,8 @@ background-color: #243169
    <widget class="QLabel" name="Apollo_Sprite">
     <property name="geometry">
      <rect>
-      <x>900</x>
-      <y>160</y>
+      <x>910</x>
+      <y>130</y>
       <width>280</width>
       <height>360</height>
      </rect>
@@ -212,8 +290,8 @@ background-color: #243169
    <widget class="QComboBox" name="Model_Chooser">
     <property name="geometry">
      <rect>
-      <x>980</x>
-      <y>530</y>
+      <x>990</x>
+      <y>510</y>
       <width>141</width>
       <height>61</height>
      </rect>

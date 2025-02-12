@@ -23,6 +23,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         self.Send_Button.clicked.connect(self.ask_ollama)
+        self.Refresh_Button.clicked.connect(self.Refresh_Conversation)
         self.partial_json_buffer = ""
         self.query = ""
         self.convo_history = ""
@@ -89,7 +90,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     # ✅ If "done" is True, finalize response
                     if json_obj.get("done", False):
                         self.Send_Button.setEnabled(True)
-                        
+
                         self.end_time = time.time()
                         self.total_time = round(
                             self.end_time - self.start_time)
@@ -102,3 +103,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
                 except json.JSONDecodeError as e:
                     print("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
+
+    def Refresh_Conversation(self):
+        self.Input_Field.clear()
+        self.Response_Display.clear()
+        self.convo_history = ""
+        self.Response_Display.append("APOLLO: Conversation history refreshed.")
