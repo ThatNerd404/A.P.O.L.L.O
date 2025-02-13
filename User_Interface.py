@@ -120,6 +120,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Response_Display.append("APOLLO: Conversation history refreshed.")
 
     def update_prompt(self):
+        '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
         chosen_model = self.Model_Chooser.currentText()
         if chosen_model == "General":
             self.prompt = f"""You are a helpful AI assisant named APOLLO.
