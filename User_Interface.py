@@ -33,6 +33,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.query = self.Input_Field.toPlainText()
         self.Input_Field.clear()
         self.Send_Button.setEnabled(False)
+        self.Refresh_Button_Button.setEnabled(False)
+        
         self.start_time = time.time()
 
         url = QUrl("http://127.0.0.1:11434/api/generate")
@@ -84,13 +86,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     json_obj = json.loads(line)
 
                     if "response" in json_obj:
+                        self.Response_Display.ensureCursorVisible()
                         self.Response_Display.insertPlainText(
                             json_obj["response"])  # ✅ Stream output
                         self.Response_Display.ensureCursorVisible()
                     # ✅ If "done" is True, finalize response
                     if json_obj.get("done", False):
                         self.Send_Button.setEnabled(True)
-
+                        self.Refresh_Button_Button.setEnabled(True)
+                        
                         self.end_time = time.time()
                         self.total_time = round(
                             self.end_time - self.start_time)

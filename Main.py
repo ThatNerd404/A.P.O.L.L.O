@@ -1,8 +1,7 @@
 from PySide6 import QtWidgets
 from User_Interface import UserInterface
 import sys
-import subprocess
-
+#import subprocess
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
