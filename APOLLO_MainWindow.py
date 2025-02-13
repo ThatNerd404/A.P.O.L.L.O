@@ -68,6 +68,7 @@ class Ui_MainWindow(object):
                                             "border-style: solid;\n"
                                             "border-width: 5px;\n"
                                             "border-radius: 10px;\n"
+                                            "font-size: 15px;\n"
                                             "}")
         self.Response_Display.setFrameShape(QFrame.StyledPanel)
         self.Response_Display.setFrameShadow(QFrame.Sunken)
@@ -168,12 +169,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.Model_Chooser)
 
-        self.Submit_Model_Change = QPushButton(self.groupBox_2)
-        self.Submit_Model_Change.setObjectName(u"Submit_Model_Change")
-        self.Submit_Model_Change.setMinimumSize(QSize(0, 30))
-
-        self.verticalLayout_2.addWidget(self.Submit_Model_Change)
-
         MainWindow.setCentralWidget(self.centralwidget)
         self.groupBox_2.raise_()
         self.verticalLayoutWidget.raise_()
@@ -193,8 +188,8 @@ class Ui_MainWindow(object):
         self.Response_Display.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                                  "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                                                  "p, li { white-space: pre-wrap; }\n"
-                                                                 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-                                                                 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>", None))
+                                                                 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:15px; font-weight:400; font-style:normal;\">\n"
+                                                                 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;\"><br /></p></body></html>", None))
         self.Input_Field.setPlaceholderText(QCoreApplication.translate(
             "MainWindow", u"Ask your question here!", None))
         self.groupBox.setTitle("")
@@ -211,6 +206,4 @@ class Ui_MainWindow(object):
 
         self.Model_Chooser.setCurrentText(
             QCoreApplication.translate("MainWindow", u"General", None))
-        self.Submit_Model_Change.setText(
-            QCoreApplication.translate("MainWindow", u"Change Model", None))
     # retranslateUi

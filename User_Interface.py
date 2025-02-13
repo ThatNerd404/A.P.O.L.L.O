@@ -24,18 +24,25 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite_idle_animation.start()
         self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.Refresh_Conversation)
+        self.Model_Chooser.currentIndexChanged.connect(self.update_prompt)
         self.partial_json_buffer = ""
         self.query = ""
         self.convo_history = ""
-        self.model = "llama3.2:1b"
-        
+        self.prompt = f"""You are a helpful AI assisant named APOLLO.
+                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You will answer questions with context from the conversation history and, of course, the user's question.
+                          Conversation History: {self.convo_history}
+                          Question: {self.query}"""
+
     def ask_ollama(self):
         '''Grabs prompt form input field and sends it to the ollama server'''
         self.query = self.Input_Field.toPlainText()
         self.Input_Field.clear()
         self.Send_Button.setEnabled(False)
         self.Refresh_Button.setEnabled(False)
-        
+
+        self.update_prompt()
+
         self.start_time = time.time()
 
         url = QUrl("http://127.0.0.1:11434/api/generate")
@@ -44,12 +51,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           "application/json")
 
         json_data = {
-            "model": self.model,
-            "prompt": f"""You are a helpful AI assisant named APOLLO.
-                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
-                          You will answer questions with context from the conversation history and, of course, the user's question.
-                          Conversation History: {self.convo_history}
-                          Question: {self.query}""",
+            "model": "llama3.2:1b",
+            "prompt": self.prompt,
             "stream": True
         }
 
@@ -67,9 +70,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def handle_response(self):
         '''Handles the response from ollama and puts it in the chat display'''
-        error_message = self.reply.errorString()
-        status_code = self.reply.attribute(
-            QNetworkRequest.HttpStatusCodeAttribute)
+        #!error_message = self.reply.errorString()
+        #!status_code = self.reply.attribute(
+        #!    QNetworkRequest.HttpStatusCodeAttribute)
         raw_data = self.reply.readAll().data().decode()
 
         self.partial_json_buffer += raw_data
@@ -95,7 +98,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     if json_obj.get("done", False):
                         self.Send_Button.setEnabled(True)
                         self.Refresh_Button.setEnabled(True)
-                        
+
                         self.end_time = time.time()
                         self.total_time = round(
                             self.end_time - self.start_time)
@@ -116,5 +119,28 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.convo_history = ""
         self.Response_Display.append("APOLLO: Conversation history refreshed.")
 
-    def Change_Apollo_Model(self):
-        pass
+    def update_prompt(self):
+        chosen_model = self.Model_Chooser.currentText()
+        if chosen_model == "General":
+            self.prompt = f"""You are a helpful AI assisant named APOLLO.
+                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You will answer questions with context from the conversation history and, of course, the user's question.
+                          Conversation History: {self.convo_history}
+                          Question: {self.query}"""
+        elif chosen_model == "Coding":
+            self.prompt = f"""You are a helpful AI assisant named APOLLO.
+                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You will answer coding questions in great detail, give sources to help allow the user to research for themselves,
+                          and use context from the conversation history and, of course, the user's question.
+                          Conversation History: {self.convo_history}
+                          Question: {self.query}
+                          """
+        elif chosen_model == "Tutoring":
+            self.prompt = f"""You are a helpful AI assisant named APOLLO.
+                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You will act as a Socratic tutor and first give me a very in-depth explanation of my question:
+                          {self.query} with context from the conversation history then give me examples, 
+                          then give sources to help allow the user to research for themselves, 
+                          then ask me questions about it to help me build understanding.
+                          Conversation History: {self.convo_history}
+                          """
