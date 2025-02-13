@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
                            QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QGroupBox, QHBoxLayout,
-                               QLabel, QMainWindow, QPlainTextEdit, QPushButton,
-                               QSizePolicy, QTextBrowser, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGroupBox,
+                               QHBoxLayout, QLabel, QMainWindow, QPlainTextEdit,
+                               QPushButton, QSizePolicy, QTextBrowser, QVBoxLayout,
+                               QWidget)
 
 
 class Ui_MainWindow(object):
@@ -41,14 +42,15 @@ class Ui_MainWindow(object):
                                          "}")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(70, 0, 822, 671))
+        self.verticalLayoutWidget.setGeometry(QRect(30, 0, 822, 671))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setSpacing(0)
+        self.verticalLayout.setSpacing(5)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.Title_Label = QLabel(self.verticalLayoutWidget)
         self.Title_Label.setObjectName(u"Title_Label")
         self.Title_Label.setMaximumSize(QSize(600, 16777215))
+        self.Title_Label.setStyleSheet(u"")
         self.Title_Label.setPixmap(QPixmap(u"Assets/APOLLO_Title.png"))
         self.Title_Label.setScaledContents(False)
         self.Title_Label.setAlignment(Qt.AlignCenter)
@@ -64,9 +66,11 @@ class Ui_MainWindow(object):
                                             "background-color: #243169;\n"
                                             "border-color:#98c5de;\n"
                                             "border-style: solid;\n"
-                                            "border-width: 10px;\n"
+                                            "border-width: 5px;\n"
                                             "border-radius: 10px;\n"
                                             "}")
+        self.Response_Display.setFrameShape(QFrame.StyledPanel)
+        self.Response_Display.setFrameShadow(QFrame.Sunken)
         self.Response_Display.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.Response_Display.setHorizontalScrollBarPolicy(
             Qt.ScrollBarAlwaysOff)
@@ -80,7 +84,11 @@ class Ui_MainWindow(object):
         self.Input_Field.setMinimumSize(QSize(800, 0))
         self.Input_Field.setMaximumSize(QSize(1000, 150))
         self.Input_Field.setStyleSheet(u"QPlainTextEdit {\n"
-                                       "background-color: #243169\n"
+                                       "background-color: #243169;\n"
+                                       "border-color:#98c5de;\n"
+                                       "border-style: solid;\n"
+                                       "border-width: 5px;\n"
+                                       "border-radius: 10px;\n"
                                        "}")
         self.Input_Field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.Input_Field.setBackgroundVisible(False)
@@ -132,18 +140,43 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(
             self.groupBox, 0, Qt.AlignHCenter | Qt.AlignVCenter)
 
-        self.Apollo_Sprite = QLabel(self.centralwidget)
+        self.groupBox_2 = QGroupBox(self.centralwidget)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.groupBox_2.setGeometry(QRect(860, 120, 300, 471))
+        self.groupBox_2.setStyleSheet(u"QGroupBox {\n"
+                                      "border-color:#98c5de;\n"
+                                      "border-style: solid;\n"
+                                      "border-width: 0px;\n"
+                                      "border-radius: 10px;}")
+        self.verticalLayout_2 = QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.Apollo_Sprite = QLabel(self.groupBox_2)
         self.Apollo_Sprite.setObjectName(u"Apollo_Sprite")
-        self.Apollo_Sprite.setGeometry(QRect(910, 130, 280, 360))
         self.Apollo_Sprite.setPixmap(QPixmap(u"Assets/Apollo_Idle.gif"))
         self.Apollo_Sprite.setScaledContents(False)
-        self.Model_Chooser = QComboBox(self.centralwidget)
+
+        self.verticalLayout_2.addWidget(self.Apollo_Sprite)
+
+        self.Model_Chooser = QComboBox(self.groupBox_2)
         self.Model_Chooser.addItem("")
         self.Model_Chooser.addItem("")
         self.Model_Chooser.addItem("")
         self.Model_Chooser.setObjectName(u"Model_Chooser")
-        self.Model_Chooser.setGeometry(QRect(990, 510, 141, 61))
+        self.Model_Chooser.setMinimumSize(QSize(0, 60))
+        self.Model_Chooser.setLayoutDirection(Qt.LeftToRight)
+        self.Model_Chooser.setFrame(True)
+
+        self.verticalLayout_2.addWidget(self.Model_Chooser)
+
+        self.Submit_Model_Change = QPushButton(self.groupBox_2)
+        self.Submit_Model_Change.setObjectName(u"Submit_Model_Change")
+        self.Submit_Model_Change.setMinimumSize(QSize(0, 30))
+
+        self.verticalLayout_2.addWidget(self.Submit_Model_Change)
+
         MainWindow.setCentralWidget(self.centralwidget)
+        self.groupBox_2.raise_()
+        self.verticalLayoutWidget.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -167,6 +200,7 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle("")
         self.Send_Button.setText("")
         self.Refresh_Button.setText("")
+        self.groupBox_2.setTitle("")
         self.Apollo_Sprite.setText("")
         self.Model_Chooser.setItemText(
             0, QCoreApplication.translate("MainWindow", u"General", None))
@@ -177,4 +211,6 @@ class Ui_MainWindow(object):
 
         self.Model_Chooser.setCurrentText(
             QCoreApplication.translate("MainWindow", u"General", None))
+        self.Submit_Model_Change.setText(
+            QCoreApplication.translate("MainWindow", u"Change Model", None))
     # retranslateUi

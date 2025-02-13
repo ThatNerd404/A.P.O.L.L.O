@@ -27,13 +27,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.partial_json_buffer = ""
         self.query = ""
         self.convo_history = ""
-
+        self.model = "llama3.2:1b"
+        
     def ask_ollama(self):
         '''Grabs prompt form input field and sends it to the ollama server'''
         self.query = self.Input_Field.toPlainText()
         self.Input_Field.clear()
         self.Send_Button.setEnabled(False)
-        self.Refresh_Button_Button.setEnabled(False)
+        self.Refresh_Button.setEnabled(False)
         
         self.start_time = time.time()
 
@@ -43,7 +44,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           "application/json")
 
         json_data = {
-            "model": "llama3.2:1b",
+            "model": self.model,
             "prompt": f"""You are a helpful AI assisant named APOLLO.
                           You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
                           You will answer questions with context from the conversation history and, of course, the user's question.
@@ -93,7 +94,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     # ✅ If "done" is True, finalize response
                     if json_obj.get("done", False):
                         self.Send_Button.setEnabled(True)
-                        self.Refresh_Button_Button.setEnabled(True)
+                        self.Refresh_Button.setEnabled(True)
                         
                         self.end_time = time.time()
                         self.total_time = round(
@@ -109,7 +110,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     print("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
 
     def Refresh_Conversation(self):
+        '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.Input_Field.clear()
         self.Response_Display.clear()
         self.convo_history = ""
         self.Response_Display.append("APOLLO: Conversation history refreshed.")
+
+    def Change_Apollo_Model(self):
+        pass

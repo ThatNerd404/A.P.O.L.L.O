@@ -47,7 +47,7 @@ color: #98c5de;
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>70</x>
+      <x>30</x>
       <y>0</y>
       <width>822</width>
       <height>671</height>
@@ -55,7 +55,7 @@ color: #98c5de;
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>0</number>
+      <number>5</number>
      </property>
      <item alignment="Qt::AlignHCenter">
       <widget class="QLabel" name="Title_Label">
@@ -64,6 +64,9 @@ color: #98c5de;
          <width>600</width>
          <height>16777215</height>
         </size>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <property name="text">
         <string/>
@@ -101,9 +104,15 @@ color: #98c5de;
 background-color: #243169;
 border-color:#98c5de;
 border-style: solid;
-border-width: 10px;
+border-width: 5px;
 border-radius: 10px;
 }</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Sunken</enum>
        </property>
        <property name="verticalScrollBarPolicy">
         <enum>Qt::ScrollBarAlwaysOn</enum>
@@ -139,7 +148,11 @@ p, li { white-space: pre-wrap; }
        </property>
        <property name="styleSheet">
         <string notr="true">QPlainTextEdit {
-background-color: #243169
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+border-radius: 10px;
 }</string>
        </property>
        <property name="horizontalScrollBarPolicy">
@@ -268,56 +281,93 @@ border-radius: 10px;}</string>
      </item>
     </layout>
    </widget>
-   <widget class="QLabel" name="Apollo_Sprite">
+   <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>910</x>
-      <y>130</y>
-      <width>280</width>
-      <height>360</height>
+      <x>860</x>
+      <y>120</y>
+      <width>300</width>
+      <height>471</height>
      </rect>
     </property>
-    <property name="text">
+    <property name="styleSheet">
+     <string notr="true">QGroupBox {
+border-color:#98c5de;
+border-style: solid;
+border-width: 0px;
+border-radius: 10px;}</string>
+    </property>
+    <property name="title">
      <string/>
     </property>
-    <property name="pixmap">
-     <pixmap>Assets/Apollo_Idle.gif</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <widget class="QLabel" name="Apollo_Sprite">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>Assets/Apollo_Idle.gif</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="Model_Chooser">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>60</height>
+        </size>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LeftToRight</enum>
+       </property>
+       <property name="currentText">
+        <string>General</string>
+       </property>
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string>General</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Tutoring</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Coding</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Submit_Model_Change">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Change Model</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
-   <widget class="QComboBox" name="Model_Chooser">
-    <property name="geometry">
-     <rect>
-      <x>990</x>
-      <y>510</y>
-      <width>141</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="currentText">
-     <string>General</string>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <item>
-     <property name="text">
-      <string>General</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Tutoring</string>
-     </property>
-    </item>
-    <item>
-     <property name="text">
-      <string>Coding</string>
-     </property>
-    </item>
-   </widget>
+   <zorder>groupBox_2</zorder>
+   <zorder>verticalLayoutWidget</zorder>
   </widget>
  </widget>
  <resources/>
