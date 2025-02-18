@@ -36,10 +36,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.MAX_TOKEN = 1000
         self.query = ""
         self.model = "llama3.2:1b"
-        self.convo_history = " "
         self.system_settings = f"""You are a helpful AI assisant named APOLLO. You are created by brayden cotterman,
                           the user, who you refer to as Sir Cotterman.
                           """
+        self.convo_history = [
+            {"role": "system", "content": self.system_settings}]
 
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
@@ -53,11 +54,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Update the prompt
         self.update_json_data()
 
-        # Start timer
-        self.start_time = time.time()
+        self.convo_history.append({"role": "user", "content": self.query})
 
         # Create request URL and set header
-        url = QUrl("http://127.0.0.1:11434/api/generate")
+        url = QUrl("http://127.0.0.1:11434/api/chat")
         request = QNetworkRequest(url)
         request.setHeader(QNetworkRequest.ContentTypeHeader,
                           "application/json")
@@ -65,10 +65,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Create JSON data to send to server
         self.json_data = {
             "model": self.model,
-            "prompt": f"""Conversation History: {self.convo_history}
-                          Question: {self.query}""",
-            "system": self.system_settings,
-            #? temperature makes the answer a bit more random
+            "messages": self.convo_history,
+            # ? temperature makes the answer a bit more random
             "options": {"temperature": 0.7},
             "keep_alive": "5m",
             "stream": True,
@@ -100,9 +98,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         #!status_code = self.reply.attribute(
         #!    QNetworkRequest.HttpStatusCodeAttribute)
         raw_data = self.reply.readAll().data().decode()
-
         self.partial_json_buffer += raw_data
-
+        self.current_response = ""
+        
         while "\n" in self.partial_json_buffer:
             line, self.partial_json_buffer = self.partial_json_buffer.split(
                 "\n", 1)
@@ -115,27 +113,27 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 json_obj = json.loads(line)
 
                 # ? If "response" key is present in the JSON object, insert it into the chat display
-                if "response" in json_obj:
+                if "message" in json_obj and "content" in json_obj["message"]:
+                    chunk = json_obj["message"]["content"]
+                    self.current_response += chunk  # Append the chunk
                     self.Response_Display.ensureCursorVisible()
-                    self.Response_Display.insertPlainText(
-                        json_obj["response"])  # ✅ Stream output
+                    self.Response_Display.insertPlainText(chunk)  # Stream it to UI
                     self.Response_Display.ensureCursorVisible()
-
+                    
                 # ? If "done" key is present in the JSON object and it's set to True, finalize the response
                 if json_obj.get("done", False):
                     self.Send_Button.setEnabled(True)
                     self.Refresh_Button.setEnabled(True)
+                    
+                    self.convo_history.append({"role": "assistant", "content": self.current_response})
+                    
+                    self.current_response = ""
 
-                    self.end_time = time.time()
-                    self.total_time = round(
-                        self.end_time - self.start_time)
                     self.Apollo_Sprite_idle_animation = QMovie(
                         "Assets\Apollo_Idle.gif")
                     self.Apollo_Sprite.setMovie(
                         self.Apollo_Sprite_idle_animation)
                     self.Apollo_Sprite_idle_animation.start()
-                    self.convo_history = self.Response_Display.toPlainText(
-                    )[-self.MAX_TOKEN:]
 
             except json.JSONDecodeError as e:
                 print("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
@@ -144,7 +142,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.Input_Field.clear()
         self.Response_Display.clear()
-        self.convo_history = " "
+        self.conversation_history = [
+            {"role": "system", "content": self.system_settings}]
         self.Response_Display.append("APOLLO: Conversation history refreshed.")
 
     def update_json_data(self):
