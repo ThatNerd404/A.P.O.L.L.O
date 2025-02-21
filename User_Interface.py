@@ -146,9 +146,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def change_model(self):
         '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
         self.refresh_conversation()
+        
         # Get the current text of the Model Chooser combo box
         chosen_model = self.Model_Chooser.currentText()
-        # Update the model and prompt based on the selected choice
+        
+        # Update the model, prompt, and sprite based on the selected choice
         if chosen_model == "General":
             self.model = "llama3.2:1b"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
@@ -166,7 +168,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
                           Take the following code and add comments to it to improve readability and make it adhere to pep8 standards."""
             self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\Apollo_Idle.gif")
+            "Assets\Apollo_Idle_Coding.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
             "Assets\Apollo_Loading.gif")
 
@@ -179,10 +181,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           then ask me questions about it to help me build understanding.
                           Remember to use the conversation history to inform your answer only.
                           """
+                          
             self.Apollo_Sprite_idle_animation = QMovie(
             "Assets\Apollo_Idle_Tutoring.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
             "Assets\Apollo_Loading_Tutor.gif")
+            
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         

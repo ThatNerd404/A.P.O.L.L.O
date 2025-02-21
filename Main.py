@@ -16,19 +16,6 @@ if __name__ == "__main__":
     main()
     # ollama_server.kill()
 
-'''import requests
-
-url = "http://127.0.0.1:11434/api/generate"
-json_data = {
-    "model": "llama3.2:1b",
-    "prompt": "Hello",
-    "stream": True
-}
-
-response = requests.post(url, json=json_data, stream=True)
-for line in response.iter_lines():
-    print("Response:", line)'''
-
 # * command to turn ui files into py files: pyside6-uic APOLLO_Mainwindow.ui > APOLLO_MainWindow.py make sure to be in powershell
 # * command to turn py files into exe files: pyinstaller --onefile -w pytoexe.py
 #! remember to change encoding of the  ui-to-py files to utf-8 EVERY SINGLE TIME
