@@ -47,56 +47,28 @@ color: #98c5de;
    <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>0</y>
-      <width>822</width>
-      <height>671</height>
+      <x>10</x>
+      <y>140</y>
+      <width>842</width>
+      <height>531</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <property name="spacing">
-      <number>5</number>
+      <number>0</number>
      </property>
-     <item alignment="Qt::AlignHCenter">
-      <widget class="QLabel" name="Title_Label">
-       <property name="maximumSize">
-        <size>
-         <width>600</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>Assets/APOLLO_Title.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="margin">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
      <item alignment="Qt::AlignHCenter">
       <widget class="QTextBrowser" name="Response_Display">
        <property name="minimumSize">
         <size>
-         <width>820</width>
+         <width>840</width>
          <height>0</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>800</width>
-         <height>421</height>
+         <width>1000</width>
+         <height>1000</height>
         </size>
        </property>
        <property name="styleSheet">
@@ -133,54 +105,17 @@ p, li { white-space: pre-wrap; }
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QPlainTextEdit" name="Input_Field">
-       <property name="minimumSize">
-        <size>
-         <width>800</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1000</width>
-         <height>150</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPlainTextEdit {
-background-color: #243169;
-border-color:#98c5de;
-border-style: solid;
-border-width: 5px;
-border-radius: 10px;
-}</string>
-       </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="backgroundVisible">
-        <bool>false</bool>
-       </property>
-       <property name="centerOnScroll">
-        <bool>false</bool>
-       </property>
-       <property name="placeholderText">
-        <string>Ask your question here!</string>
-       </property>
-      </widget>
-     </item>
-     <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
+     <item alignment="Qt::AlignHCenter|Qt::AlignTop">
       <widget class="QGroupBox" name="groupBox">
        <property name="minimumSize">
         <size>
-         <width>0</width>
+         <width>800</width>
          <height>68</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>250</width>
+         <width>800</width>
          <height>100</height>
         </size>
        </property>
@@ -216,6 +151,43 @@ border-radius: 10px;}</string>
         <property name="bottomMargin">
          <number>0</number>
         </property>
+        <item>
+         <widget class="QPlainTextEdit" name="Input_Field">
+          <property name="minimumSize">
+           <size>
+            <width>500</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>1000</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPlainTextEdit {
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+border-radius: 10px;
+}</string>
+          </property>
+          <property name="horizontalScrollBarPolicy">
+           <enum>Qt::ScrollBarAlwaysOff</enum>
+          </property>
+          <property name="backgroundVisible">
+           <bool>false</bool>
+          </property>
+          <property name="centerOnScroll">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>Ask your question here!</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QPushButton" name="Send_Button">
           <property name="maximumSize">
@@ -285,10 +257,10 @@ border-radius: 10px;}</string>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>120</y>
+      <x>850</x>
+      <y>140</y>
       <width>300</width>
-      <height>471</height>
+      <height>531</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -354,8 +326,43 @@ border-radius: 10px;}</string>
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="Title_Label">
+    <property name="geometry">
+     <rect>
+      <x>420</x>
+      <y>10</y>
+      <width>357</width>
+      <height>117</height>
+     </rect>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>600</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Assets/APOLLO_Title.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="margin">
+     <number>0</number>
+    </property>
+   </widget>
    <zorder>groupBox_2</zorder>
    <zorder>verticalLayoutWidget</zorder>
+   <zorder>Title_Label</zorder>
   </widget>
  </widget>
  <resources/>

@@ -42,26 +42,15 @@ class Ui_MainWindow(object):
                                          "}")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(30, 0, 822, 671))
+        self.verticalLayoutWidget.setGeometry(QRect(10, 140, 842, 531))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
-        self.verticalLayout.setSpacing(5)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
-        self.Title_Label = QLabel(self.verticalLayoutWidget)
-        self.Title_Label.setObjectName(u"Title_Label")
-        self.Title_Label.setMaximumSize(QSize(600, 16777215))
-        self.Title_Label.setStyleSheet(u"")
-        self.Title_Label.setPixmap(QPixmap(u"Assets/APOLLO_Title.png"))
-        self.Title_Label.setScaledContents(False)
-        self.Title_Label.setAlignment(Qt.AlignCenter)
-        self.Title_Label.setMargin(0)
-
-        self.verticalLayout.addWidget(self.Title_Label, 0, Qt.AlignHCenter)
-
         self.Response_Display = QTextBrowser(self.verticalLayoutWidget)
         self.Response_Display.setObjectName(u"Response_Display")
-        self.Response_Display.setMinimumSize(QSize(820, 0))
-        self.Response_Display.setMaximumSize(QSize(800, 421))
+        self.Response_Display.setMinimumSize(QSize(840, 0))
+        self.Response_Display.setMaximumSize(QSize(1000, 1000))
         self.Response_Display.setStyleSheet(u"QTextBrowser {\n"
                                             "background-color: #243169;\n"
                                             "border-color:#98c5de;\n"
@@ -80,27 +69,10 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(
             self.Response_Display, 0, Qt.AlignHCenter)
 
-        self.Input_Field = QPlainTextEdit(self.verticalLayoutWidget)
-        self.Input_Field.setObjectName(u"Input_Field")
-        self.Input_Field.setMinimumSize(QSize(800, 0))
-        self.Input_Field.setMaximumSize(QSize(1000, 150))
-        self.Input_Field.setStyleSheet(u"QPlainTextEdit {\n"
-                                       "background-color: #243169;\n"
-                                       "border-color:#98c5de;\n"
-                                       "border-style: solid;\n"
-                                       "border-width: 5px;\n"
-                                       "border-radius: 10px;\n"
-                                       "}")
-        self.Input_Field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.Input_Field.setBackgroundVisible(False)
-        self.Input_Field.setCenterOnScroll(False)
-
-        self.verticalLayout.addWidget(self.Input_Field)
-
         self.groupBox = QGroupBox(self.verticalLayoutWidget)
         self.groupBox.setObjectName(u"groupBox")
-        self.groupBox.setMinimumSize(QSize(0, 68))
-        self.groupBox.setMaximumSize(QSize(250, 100))
+        self.groupBox.setMinimumSize(QSize(800, 68))
+        self.groupBox.setMaximumSize(QSize(800, 100))
         self.groupBox.setStyleSheet(u"QGroupBox {\n"
                                     "border-color:#98c5de;\n"
                                     "border-style: solid;\n"
@@ -112,6 +84,23 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.Input_Field = QPlainTextEdit(self.groupBox)
+        self.Input_Field.setObjectName(u"Input_Field")
+        self.Input_Field.setMinimumSize(QSize(500, 0))
+        self.Input_Field.setMaximumSize(QSize(1000, 50))
+        self.Input_Field.setStyleSheet(u"QPlainTextEdit {\n"
+                                       "background-color: #243169;\n"
+                                       "border-color:#98c5de;\n"
+                                       "border-style: solid;\n"
+                                       "border-width: 5px;\n"
+                                       "border-radius: 10px;\n"
+                                       "}")
+        self.Input_Field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.Input_Field.setBackgroundVisible(False)
+        self.Input_Field.setCenterOnScroll(False)
+
+        self.horizontalLayout.addWidget(self.Input_Field)
+
         self.Send_Button = QPushButton(self.groupBox)
         self.Send_Button.setObjectName(u"Send_Button")
         self.Send_Button.setMaximumSize(QSize(128, 1000))
@@ -139,11 +128,11 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addWidget(self.Refresh_Button)
 
         self.verticalLayout.addWidget(
-            self.groupBox, 0, Qt.AlignHCenter | Qt.AlignVCenter)
+            self.groupBox, 0, Qt.AlignHCenter | Qt.AlignTop)
 
         self.groupBox_2 = QGroupBox(self.centralwidget)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setGeometry(QRect(860, 120, 300, 471))
+        self.groupBox_2.setGeometry(QRect(850, 140, 300, 531))
         self.groupBox_2.setStyleSheet(u"QGroupBox {\n"
                                       "border-color:#98c5de;\n"
                                       "border-style: solid;\n"
@@ -169,9 +158,19 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.Model_Chooser)
 
+        self.Title_Label = QLabel(self.centralwidget)
+        self.Title_Label.setObjectName(u"Title_Label")
+        self.Title_Label.setGeometry(QRect(420, 10, 357, 117))
+        self.Title_Label.setMaximumSize(QSize(600, 16777215))
+        self.Title_Label.setStyleSheet(u"")
+        self.Title_Label.setPixmap(QPixmap(u"Assets/APOLLO_Title.png"))
+        self.Title_Label.setScaledContents(False)
+        self.Title_Label.setAlignment(Qt.AlignCenter)
+        self.Title_Label.setMargin(0)
         MainWindow.setCentralWidget(self.centralwidget)
         self.groupBox_2.raise_()
         self.verticalLayoutWidget.raise_()
+        self.Title_Label.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -184,15 +183,14 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate(
             "MainWindow", u"A.P.O.L.L.O", None))
-        self.Title_Label.setText("")
         self.Response_Display.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                                  "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                                                  "p, li { white-space: pre-wrap; }\n"
                                                                  "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:15px; font-weight:400; font-style:normal;\">\n"
                                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;\"><br /></p></body></html>", None))
+        self.groupBox.setTitle("")
         self.Input_Field.setPlaceholderText(QCoreApplication.translate(
             "MainWindow", u"Ask your question here!", None))
-        self.groupBox.setTitle("")
         self.Send_Button.setText("")
         self.Refresh_Button.setText("")
         self.groupBox_2.setTitle("")
@@ -206,4 +204,5 @@ class Ui_MainWindow(object):
 
         self.Model_Chooser.setCurrentText(
             QCoreApplication.translate("MainWindow", u"General", None))
+        self.Title_Label.setText("")
     # retranslateUi

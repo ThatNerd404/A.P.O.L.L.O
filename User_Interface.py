@@ -20,8 +20,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
 
-        # Initialize movie for idle animation
-        self.Apollo_Sprite_idle_animation = QMovie("Assets\Apollo_Idle.gif")
+        # Initialize movie for idle animation and other animations
+        self.Apollo_Sprite_idle_animation = QMovie(
+            "Assets\Apollo_Idle.gif")
+        self.Apollo_Sprite_loading_animation = QMovie(
+            "Assets\Apollo_Loading.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
 
@@ -29,7 +32,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Model_Chooser.currentIndexChanged.connect(
-            self.refresh_conversation)
+            self.change_model)
 
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
@@ -52,8 +55,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Refresh_Button.setEnabled(False)
 
         # Update the prompt
-        self.update_json_data()
-
         self.convo_history.append({"role": "user", "content": self.query})
 
         # Create request URL and set header
@@ -65,7 +66,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Create JSON data to send to server
         self.json_data = {
             "model": self.model,
-            "messages": self.convo_history,
+            "messages": self.convo_history, #TODO: add a  {"role": "system", "content": relevant documents using rag}
             # ? temperature makes the answer a bit more random
             "options": {"temperature": 0.7},
             "keep_alive": "5m",
@@ -80,8 +81,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.reply.readyRead.connect(self.handle_response)
 
         # Start loading animation
-        self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\Apollo_Loading.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
         self.Apollo_Sprite_loading_animation.start()
 
@@ -92,7 +91,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         """
         Handles the response from ollama and puts it in the chat display.
 
-        Note: The code assumes that the raw data received is a JSON object with a "response" key, and an optional "done" key indicating whether the conversation is complete.
+        Note: The code assumes that the raw data received is a JSON object with a "message" key, and an optional "done" key indicating whether the conversation is complete.
         """
         #!error_message = self.reply.errorString()
         #!status_code = self.reply.attribute(
@@ -129,8 +128,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     
                     self.current_response = ""
 
-                    self.Apollo_Sprite_idle_animation = QMovie(
-                        "Assets\Apollo_Idle.gif")
                     self.Apollo_Sprite.setMovie(
                         self.Apollo_Sprite_idle_animation)
                     self.Apollo_Sprite_idle_animation.start()
@@ -146,12 +143,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             {"role": "system", "content": self.system_settings}]
         self.Response_Display.append("APOLLO: Conversation history refreshed.")
 
-    def update_json_data(self):
+    def change_model(self):
         '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
-
+        self.refresh_conversation()
         # Get the current text of the Model Chooser combo box
         chosen_model = self.Model_Chooser.currentText()
-
         # Update the model and prompt based on the selected choice
         if chosen_model == "General":
             self.model = "llama3.2:1b"
@@ -159,11 +155,20 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
                           Remember to use the conversation history to inform your answer only.
                           """
+            self.Apollo_Sprite_idle_animation = QMovie(
+            "Assets\Apollo_Idle.gif")
+            self.Apollo_Sprite_loading_animation = QMovie(
+            "Assets\Apollo_Loading.gif")
+            
         elif chosen_model == "Coding":
             self.model = "codellama:7b"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
                           You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
                           Take the following code and add comments to it to improve readability and make it adhere to pep8 standards."""
+            self.Apollo_Sprite_idle_animation = QMovie(
+            "Assets\Apollo_Idle.gif")
+            self.Apollo_Sprite_loading_animation = QMovie(
+            "Assets\Apollo_Loading.gif")
 
         elif chosen_model == "Tutoring":
             self.model = "llama3.2:1b"
@@ -174,3 +179,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           then ask me questions about it to help me build understanding.
                           Remember to use the conversation history to inform your answer only.
                           """
+            self.Apollo_Sprite_idle_animation = QMovie(
+            "Assets\Apollo_Idle_Tutoring.gif")
+            self.Apollo_Sprite_loading_animation = QMovie(
+            "Assets\Apollo_Loading_Tutor.gif")
+        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+        self.Apollo_Sprite_idle_animation.start()
+        
+
