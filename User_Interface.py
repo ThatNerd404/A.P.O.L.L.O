@@ -170,7 +170,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Apollo_Sprite_idle_animation = QMovie(
             "Assets\Apollo_Idle_Coding.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\Apollo_Loading.gif")
+            "Assets\Apollo_Loading_Coding.gif")
 
         elif chosen_model == "Tutoring":
             self.model = "llama3.2:1b"
