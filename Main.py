@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     main()
     # ollama_server.kill()
-
+#TODO Make model to use for my job in lead generation
 # * command to turn ui files into py files: pyside6-uic APOLLO_Mainwindow.ui > APOLLO_MainWindow.py make sure to be in powershell
 # * command to turn py files into exe files: pyinstaller --onefile -w pytoexe.py
 #! remember to change encoding of the  ui-to-py files to utf-8 EVERY SINGLE TIME

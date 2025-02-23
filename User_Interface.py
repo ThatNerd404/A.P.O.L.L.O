@@ -1,13 +1,10 @@
-from PySide6 import QtWidgets
-from PySide6.QtGui import QMovie, QFont, QFontDatabase
+from PySide6.QtGui import QMovie
 from APOLLO_MainWindow import Ui_MainWindow
-from PySide6.QtWidgets import QWidget, QMainWindow, QPushButton
-from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest, QNetworkReply
-from PySide6.QtCore import QUrl, QByteArray, QJsonDocument
-import subprocess
+from PySide6.QtWidgets import QMainWindow
+from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
+from PySide6.QtCore import QUrl, QByteArray
 import json
-import time
-
+import logging
 
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
@@ -53,7 +50,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Input_Field.clear()
         self.Send_Button.setEnabled(False)
         self.Refresh_Button.setEnabled(False)
-
+        self.Model_Chooser.setEnabled(False)
+        
         # Update the prompt
         self.convo_history.append({"role": "user", "content": self.query})
 
@@ -62,14 +60,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         request = QNetworkRequest(url)
         request.setHeader(QNetworkRequest.ContentTypeHeader,
                           "application/json")
-
+        
         # Create JSON data to send to server
         self.json_data = {
             "model": self.model,
             "messages": self.convo_history, #TODO: add a  {"role": "system", "content": relevant documents using rag}
-            # ? temperature makes the answer a bit more random
-            "options": {"temperature": 0.7},
-            "keep_alive": "5m",
+            "options": {"temperature": 0.7}, # ? temperature makes the answer a bit more random
+            "keep_alive": "5m", #? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
             "stream": True,
         }
 
@@ -123,11 +120,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 if json_obj.get("done", False):
                     self.Send_Button.setEnabled(True)
                     self.Refresh_Button.setEnabled(True)
+                    self.Model_Chooser.setEnabled(True)
+                    
                     
                     self.convo_history.append({"role": "assistant", "content": self.current_response})
                     
                     self.current_response = ""
-
                     self.Apollo_Sprite.setMovie(
                         self.Apollo_Sprite_idle_animation)
                     self.Apollo_Sprite_idle_animation.start()
@@ -139,7 +137,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.Input_Field.clear()
         self.Response_Display.clear()
-        self.conversation_history = [
+        self.convo_history = [
             {"role": "system", "content": self.system_settings}]
         self.Response_Display.append("APOLLO: Conversation history refreshed.")
 
@@ -190,4 +188,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         
-
+    def save_conversation(self):
+        '''Saves the conversation to a txt file'''
+        pass
