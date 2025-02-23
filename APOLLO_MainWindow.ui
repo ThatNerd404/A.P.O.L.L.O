@@ -193,7 +193,7 @@ border-radius: 10px;
           <property name="maximumSize">
            <size>
             <width>128</width>
-            <height>1000</height>
+            <height>64</height>
            </size>
           </property>
           <property name="autoFillBackground">
@@ -237,6 +237,32 @@ border-radius: 10px;
           <property name="icon">
            <iconset>
             <normaloff>Assets/Refresh_Button.png</normaloff>Assets/Refresh_Button.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="Save_Button">
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Assets/Save_Button.png</normaloff>Assets/Save_Button.png</iconset>
           </property>
           <property name="iconSize">
            <size>

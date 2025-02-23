@@ -29,6 +29,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Connect signals or conditions to slots or functions
         self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
+        self.Save_Button.clicked.connect(self.save_conversation)
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
         self.Input_Field.textChanged.connect(self.check_for_enter)
@@ -38,8 +39,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.MAX_TOKEN = 1000
         self.query = ""
         self.model = "llama3.2:1b"
-        self.system_settings = f"""You are a helpful AI assisant named APOLLO. You are created by brayden cotterman,
-                          the user, who you refer to as Sir Cotterman.
+        self.system_settings = f"""You are a helpful AI assisant named APOLLO. You refer to the user as Sir Cotterman.
                           """
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
@@ -60,6 +60,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Input_Field.clear()
         self.Send_Button.setEnabled(False)
         self.Refresh_Button.setEnabled(False)
+        self.Save_Button.setEnabled(False)
         self.Model_Chooser.setEnabled(False)
         
         # Update the prompt
@@ -130,6 +131,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 if json_obj.get("done", False):
                     self.Send_Button.setEnabled(True)
                     self.Refresh_Button.setEnabled(True)
+                    self.Save_Button.setEnabled(True)
                     self.Model_Chooser.setEnabled(True)
                     
                     
@@ -162,8 +164,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         if chosen_model == "General":
             self.model = "llama3.2:1b"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
-                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
-                          Remember to use the conversation history to inform your answer only.
+                          You refer to the user as Sir Cotterman.
                           """
             self.Apollo_Sprite_idle_animation = QMovie(
             "Assets\Apollo_Idle.gif")
@@ -173,7 +174,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         elif chosen_model == "Coding":
             self.model = "codellama:7b"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
-                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You refer to the user as Sir Cotterman.
                           Take the following code and add comments to it to improve readability and make it adhere to pep8 standards."""
             self.Apollo_Sprite_idle_animation = QMovie(
             "Assets\Apollo_Idle_Coding.gif")
@@ -183,7 +184,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         elif chosen_model == "Tutoring":
             self.model = "llama3.2:1b"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
-                          You are created by brayden cotterman, the user, who you refer to as Sir Cotterman.
+                          You refer to the user as Sir Cotterman.
                           You will act as a Socratic tutor and first give me a very in-depth explanation of my question
                           then give me examples, then give sources to help allow the user to research for themselves, 
                           then ask me questions about it to help me build understanding.
@@ -204,4 +205,5 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         convo_file = self.convo_history_directory / f"Chat_History_{str(current_time.month)}_{str(current_time.day)}_{str(current_time.year)}.md"
         
         with open(convo_file, "w") as cf:
-            cf.write(self.Response_Display.toPlainText())
+            cf.write(f"""Config:\nModel used: {self.model}\nSystem Prompt: {self.system_settings}\nConversation:\n{self.Response_Display.toPlainText()}""")
+        self.Response_Display.append(f"APOLLO: Conversation Saved to file {convo_file}")

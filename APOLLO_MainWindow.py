@@ -103,7 +103,7 @@ class Ui_MainWindow(object):
 
         self.Send_Button = QPushButton(self.groupBox)
         self.Send_Button.setObjectName(u"Send_Button")
-        self.Send_Button.setMaximumSize(QSize(128, 1000))
+        self.Send_Button.setMaximumSize(QSize(128, 64))
         self.Send_Button.setAutoFillBackground(False)
         icon = QIcon()
         icon.addFile(u"Assets/Apollo_Send_Button.png", QSize(),
@@ -126,6 +126,18 @@ class Ui_MainWindow(object):
         self.Refresh_Button.setFlat(True)
 
         self.horizontalLayout.addWidget(self.Refresh_Button)
+
+        self.Save_Button = QPushButton(self.groupBox)
+        self.Save_Button.setObjectName(u"Save_Button")
+        self.Save_Button.setMaximumSize(QSize(64, 64))
+        icon2 = QIcon()
+        icon2.addFile(u"Assets/Save_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
+        self.Save_Button.setIcon(icon2)
+        self.Save_Button.setIconSize(QSize(64, 64))
+        self.Save_Button.setFlat(True)
+
+        self.horizontalLayout.addWidget(self.Save_Button)
 
         self.verticalLayout.addWidget(
             self.groupBox, 0, Qt.AlignHCenter | Qt.AlignTop)
@@ -193,6 +205,7 @@ class Ui_MainWindow(object):
             "MainWindow", u"Ask your question here!", None))
         self.Send_Button.setText("")
         self.Refresh_Button.setText("")
+        self.Save_Button.setText("")
         self.groupBox_2.setTitle("")
         self.Apollo_Sprite.setText("")
         self.Model_Chooser.setItemText(
