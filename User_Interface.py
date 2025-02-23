@@ -1,7 +1,7 @@
 from PySide6.QtGui import QMovie
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PySide6.QtCore import QUrl, QByteArray
+from PySide6.QtCore import QUrl, QByteArray, QEvent
 from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
 import json
@@ -26,12 +26,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
 
-        # Connect buttons to functions
+        # Connect signals or conditions to slots or functions
         self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
-
+        self.Input_Field.textChanged.connect(self.check_for_enter)
+        
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
         self.MAX_TOKEN = 1000
@@ -43,6 +44,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
         self.convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
+        
+    def check_for_enter(self):
+        """Allow the question area to be submitted with the enter key for seamless use"""
+        if "\n" in self.Input_Field.toPlainText():
+            self.ask_ollama()
+        else:
+            pass
         
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
@@ -138,7 +146,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.Input_Field.clear()
-        self.save_conversation()
         self.Response_Display.clear()
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
