@@ -1,10 +1,11 @@
 from PySide6.QtGui import QMovie
-from APOLLO_MainWindow import Ui_MainWindow
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PySide6.QtCore import QUrl, QByteArray
+from pathlib import Path
+from APOLLO_MainWindow import Ui_MainWindow
 import json
-import logging
+import datetime
 
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
@@ -41,7 +42,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           """
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
-
+        self.convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
+        
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
 
@@ -136,6 +138,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.Input_Field.clear()
+        self.save_conversation()
         self.Response_Display.clear()
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
@@ -190,4 +193,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         
     def save_conversation(self):
         '''Saves the conversation to a txt file'''
-        pass
+        current_time = datetime.datetime.now()
+        convo_file = self.convo_history_directory / f"Chat_History_{str(current_time.month)}_{str(current_time.day)}_{str(current_time.year)}.md"
+        
+        with open(convo_file, "w") as cf:
+            cf.write(self.Response_Display.toPlainText())

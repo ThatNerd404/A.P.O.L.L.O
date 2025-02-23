@@ -1,4 +1,4 @@
-from Config import *
+'''from Config import *
 
 class Apollo:
     def __init__(self):
@@ -39,19 +39,20 @@ class Apollo:
             with sr.Microphone() as source:
                 self.listen_for_wakeword(source)
 
-
-if __name__ == "__main__":
+'''
+'''if __name__ == "__main__":
     ap = Apollo()
     ap.run()
-
+'''
 if __name__ == "__main__":
-    import pyttsx4
-
-    # Initialize the engine
-    
-    engine = pyttsx4.init()
-    engine.say('this is an english text to voice test.')
-    engine.runAndWait()
+    import datetime 
+    from pathlib import Path
+    convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
+    current_time = datetime.datetime.now()
+    current_day = current_time.day
+    convo_file = convo_history_directory / f"Chat_History_{str(current_day)}"
+    with open(convo_file, "w") as cf:
+        cf.write("Penis Fart 2")
     
 
     # Test the voice
