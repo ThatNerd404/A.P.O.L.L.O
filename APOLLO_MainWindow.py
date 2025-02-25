@@ -103,13 +103,26 @@ class Ui_MainWindow(object):
 
         self.Send_Button = QPushButton(self.groupBox)
         self.Send_Button.setObjectName(u"Send_Button")
-        self.Send_Button.setMaximumSize(QSize(128, 64))
+        self.Send_Button.setMinimumSize(QSize(64, 64))
+        self.Send_Button.setMaximumSize(QSize(64, 64))
         self.Send_Button.setAutoFillBackground(False)
+        self.Send_Button.setStyleSheet(u"QPushButton {\n"
+                                       "qproperty-icon: url(\" \");\n"
+                                       "qproperty-iconSize: 64px 64px;\n"
+                                       "width: 64px;\n"
+                                       "height:64px;\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);\n"
+                                       "  background-repeat: no-repeat;}\n"
+                                       "QPushButton:hover {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;}\n"
+                                       " \n"
+                                       "")
         icon = QIcon()
         icon.addFile(u"Assets/Apollo_Send_Button.png", QSize(),
                      QIcon.Mode.Normal, QIcon.State.Off)
         self.Send_Button.setIcon(icon)
-        self.Send_Button.setIconSize(QSize(128, 64))
+        self.Send_Button.setIconSize(QSize(64, 64))
         self.Send_Button.setAutoDefault(False)
         self.Send_Button.setFlat(True)
 
@@ -117,7 +130,18 @@ class Ui_MainWindow(object):
 
         self.Refresh_Button = QPushButton(self.groupBox)
         self.Refresh_Button.setObjectName(u"Refresh_Button")
+        self.Refresh_Button.setMinimumSize(QSize(64, 64))
         self.Refresh_Button.setMaximumSize(QSize(64, 64))
+        self.Refresh_Button.setStyleSheet(u"QPushButton {\n"
+                                          "qproperty-icon: url(\" \");\n"
+                                          "qproperty-iconSize: 64px 64px;\n"
+                                          "width: 64px;\n"
+                                          "height:64px;\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button.png);\n"
+                                          "  background-repeat: no-repeat;}\n"
+                                          "QPushButton:hover {\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
+                                          "background-repeat: no-repeat;}")
         icon1 = QIcon()
         icon1.addFile(u"Assets/Refresh_Button.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
@@ -129,7 +153,18 @@ class Ui_MainWindow(object):
 
         self.Save_Button = QPushButton(self.groupBox)
         self.Save_Button.setObjectName(u"Save_Button")
+        self.Save_Button.setMinimumSize(QSize(64, 64))
         self.Save_Button.setMaximumSize(QSize(64, 64))
+        self.Save_Button.setStyleSheet(u"QPushButton {\n"
+                                       "qproperty-icon: url(\" \");\n"
+                                       "qproperty-iconSize: 64px 64px;\n"
+                                       "width: 64px;\n"
+                                       "height:64px;\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button.png);\n"
+                                       "  background-repeat: no-repeat;}\n"
+                                       "QPushButton:hover {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;}")
         icon2 = QIcon()
         icon2.addFile(u"Assets/Save_Button.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)

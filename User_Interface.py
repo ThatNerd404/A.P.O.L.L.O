@@ -1,7 +1,7 @@
 from PySide6.QtGui import QMovie
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PySide6.QtCore import QUrl, QByteArray, QEvent
+from PySide6.QtCore import QUrl, QByteArray
 from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
 import json
@@ -36,7 +36,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
-        self.MAX_TOKEN = 1000
         self.query = ""
         self.model = "llama3.2:1b"
         self.system_settings = f"""You are a helpful AI assisant named APOLLO. You refer to the user as Sir Cotterman.
@@ -155,7 +154,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def change_model(self):
         '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
-        self.refresh_conversation()
         
         # Get the current text of the Model Chooser combo box
         chosen_model = self.Model_Chooser.currentText()
@@ -175,7 +173,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.model = "codellama:7b"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
                           You refer to the user as Sir Cotterman.
-                          Take the following code and add comments to it to improve readability and make it adhere to pep8 standards."""
+                          """
             self.Apollo_Sprite_idle_animation = QMovie(
             "Assets\Apollo_Idle_Coding.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
@@ -196,6 +194,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Apollo_Sprite_loading_animation = QMovie(
             "Assets\Apollo_Loading_Tutor.gif")
             
+        self.refresh_conversation()
+        
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         
@@ -204,6 +204,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         current_time = datetime.datetime.now()
         convo_file = self.convo_history_directory / f"Chat_History_{str(current_time.month)}_{str(current_time.day)}_{str(current_time.year)}.md"
         
-        with open(convo_file, "w") as cf:
-            cf.write(f"""Config:\nModel used: {self.model}\nSystem Prompt: {self.system_settings}\nConversation:\n{self.Response_Display.toPlainText()}""")
+        # add if statement to check if the conversation file exists add timestamps to questions
+        if convo_file.exists():
+            with open(convo_file, "a") as cf:
+                cf.write(f"\n\n{self.Response_Display.toPlainText()}")
+        else:    
+            with open(convo_file, "w") as cf:
+                cf.write(self.Response_Display.toPlainText())
         self.Response_Display.append(f"APOLLO: Conversation Saved to file {convo_file}")
