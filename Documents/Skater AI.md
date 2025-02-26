@@ -1,1 +1,0 @@
-An robot dressed in 90 / 80's clothes on a skateboard in a futuristic setting. 

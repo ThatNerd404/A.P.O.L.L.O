@@ -1,1 +1,0 @@
-A play on words, para-social butterfly is an art piece on parasocial relationships on the internet with screens and a crylisallis and flowers with faces in them.

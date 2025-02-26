@@ -1,5 +1,0 @@
-Cat Gojo got mpreg from cat Sukuna and then had Phoenix. Raised by the Gojo clan, she has a skittish and shy personality, preferring to stay to herself. Her cursed technique reflects this. She has the six eyes. Her technique makes anything that tries to get close to her to experiences so much friction it disintegrates (this also ignites her fists which is cool as balls). This technique is called "sandpaper". This power can be channeled into her attacks making her lethal from melee range. 
-"Through the fire and flames" is her domain (the song plays while its open) that extends her friction to her entire domain making it so if they move (including breathing). This effects EVERYTHING including her so she has figured out how to summon her domain a few feet from her. Her awakening makes her sandpaper technique destroy even projectiles. 
-
-Finished work:
-![[Phoenix_JJK.png]]

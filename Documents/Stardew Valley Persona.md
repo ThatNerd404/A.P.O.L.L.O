@@ -1,1 +1,0 @@
-I'm gonna draw myself and use the stardew valley character sheet thing as a blueprint.

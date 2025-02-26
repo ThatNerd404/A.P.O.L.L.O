@@ -1,1 +1,0 @@
-A Daemon is a computer process that run automatically and I will take advantage of religious and sci-fi themes. Screen for a face, a wire tail, dongle horns (maybe on that one). the background will say "abandon all hope, all ye who enter here" in binary
