@@ -1,12 +1,12 @@
-from PySide6.QtGui import QMovie
+from PySide6.QtGui import QMovie, QKeyEvent
 from PySide6.QtWidgets import QMainWindow
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PySide6.QtCore import QUrl, QByteArray
+from PySide6.QtCore import QUrl, QByteArray, Qt
 from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
 import json
 import datetime
-
+        
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         """Sets up the window and connects buttons"""
@@ -32,7 +32,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
-        self.Input_Field.textChanged.connect(self.check_for_enter)
+        
+        self.Input_Field.installEventFilter(self)
         
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
@@ -43,14 +44,18 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
         self.convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
-        
-    def check_for_enter(self):
-        """Allow the question area to be submitted with the enter key for seamless use"""
-        if "\n" in self.Input_Field.toPlainText():
-            self.ask_ollama()
-        else:
-            pass
-        
+    
+    def eventFilter(self, obj, event):
+        """Detect Enter key in Input Field"""
+        if event.type() == QKeyEvent.KeyPress:
+            if event.key() == Qt.Key_Return and not event.modifiers() & Qt.ShiftModifier:
+                if not self.Input_Field.toPlainText().strip(): #? stops from sending empty requests
+                    return True
+                else: 
+                    self.ask_ollama()
+                    return True  # Prevent default behavior (optional)
+        return super().eventFilter(obj, event)
+    
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
 
@@ -212,3 +217,5 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             with open(convo_file, "w") as cf:
                 cf.write(self.Response_Display.toPlainText())
         self.Response_Display.append(f"APOLLO: Conversation Saved to file {convo_file}")
+        
+
