@@ -1,5 +1,5 @@
 from PySide6.QtGui import QMovie, QKeyEvent
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QInputDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PySide6.QtCore import QUrl, QByteArray, Qt
 from pathlib import Path
@@ -198,24 +198,25 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             "Assets\Apollo_Idle_Tutoring.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
             "Assets\Apollo_Loading_Tutor.gif")
-            
-        self.refresh_conversation()
         
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         
     def save_conversation(self):
-        '''Saves the conversation to a txt file'''
-        current_time = datetime.datetime.now()
-        convo_file = self.convo_history_directory / f"Chat_History_{str(current_time.month)}_{str(current_time.day)}_{str(current_time.year)}.md"
-        
-        # add if statement to check if the conversation file exists add timestamps to questions
-        if convo_file.exists():
-            with open(convo_file, "a") as cf:
-                cf.write(f"\n\n{self.Response_Display.toPlainText()}")
-        else:    
-            with open(convo_file, "w") as cf:
-                cf.write(self.Response_Display.toPlainText())
-        self.Response_Display.append(f"APOLLO: Conversation Saved to file {convo_file}")
-        
+        '''Saves the current conversation to a md file'''
+        #? saves in a tuple of the text + a true boolean
+        savename, done = QInputDialog.getText(self, "File Name", "Enter File Name:")
 
+        try:
+            if not savename:
+                pass
+            else:
+                convo_file = self.convo_history_directory / f"{savename}.md"
+                with open(convo_file, "w") as cf:
+                    cf.write(self.Response_Display.toPlainText())
+                self.Response_Display.append(f"APOLLO: Conversation Saved to file {savename}.md")
+            
+        except Exception as e:
+            self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
+            Try again and fit the requirements.""")
+            self.save_conversation()
