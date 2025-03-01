@@ -45,14 +45,16 @@ class Apollo:
     ap.run()
 '''
 if __name__ == "__main__":
-    import datetime 
-    from pathlib import Path
-    convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
-    current_time = datetime.datetime.now()
-    current_day = current_time.day
-    convo_file = convo_history_directory / f"Chat_History_{str(current_day)}"
-    with open(convo_file, "w") as cf:
-        cf.write("Penis Fart 2")
+    import os
+    import subprocess
+    import huggingface_hub
+    
+# Kill a process by name
+    ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    #os.system("taskkill /f /im ollama.exe")  # Replace with the process name
+    os.system("taskkill /F /IM ollama.exe > nul 2>&1")
+# Kill a process by PID
+    #os.system("taskkill /f /pid 1234")  # Replace with the process ID
     
 
     # Test the voice
