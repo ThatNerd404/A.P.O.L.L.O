@@ -128,6 +128,29 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.Send_Button)
 
+        self.Cancel_Button = QPushButton(self.groupBox)
+        self.Cancel_Button.setObjectName(u"Cancel_Button")
+        self.Cancel_Button.setMaximumSize(QSize(64, 64))
+        self.Cancel_Button.setStyleSheet(u"QPushButton {\n"
+                                         "qproperty-icon: url(\" \");\n"
+                                         "qproperty-iconSize: 64px 64px;\n"
+                                         "width: 64px;\n"
+                                         "height:64px;\n"
+                                         "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);\n"
+                                         "  background-repeat: no-repeat;}\n"
+                                         "QPushButton:hover {\n"
+                                         "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);\n"
+                                         "background-repeat: no-repeat;}\n"
+                                         " ")
+        icon1 = QIcon()
+        icon1.addFile(u"Assets/Cancel_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
+        self.Cancel_Button.setIcon(icon1)
+        self.Cancel_Button.setIconSize(QSize(64, 64))
+        self.Cancel_Button.setFlat(True)
+
+        self.horizontalLayout.addWidget(self.Cancel_Button)
+
         self.Refresh_Button = QPushButton(self.groupBox)
         self.Refresh_Button.setObjectName(u"Refresh_Button")
         self.Refresh_Button.setMinimumSize(QSize(64, 64))
@@ -142,10 +165,10 @@ class Ui_MainWindow(object):
                                           "QPushButton:hover {\n"
                                           "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
                                           "background-repeat: no-repeat;}")
-        icon1 = QIcon()
-        icon1.addFile(u"Assets/Refresh_Button.png", QSize(),
+        icon2 = QIcon()
+        icon2.addFile(u"Assets/Refresh_Button.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
-        self.Refresh_Button.setIcon(icon1)
+        self.Refresh_Button.setIcon(icon2)
         self.Refresh_Button.setIconSize(QSize(64, 64))
         self.Refresh_Button.setFlat(True)
 
@@ -165,10 +188,10 @@ class Ui_MainWindow(object):
                                        "QPushButton:hover {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
                                        "background-repeat: no-repeat;}")
-        icon2 = QIcon()
-        icon2.addFile(u"Assets/Save_Button.png", QSize(),
+        icon3 = QIcon()
+        icon3.addFile(u"Assets/Save_Button.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
-        self.Save_Button.setIcon(icon2)
+        self.Save_Button.setIcon(icon3)
         self.Save_Button.setIconSize(QSize(64, 64))
         self.Save_Button.setFlat(True)
 
@@ -239,6 +262,7 @@ class Ui_MainWindow(object):
         self.Input_Field.setPlaceholderText(QCoreApplication.translate(
             "MainWindow", u"Ask your question here!", None))
         self.Send_Button.setText("")
+        self.Cancel_Button.setText("")
         self.Refresh_Button.setText("")
         self.Save_Button.setText("")
         self.groupBox_2.setTitle("")

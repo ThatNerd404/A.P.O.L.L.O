@@ -15,6 +15,7 @@ if __name__ == "__main__":
     # ? makes it not print to screen when starting process
     ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     main()
+    #! work around because ollama_server.kill fails to cancel the server
     os.system("taskkill /F /IM ollama.exe > nul 2>&1")
     
 #TODO Make model to use for my job in lead generation

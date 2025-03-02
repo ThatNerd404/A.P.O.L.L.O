@@ -30,6 +30,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Save_Button.clicked.connect(self.save_conversation)
+        self.Cancel_Button.clicked.connect(self.cancel_request)
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
         
@@ -58,7 +59,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
-
+        
         # Get user's prompt and disable buttons
         self.query = self.Input_Field.toPlainText()
         self.Input_Field.clear()
@@ -130,7 +131,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     self.Response_Display.ensureCursorVisible()
                     self.Response_Display.insertPlainText(chunk)  # Stream it to UI
                     self.Response_Display.ensureCursorVisible()
-                    
+
                 # ? If "done" key is present in the JSON object and it's set to True, finalize the response
                 if json_obj.get("done", False):
                     self.Send_Button.setEnabled(True)
@@ -141,11 +142,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     
                     self.convo_history.append({"role": "assistant", "content": self.current_response})
                     
+                    
                     self.current_response = ""
                     self.Apollo_Sprite.setMovie(
                         self.Apollo_Sprite_idle_animation)
                     self.Apollo_Sprite_idle_animation.start()
-
+                
             except json.JSONDecodeError as e:
                 print("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
 
@@ -220,3 +222,22 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
             Try again and fit the requirements.""")
             self.save_conversation()
+            
+    def cancel_request(self):
+        """Stops Apollo's response mid-stream by aborting the network request."""
+        if hasattr(self, 'reply') and self.reply and self.reply.isRunning():
+            self.reply.abort()  # Cancel the ongoing network request
+        
+            # Reset UI elements
+            self.Send_Button.setEnabled(True)
+            self.Refresh_Button.setEnabled(True)
+            self.Save_Button.setEnabled(True)
+            self.Model_Chooser.setEnabled(True)
+            
+            # Reset Apollo's animation to idle
+            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+            self.Apollo_Sprite_idle_animation.start()
+            
+            # Display cancellation message append convo to 
+            self.Response_Display.append("\nAPOLLO: Response cancelled.")
+            self.convo_history.append({"role": "assistant", "content": self.current_response})

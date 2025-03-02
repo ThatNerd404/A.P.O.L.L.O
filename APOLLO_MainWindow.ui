@@ -244,6 +244,45 @@ background-repeat: no-repeat;}
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="Cancel_Button">
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);
+background-repeat: no-repeat;}
+ </string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>Assets/Cancel_Button.png</normaloff>Assets/Cancel_Button.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="Refresh_Button">
           <property name="minimumSize">
            <size>
