@@ -7,6 +7,8 @@ from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
 import json
 import logging
+import time
+
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         """Sets up the window and connects buttons"""
@@ -17,7 +19,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('Logs/test.log', maxBytes=1000000, backupCount=5)
+        handler = RotatingFileHandler('Logs/log.log', maxBytes=1000000, backupCount=5)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
@@ -53,7 +55,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
         self.convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
-
+        self.current_response = ""
         self.logger.debug('Initialization finished')
         
     def eventFilter(self, obj, event):
@@ -70,7 +72,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
         
-        self.logger.debug('Ask ollama function called')
+        self.logger.debug('ask_ollama called')
         
         # Get user's prompt and disable buttons
         self.query = self.Input_Field.toPlainText()
@@ -80,7 +82,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.setEnabled(False)
         self.Model_Chooser.setEnabled(False)
         
-        # Update the prompt
+        # Add the user's prompt
         self.convo_history.append({"role": "user", "content": self.query})
 
         # Create request URL and set header
@@ -113,19 +115,23 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         # Display response in UI element
         self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
-
+        
+        # grab start time
+        self.start_time = time.perf_counter()
+        
     def handle_response(self):
         """
         Handles the response from ollama and puts it in the chat display.
-
+        
         Note: The code assumes that the raw data received is a JSON object with a "message" key, and an optional "done" key indicating whether the conversation is complete.
         """
+        
         #!error_message = self.reply.errorString()
         #!status_code = self.reply.attribute(
         #!    QNetworkRequest.HttpStatusCodeAttribute)
         raw_data = self.reply.readAll().data().decode()
         self.partial_json_buffer += raw_data
-        self.current_response = ""
+        
         
         while "\n" in self.partial_json_buffer:
             line, self.partial_json_buffer = self.partial_json_buffer.split(
@@ -148,25 +154,34 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
                 # ? If "done" key is present in the JSON object and it's set to True, finalize the response
                 if json_obj.get("done", False):
+                    # grab end time and log it
+                    self.end_time = time.perf_counter()
+                    elasped_time = self.end_time - self.start_time
+                    self.logger.info(f"Response finished generating in {elasped_time:.4f} seconds")
+                    self.logger.info(f"Full APOLLO response: {self.current_response}")
+                    
+                    # re-enable buttons
                     self.Send_Button.setEnabled(True)
                     self.Refresh_Button.setEnabled(True)
                     self.Save_Button.setEnabled(True)
                     self.Model_Chooser.setEnabled(True)
                     
-                    self.logger.info(f"Full APOLLO response: {self.current_response}")
+                    # add APOLLO response to convo history
                     self.convo_history.append({"role": "assistant", "content": self.current_response})
-                    
-                    
-                    self.current_response = ""
+                
                     self.Apollo_Sprite.setMovie(
                         self.Apollo_Sprite_idle_animation)
                     self.Apollo_Sprite_idle_animation.start()
+                    self.current_response = ""
+                    self.reply.abort()
                 
             except json.JSONDecodeError as e:
                 self.logger.error("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
 
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
+        self.logger.debug("refresh_conversation was called")
+        
         self.Input_Field.clear()
         self.Response_Display.clear()
         self.convo_history = [
@@ -175,7 +190,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def change_model(self):
         '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
-        
+        self.logger.debug("change_model was called")
         # Get the current text of the Model Chooser combo box
         chosen_model = self.Model_Chooser.currentText()
         
@@ -202,12 +217,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         elif chosen_model == "Tutoring":
             self.model = "llama3.2:1b"
-            self.system_settings = """You are a helpful AI assisant named APOLLO.
-                          You refer to the user as Sir Cotterman.
-                          You will act as a Socratic tutor and first give me a very in-depth explanation of my question
-                          then give me examples, then give sources to help allow the user to research for themselves, 
-                          then ask me questions about it to help me build understanding.
-                          Remember to use the conversation history to inform your answer only.
+            self.system_settings = """You are a helpful AI assisant named APOLLO.\n
+                          You refer to the user as Sir Cotterman.\n
+                          You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n
+                          then give me examples, then give sources to help allow the user to research for themselves,\n
+                          then ask me questions about it to help me build understanding.\n
+                          Remember to use the conversation history to inform your answer only\n.
                           """
                           
             self.Apollo_Sprite_idle_animation = QMovie(
@@ -223,6 +238,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def save_conversation(self):
         '''Saves the current conversation to a md file'''
         #? saves in a tuple of the text + a true boolean
+        self.logger.debug("save_conversation was called")
         savename, done = QInputDialog.getText(self, "File Name", "Enter File Name:")
 
         try:
@@ -243,9 +259,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             
     def cancel_request(self):
         """Stops Apollo's response mid-stream by aborting the network request."""
-        try:
+        if hasattr(self, "reply") and self.reply.isRunning() and self.reply:
             self.reply.abort()  # Cancel the ongoing network request
-        
+            self.logger.info("Response cancelled")
             # Reset UI elements
             self.Send_Button.setEnabled(True)
             self.Refresh_Button.setEnabled(True)
@@ -256,9 +272,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
             self.Apollo_Sprite_idle_animation.start()
             
-            # Display cancellation message append convo to 
+            # Display cancellation message 
             self.Response_Display.append("\nAPOLLO: Response cancelled.")
-            self.convo_history.append({"role": "assistant", "content": self.current_response})
-        except Exception as e:
+            
+            # reset current response 
+            self.current_response = ""
+            
+            # remove user query from history
+            self.convo_history.pop()
+        else:
             self.Response_Display.append("\nAPOLLO: No response being generated currently.")
-            self.logger.error(f"Function has been run when no response is being generated.\nError: {e}")
+            self.logger.debug("cancel_request has been run when no response is being generated.")

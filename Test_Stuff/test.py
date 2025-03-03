@@ -52,7 +52,7 @@ if __name__ == "__main__":
 # Kill a process by name
     ollama_server = subprocess.Popen(    ["ollama", "serve"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     #os.system("taskkill /f /im ollama.exe")  # Replace with the process name
-    os.system("taskkill /F /IM ollama.exe > nul 2>&1")
+    os.system("taskkill /F /IM ollama.exe > nul 2>&1") 
 # Kill a process by PID
     #os.system("taskkill /f /pid 1234")  # Replace with the process ID
     
