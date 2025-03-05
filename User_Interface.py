@@ -49,7 +49,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
         self.query = ""
-        self.model = "llama3.2:1b"
+        self.model = "phi4-mini"
         self.system_settings = f"""You are a helpful AI assisant named APOLLO. You refer to the user as Sir Cotterman.
                           """
         self.convo_history = [
@@ -196,7 +196,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         
         # Update the model, prompt, and sprite based on the selected choice
         if chosen_model == "General":
-            self.model = "llama3.2:1b"
+            self.model = "phi4-mini"
             self.system_settings = """You are a helpful AI assisant named APOLLO.
                           You refer to the user as Sir Cotterman.
                           """
@@ -216,7 +216,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             "Assets\Apollo_Loading_Coding.gif")
 
         elif chosen_model == "Tutoring":
-            self.model = "llama3.2:1b"
+            self.model = "phi4-mini"
             self.system_settings = """You are a helpful AI assisant named APOLLO.\n
                           You refer to the user as Sir Cotterman.\n
                           You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n

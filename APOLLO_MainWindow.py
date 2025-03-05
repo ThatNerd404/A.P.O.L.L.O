@@ -116,6 +116,9 @@ class Ui_MainWindow(object):
                                        "QPushButton:hover {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);\n"
                                        "background-repeat: no-repeat;}\n"
+                                       "QPushButton:disabled {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);\n"
+                                       "background-repeat: no-repeat;}\n"
                                        " \n"
                                        "")
         icon = QIcon()
@@ -164,6 +167,9 @@ class Ui_MainWindow(object):
                                           "  background-repeat: no-repeat;}\n"
                                           "QPushButton:hover {\n"
                                           "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
+                                          "background-repeat: no-repeat;}\n"
+                                          "QPushButton:disabled {\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);\n"
                                           "background-repeat: no-repeat;}")
         icon2 = QIcon()
         icon2.addFile(u"Assets/Refresh_Button.png", QSize(),
@@ -187,6 +193,9 @@ class Ui_MainWindow(object):
                                        "  background-repeat: no-repeat;}\n"
                                        "QPushButton:hover {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;}\n"
+                                       "QPushButton:disabled {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);\n"
                                        "background-repeat: no-repeat;}")
         icon3 = QIcon()
         icon3.addFile(u"Assets/Save_Button.png", QSize(),
