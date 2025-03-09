@@ -15,11 +15,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.setWindowTitle("A.P.O.L.L.O")
-        
+        self.setWindowFlags(Qt.FramelessWindowHint)
         # setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('Logs/log.log', maxBytes=1000000, backupCount=5)
+        handler = RotatingFileHandler('Logs/log.log', maxBytes=100000, backupCount=5)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
@@ -41,6 +41,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Cancel_Button.clicked.connect(self.cancel_request)
+        self.Close_Window_Button.clicked.connect(self.close)
+        self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
         

@@ -25,12 +25,16 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1200, 675)
+        MainWindow.resize(1200, 710)
         MainWindow.setMinimumSize(QSize(1200, 675))
-        MainWindow.setMaximumSize(QSize(1200, 675))
+        MainWindow.setMaximumSize(QSize(1200, 710))
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"QMainWindow {\n"
                                  "background-color: #4666a3 ;\n"
+                                 "border-color:#98c5de;\n"
+                                 "border-style: solid;\n"
+                                 "border-width: 5px;\n"
+                                 "border-radius: 10px;\n"
                                  "}\n"
                                  "")
         MainWindow.setDocumentMode(False)
@@ -39,10 +43,16 @@ class Ui_MainWindow(object):
         self.centralwidget.setStyleSheet(u"QWidget {\n"
                                          "background-color: #4666a3 ;\n"
                                          "color: #98c5de;\n"
+                                         "\n"
+                                         "}\n"
+                                         "QWidget #centralwidget {\n"
+                                         "border-width: 3px;\n"
+                                         "border-style: solid;\n"
+                                         "border-color: #243169;\n"
                                          "}")
         self.verticalLayoutWidget = QWidget(self.centralwidget)
         self.verticalLayoutWidget.setObjectName(u"verticalLayoutWidget")
-        self.verticalLayoutWidget.setGeometry(QRect(10, 140, 842, 531))
+        self.verticalLayoutWidget.setGeometry(QRect(20, 170, 842, 531))
         self.verticalLayout = QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName(u"verticalLayout")
@@ -211,7 +221,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_2 = QGroupBox(self.centralwidget)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setGeometry(QRect(850, 140, 300, 531))
+        self.groupBox_2.setGeometry(QRect(860, 170, 300, 531))
         self.groupBox_2.setStyleSheet(u"QGroupBox {\n"
                                       "border-color:#98c5de;\n"
                                       "border-style: solid;\n"
@@ -239,22 +249,70 @@ class Ui_MainWindow(object):
 
         self.Title_Label = QLabel(self.centralwidget)
         self.Title_Label.setObjectName(u"Title_Label")
-        self.Title_Label.setGeometry(QRect(420, 10, 357, 117))
+        self.Title_Label.setGeometry(QRect(430, 40, 357, 117))
         self.Title_Label.setMaximumSize(QSize(600, 16777215))
         self.Title_Label.setStyleSheet(u"")
         self.Title_Label.setPixmap(QPixmap(u"Assets/APOLLO_Title.png"))
         self.Title_Label.setScaledContents(False)
         self.Title_Label.setAlignment(Qt.AlignCenter)
         self.Title_Label.setMargin(0)
+        self.Close_Window_Button = QPushButton(self.centralwidget)
+        self.Close_Window_Button.setObjectName(u"Close_Window_Button")
+        self.Close_Window_Button.setGeometry(QRect(1133, 0, 66, 46))
+        self.Close_Window_Button.setStyleSheet(u"QPushButton {\n"
+                                               "qproperty-icon: url(\" \");\n"
+                                               "qproperty-iconSize: 64px 44px;\n"
+                                               "width: 64px;\n"
+                                               "height:44px;\n"
+                                               "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Close_Window_Button.png);\n"
+                                               "  background-repeat: no-repeat;}\n"
+                                               "QPushButton:hover {\n"
+                                               "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Close_Window_Button_Hover.png);\n"
+                                               "qproperty-iconSize: 64px 44px;\n"
+                                               "width: 64px;\n"
+                                               "height:44px;\n"
+                                               "}")
+        icon4 = QIcon()
+        icon4.addFile(u"Assets/Close_Window_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
+        self.Close_Window_Button.setIcon(icon4)
+        self.Close_Window_Button.setIconSize(QSize(64, 44))
+        self.Close_Window_Button.setFlat(True)
+        self.Minimize_Window_Button = QPushButton(self.centralwidget)
+        self.Minimize_Window_Button.setObjectName(u"Minimize_Window_Button")
+        self.Minimize_Window_Button.setGeometry(QRect(1071, 0, 66, 46))
+        self.Minimize_Window_Button.setStyleSheet(u"QPushButton {\n"
+                                                  "qproperty-icon: url(\" \");\n"
+                                                  "qproperty-iconSize: 64px 44px;\n"
+                                                  "width: 64px;\n"
+                                                  "height:44px;\n"
+                                                  "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Minimize_Window_Button.png);\n"
+                                                  "  background-repeat: no-repeat;}\n"
+                                                  "QPushButton:hover {\n"
+                                                  "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Minimize_Window_Button_Hover.png);\n"
+                                                  "qproperty-iconSize: 64px 44px;\n"
+                                                  "width: 64px;\n"
+                                                  "height:44px;\n"
+                                                  "}")
+        icon5 = QIcon()
+        icon5.addFile(u"Assets/Minimize_Window_Button.png",
+                      QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.Minimize_Window_Button.setIcon(icon5)
+        self.Minimize_Window_Button.setIconSize(QSize(64, 44))
+        self.Minimize_Window_Button.setFlat(True)
         MainWindow.setCentralWidget(self.centralwidget)
         self.groupBox_2.raise_()
         self.verticalLayoutWidget.raise_()
         self.Title_Label.raise_()
+        self.Close_Window_Button.raise_()
+        self.Minimize_Window_Button.raise_()
 
         self.retranslateUi(MainWindow)
 
         self.Send_Button.setDefault(False)
         self.Model_Chooser.setCurrentIndex(0)
+        self.Close_Window_Button.setDefault(False)
+        self.Minimize_Window_Button.setDefault(False)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -286,4 +344,6 @@ class Ui_MainWindow(object):
         self.Model_Chooser.setCurrentText(
             QCoreApplication.translate("MainWindow", u"General", None))
         self.Title_Label.setText("")
+        self.Close_Window_Button.setText("")
+        self.Minimize_Window_Button.setText("")
     # retranslateUi
