@@ -66,8 +66,7 @@ class Ui_MainWindow(object):
                                             "border-color:#98c5de;\n"
                                             "border-style: solid;\n"
                                             "border-width: 5px;\n"
-                                            "border-radius: 10px;\n"
-                                            "font-size: 15px;\n"
+                                            "font-size: 32px;\n"
                                             "}")
         self.Response_Display.setFrameShape(QFrame.StyledPanel)
         self.Response_Display.setFrameShadow(QFrame.Sunken)
@@ -103,7 +102,7 @@ class Ui_MainWindow(object):
                                        "border-color:#98c5de;\n"
                                        "border-style: solid;\n"
                                        "border-width: 5px;\n"
-                                       "border-radius: 10px;\n"
+                                       "font-size: 16px;\n"
                                        "}")
         self.Input_Field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.Input_Field.setBackgroundVisible(False)
@@ -243,6 +242,13 @@ class Ui_MainWindow(object):
         self.Model_Chooser.setObjectName(u"Model_Chooser")
         self.Model_Chooser.setMinimumSize(QSize(0, 60))
         self.Model_Chooser.setLayoutDirection(Qt.LeftToRight)
+        self.Model_Chooser.setStyleSheet(u"QComboBox {\n"
+                                         "background-color: #243169;\n"
+                                         "border-color:#98c5de;\n"
+                                         "border-style: solid;\n"
+                                         "border-width: 5px;\n"
+                                         "font-size:16px;\n"
+                                         "}")
         self.Model_Chooser.setFrame(True)
 
         self.verticalLayout_2.addWidget(self.Model_Chooser)
@@ -300,12 +306,17 @@ class Ui_MainWindow(object):
         self.Minimize_Window_Button.setIcon(icon5)
         self.Minimize_Window_Button.setIconSize(QSize(64, 44))
         self.Minimize_Window_Button.setFlat(True)
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(800, 130, 61, 26))
+        self.label.setPixmap(QPixmap(u"Assets/APOLLO_Initials.png"))
         MainWindow.setCentralWidget(self.centralwidget)
         self.groupBox_2.raise_()
         self.verticalLayoutWidget.raise_()
         self.Title_Label.raise_()
         self.Close_Window_Button.raise_()
         self.Minimize_Window_Button.raise_()
+        self.label.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -323,7 +334,7 @@ class Ui_MainWindow(object):
         self.Response_Display.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
                                                                  "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
                                                                  "p, li { white-space: pre-wrap; }\n"
-                                                                 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:15px; font-weight:400; font-style:normal;\">\n"
+                                                                 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:32px; font-weight:400; font-style:normal;\">\n"
                                                                  "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;\"><br /></p></body></html>", None))
         self.groupBox.setTitle("")
         self.Input_Field.setPlaceholderText(QCoreApplication.translate(
@@ -346,4 +357,5 @@ class Ui_MainWindow(object):
         self.Title_Label.setText("")
         self.Close_Window_Button.setText("")
         self.Minimize_Window_Button.setText("")
+        self.label.setText("")
     # retranslateUi

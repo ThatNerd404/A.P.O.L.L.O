@@ -1,4 +1,4 @@
-from PySide6.QtGui import QMovie, QKeyEvent
+from PySide6.QtGui import QMovie, QKeyEvent, QFont, QFontDatabase
 from PySide6.QtWidgets import QMainWindow, QInputDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PySide6.QtCore import QUrl, QByteArray, Qt
@@ -16,7 +16,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("A.P.O.L.L.O")
         self.setWindowFlags(Qt.FramelessWindowHint)
-        # setup logger and rotating file handler
+        
+        # Set cool pixel font
+        font = QFontDatabase.addApplicationFont("C:\\Users\\MyCom\\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Assets\\PixelPurl.ttf")
+        pixel_family = QFontDatabase.applicationFontFamilies(font)
+        self.Model_Chooser.setFont(pixel_family[0])
+        self.Input_Field.setFont(pixel_family[0])
+        self.Response_Display.setFont(pixel_family[0])
+        
+        # Setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
         handler = RotatingFileHandler('Logs\\log.log', maxBytes=100000, backupCount=5)

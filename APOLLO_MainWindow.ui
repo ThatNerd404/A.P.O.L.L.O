@@ -87,8 +87,7 @@ background-color: #243169;
 border-color:#98c5de;
 border-style: solid;
 border-width: 5px;
-border-radius: 10px;
-font-size: 15px;
+font-size: 32px;
 }</string>
        </property>
        <property name="frameShape">
@@ -107,7 +106,7 @@ font-size: 15px;
         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:15px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:32px; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="openLinks">
@@ -181,7 +180,7 @@ background-color: #243169;
 border-color:#98c5de;
 border-style: solid;
 border-width: 5px;
-border-radius: 10px;
+font-size: 16px;
 }</string>
           </property>
           <property name="horizontalScrollBarPolicy">
@@ -438,6 +437,15 @@ border-radius: 10px;}</string>
        <property name="layoutDirection">
         <enum>Qt::LeftToRight</enum>
        </property>
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+font-size:16px;
+}</string>
+       </property>
        <property name="currentText">
         <string>General</string>
        </property>
@@ -588,11 +596,28 @@ height:44px;
      <bool>true</bool>
     </property>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>800</x>
+      <y>130</y>
+      <width>61</width>
+      <height>26</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>Assets/APOLLO_Initials.png</pixmap>
+    </property>
+   </widget>
    <zorder>groupBox_2</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>Title_Label</zorder>
    <zorder>Close_Window_Button</zorder>
    <zorder>Minimize_Window_Button</zorder>
+   <zorder>label</zorder>
   </widget>
  </widget>
  <resources/>
