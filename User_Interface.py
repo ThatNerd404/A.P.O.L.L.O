@@ -8,6 +8,7 @@ from APOLLO_MainWindow import Ui_MainWindow
 import json
 import logging
 import time
+import os
 
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
@@ -18,7 +19,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.setWindowFlags(Qt.FramelessWindowHint)
         
         # Set cool pixel font
-        font = QFontDatabase.addApplicationFont("C:\\Users\\MyCom\\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Assets\\PixelPurl.ttf")
+        font = QFontDatabase.addApplicationFont(os.path.join("Assets", "PixelPurl.ttf"))
         pixel_family = QFontDatabase.applicationFontFamilies(font)
         self.Model_Chooser.setFont(pixel_family[0])
         self.Input_Field.setFont(pixel_family[0])
@@ -37,10 +38,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.network_manager.finished.connect(self.handle_response)
 
         # Initialize movie for idle animation and other animations
-        self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\\Apollo_Idle.gif")
-        self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\\Apollo_Loading.gif")
+        self.Apollo_Sprite_idle_animation = QMovie(os.path.join("Assets", "Apollo_Idle.gif")
+            )
+        self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Loading.gif"))
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
 
@@ -212,10 +213,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.system_settings = """You are a helpful AI assisant named APOLLO.\n
                           You refer to the user as Sir Cotterman.
                           """
-            self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\\Apollo_Idle.gif")
-            self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\\Apollo_Loading.gif")
+            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Idle.gif"))
+            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Loading.gif"))
             
         elif chosen_model == "Coding":
             self.model = "qwen2.5-coder:3b"
@@ -224,10 +225,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           The tone should be dark, rebellious, and intense..\n
                           You refer to the user as Mr Cotterman.\n
                           """
-            self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\\Apollo_Idle_Coding.gif")
-            self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\\Apollo_Loading_Coding.gif")
+            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Idle_Coding.gif"))
+            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Loading_Coding.gif"))
 
         elif chosen_model == "Tutoring":
             self.model = "phi4-mini"
@@ -238,10 +239,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           then ask me questions about it to help me build understanding.\n
                           """
                           
-            self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\\Apollo_Idle_Tutoring.gif")
-            self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\\Apollo_Loading_Tutor.gif")
+            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Idle_Tutoring.gif"))
+            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+            "Assets", "Apollo_Loading_Tutor.gif"))
         
         self.logger.info(f"Model changed to {self.model}\nSystem settings changed to {self.system_settings}")
         #? reset the system settings
