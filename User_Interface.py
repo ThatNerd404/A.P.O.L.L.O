@@ -19,7 +19,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('Logs/log.log', maxBytes=100000, backupCount=5)
+        handler = RotatingFileHandler('Logs\\log.log', maxBytes=100000, backupCount=5)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
@@ -30,9 +30,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         # Initialize movie for idle animation and other animations
         self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\Apollo_Idle.gif")
+            "Assets\\Apollo_Idle.gif")
         self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\Apollo_Loading.gif")
+            "Assets\\Apollo_Loading.gif")
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
 
@@ -56,7 +56,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           """
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
-        self.convo_history_directory = Path("C:\\Users\\MyCom\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
+        self.convo_history_directory = Path("C:\\Users\\MyCom\\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
         self.current_response = ""
         self.logger.debug('Initialization finished')
         
@@ -160,7 +160,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     self.end_time = time.perf_counter()
                     elasped_time = self.end_time - self.start_time
                     self.logger.info(f"Response finished generating in {elasped_time:.4f} seconds")
-                    self.logger.info(f"Full APOLLO response: {self.current_response}")
+                    
+                    #? decode to ignore emojis
+                    self.logger.info(f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
                     
                     # re-enable buttons
                     self.Send_Button.setEnabled(True)
@@ -199,23 +201,25 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Update the model, prompt, and sprite based on the selected choice
         if chosen_model == "General":
             self.model = "phi4-mini"
-            self.system_settings = """You are a helpful AI assisant named APOLLO.
+            self.system_settings = """You are a helpful AI assisant named APOLLO.\n
                           You refer to the user as Sir Cotterman.
                           """
             self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\Apollo_Idle.gif")
+            "Assets\\Apollo_Idle.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\Apollo_Loading.gif")
+            "Assets\\Apollo_Loading.gif")
             
         elif chosen_model == "Coding":
-            self.model = "codellama:7b"
-            self.system_settings = """You are a helpful AI assisant named APOLLO.
-                          You refer to the user as Sir Cotterman.
+            self.model = "qwen2.5-coder:3b"
+            self.system_settings = """You are APOLLO.\n
+                          Talk in a gritty punk persona, using slang and street speak like you would hear in the game Cyberpunk 2077.\n
+                          The tone should be dark, rebellious, and intense..\n
+                          You refer to the user as Mr Cotterman.\n
                           """
             self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\Apollo_Idle_Coding.gif")
+            "Assets\\Apollo_Idle_Coding.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\Apollo_Loading_Coding.gif")
+            "Assets\\Apollo_Loading_Coding.gif")
 
         elif chosen_model == "Tutoring":
             self.model = "phi4-mini"
@@ -224,16 +228,16 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n
                           then give me examples, then give sources to help allow the user to research for themselves,\n
                           then ask me questions about it to help me build understanding.\n
-                          Remember to use the conversation history to inform your answer only\n.
                           """
                           
             self.Apollo_Sprite_idle_animation = QMovie(
-            "Assets\Apollo_Idle_Tutoring.gif")
+            "Assets\\Apollo_Idle_Tutoring.gif")
             self.Apollo_Sprite_loading_animation = QMovie(
-            "Assets\Apollo_Loading_Tutor.gif")
+            "Assets\\Apollo_Loading_Tutor.gif")
         
         self.logger.info(f"Model changed to {self.model}\nSystem settings changed to {self.system_settings}")
-        
+        #? reset the system settings
+        self.convo_history[0] =  {"role": "system", "content": self.system_settings}
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
         
