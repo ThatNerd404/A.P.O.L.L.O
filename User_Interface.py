@@ -28,7 +28,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler('Logs\\log.log', maxBytes=100000, backupCount=5)
+        handler = RotatingFileHandler(os.path.join('Logs', 'log.log'), maxBytes=100000, backupCount=5)
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
