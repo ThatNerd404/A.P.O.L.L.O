@@ -213,14 +213,16 @@ class Ui_MainWindow(object):
 
         self.groupBox_2 = QGroupBox(self.centralwidget)
         self.groupBox_2.setObjectName(u"groupBox_2")
-        self.groupBox_2.setGeometry(QRect(860, 170, 300, 541))
+        self.groupBox_2.setGeometry(QRect(870, 180, 300, 521))
         self.groupBox_2.setStyleSheet(u"QGroupBox {\n"
 "border-color:#98c5de;\n"
 "border-style: solid;\n"
 "border-width: 0px;\n"
 "border-radius: 10px;}")
         self.verticalLayout_2 = QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.Apollo_Sprite = QLabel(self.groupBox_2)
         self.Apollo_Sprite.setObjectName(u"Apollo_Sprite")
         self.Apollo_Sprite.setPixmap(QPixmap(u"Assets/Apollo_Idle.gif"))
