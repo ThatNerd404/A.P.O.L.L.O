@@ -1,4 +1,4 @@
-from PySide6.QtGui import QMovie, QKeyEvent, QFont, QFontDatabase
+from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut
 from PySide6.QtWidgets import QMainWindow, QInputDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PySide6.QtCore import QUrl, QByteArray, Qt
@@ -10,6 +10,7 @@ import logging
 import time
 import os
 
+
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
         """Sets up the window and connects buttons"""
@@ -17,29 +18,32 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("A.P.O.L.L.O")
         self.setWindowFlags(Qt.FramelessWindowHint)
-        
-        # Set cool pixel font
-        font = QFontDatabase.addApplicationFont(os.path.join("Assets", "PixelPurl.ttf"))
+
+        # Setup cool pixel font
+        font = QFontDatabase.addApplicationFont(
+            os.path.join("Assets", "PixelPurl.ttf"))
         pixel_family = QFontDatabase.applicationFontFamilies(font)
         self.Model_Chooser.setFont(pixel_family[0])
         self.Input_Field.setFont(pixel_family[0])
         self.Response_Display.setFont(pixel_family[0])
-        
+
         # Setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
-        handler = RotatingFileHandler(os.path.join('Logs', 'log.log'), maxBytes=100000, backupCount=5)
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler = RotatingFileHandler(os.path.join(
+            'Logs', 'log.log'), maxBytes=100000, backupCount=5)
+        formatter = logging.Formatter(
+            '%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
-        
+
         # Initialize network manager
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
 
         # Initialize movie for idle animation and other animations
         self.Apollo_Sprite_idle_animation = QMovie(os.path.join("Assets", "Apollo_Idle.gif")
-            )
+                                                   )
         self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
             "Assets", "Apollo_Loading.gif"))
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
@@ -54,9 +58,16 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
-        
         self.Input_Field.installEventFilter(self)
-        
+
+        # Setup keyboard shortcuts
+        Save_shortcut = QKeySequence(Qt.CTRL | Qt.Key_S)
+        self.Save_SC = QShortcut(Save_shortcut, self)
+        self.Save_SC.activated.connect(self.save_conversation)
+        Refresh_shortcut = QKeySequence(Qt.CTRL | Qt.Key_R)
+        self.Refresh_SC = QShortcut(Refresh_shortcut, self)
+        self.Refresh_SC.activated.connect(self.refresh_conversation)
+
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
         self.query = ""
@@ -65,85 +76,90 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           """
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
-        self.convo_history_directory = Path("C:\\Users\\MyCom\\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
+        self.convo_history_directory = Path(
+            "C:\\Users\\MyCom\\Desktop\\.vscode\\Github_Projects\\A.P.O.L.L.O\\Conversations")
         self.current_response = ""
         self.logger.debug('Initialization finished')
-        
+
     def eventFilter(self, obj, event):
         """Detect Enter key in Input Field"""
         if event.type() == QKeyEvent.KeyPress:
-            if event.key() == Qt.Key_Return and not event.modifiers() & Qt.ShiftModifier:
-                if not self.Input_Field.toPlainText().strip(): #? stops from sending empty requests
+            if event.key() == Qt.Key_Return and not event.modifiers() & Qt.ShiftModifier and self.Send_Button.isEnabled:
+                if not self.Input_Field.toPlainText().strip():  # ? stops from sending empty requests
                     return True
-                else: 
+                else:
                     self.ask_ollama()
                     return True  # Prevent default behavior (optional)
         return super().eventFilter(obj, event)
-    
+
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
-        
-        self.logger.debug('ask_ollama called')
-        
-        # Get user's prompt and disable buttons
-        self.query = self.Input_Field.toPlainText()
-        self.Input_Field.clear()
-        self.Send_Button.setEnabled(False)
-        self.Refresh_Button.setEnabled(False)
-        self.Save_Button.setEnabled(False)
-        self.Model_Chooser.setEnabled(False)
-        
-        # Add the user's prompt
-        self.convo_history.append({"role": "user", "content": self.query})
+        if self.Send_Button.isEnabled:
+            self.logger.debug('ask_ollama called')
 
-        # Create request URL and set header
-        url = QUrl("http://127.0.0.1:11434/api/chat")
-        request = QNetworkRequest(url)
-        request.setHeader(QNetworkRequest.ContentTypeHeader,
-                          "application/json")
-        
-        # Create JSON data to send to server
-        self.json_data = {
-            "model": self.model,
-            "messages": self.convo_history, #TODO: add a  {"role": "system", "content": relevant documents using rag}
-            "options": {"temperature": 0.7}, # ? temperature makes the answer a bit more random
-            "keep_alive": "5m", #? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
-            "stream": True,
-        }
-        
-        self.logger.info(f"Query sent: {self.query}\n Full json request: {self.json_data}")
-        
-        # Convert JSON data to bytes and set as body of the request
-        byte_data = QByteArray(json.dumps(self.json_data).encode("utf-8"))
-        self.reply = self.network_manager.post(request, byte_data)
+            # Get user's prompt and disable buttons
+            self.query = self.Input_Field.toPlainText()
+            self.Input_Field.clear()
+            self.Send_Button.setEnabled(False)
+            self.Refresh_Button.setEnabled(False)
+            self.Save_Button.setEnabled(False)
+            self.Model_Chooser.setEnabled(False)
 
-        # Connect readyRead signal to handleResponse method
-        self.reply.readyRead.connect(self.handle_response)
+            # Add the user's prompt
+            self.convo_history.append({"role": "user", "content": self.query})
 
-        # Start loading animation
-        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
-        self.Apollo_Sprite_loading_animation.start()
+            # Create request URL and set header
+            url = QUrl("http://127.0.0.1:11434/api/chat")
+            request = QNetworkRequest(url)
+            request.setHeader(QNetworkRequest.ContentTypeHeader,
+                              "application/json")
 
-        # Display response in UI element
-        self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
-        
-        # grab start time
-        self.start_time = time.perf_counter()
-        
+            # Create JSON data to send to server
+            self.json_data = {
+                "model": self.model,
+                # TODO: add a  {"role": "system", "content": relevant documents using rag}
+                "messages": self.convo_history,
+                # ? temperature makes the answer a bit more random
+                "options": {"temperature": 0.7},
+                "keep_alive": "5m",  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
+                "stream": True,
+            }
+
+            self.logger.info(
+                f"Query sent: {self.query}\n Full json request: {self.json_data}")
+
+            # Convert JSON data to bytes and set as body of the request
+            byte_data = QByteArray(json.dumps(self.json_data).encode("utf-8"))
+            self.reply = self.network_manager.post(request, byte_data)
+
+            # Connect readyRead signal to handleResponse method
+            self.reply.readyRead.connect(self.handle_response)
+
+            # Start loading animation
+            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
+            self.Apollo_Sprite_loading_animation.start()
+
+            # Display response in UI element
+            self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
+
+            # grab start time
+            self.start_time = time.perf_counter()
+        else:
+            pass
+
     def handle_response(self):
         """
         Handles the response from ollama and puts it in the chat display.
-        
+
         Note: The code assumes that the raw data received is a JSON object with a "message" key, and an optional "done" key indicating whether the conversation is complete.
         """
-        
+
         #!error_message = self.reply.errorString()
         #!status_code = self.reply.attribute(
         #!    QNetworkRequest.HttpStatusCodeAttribute)
         raw_data = self.reply.readAll().data().decode()
         self.partial_json_buffer += raw_data
-        
-        
+
         while "\n" in self.partial_json_buffer:
             line, self.partial_json_buffer = self.partial_json_buffer.split(
                 "\n", 1)
@@ -160,7 +176,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     chunk = json_obj["message"]["content"]
                     self.current_response += chunk  # Append the chunk
                     self.Response_Display.ensureCursorVisible()
-                    self.Response_Display.insertPlainText(chunk)  # Stream it to UI
+                    self.Response_Display.insertPlainText(
+                        chunk)  # Stream it to UI
                     self.Response_Display.ensureCursorVisible()
 
                 # ? If "done" key is present in the JSON object and it's set to True, finalize the response
@@ -168,45 +185,52 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     # grab end time and log it
                     self.end_time = time.perf_counter()
                     elasped_time = self.end_time - self.start_time
-                    self.logger.info(f"Response finished generating in {elasped_time:.4f} seconds")
-                    
-                    #? decode to ignore emojis
-                    self.logger.info(f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
-                    
+                    self.logger.info(
+                        f"Response finished generating in {elasped_time:.4f} seconds")
+
+                    # ? decode to ignore emojis
+                    self.logger.info(
+                        f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
+
                     # re-enable buttons
                     self.Send_Button.setEnabled(True)
                     self.Refresh_Button.setEnabled(True)
                     self.Save_Button.setEnabled(True)
                     self.Model_Chooser.setEnabled(True)
-                    
+
                     # add APOLLO response to convo history
-                    self.convo_history.append({"role": "assistant", "content": self.current_response})
-                
+                    self.convo_history.append(
+                        {"role": "assistant", "content": self.current_response})
+
                     self.Apollo_Sprite.setMovie(
                         self.Apollo_Sprite_idle_animation)
                     self.Apollo_Sprite_idle_animation.start()
                     self.current_response = ""
                     self.reply.abort()
-                
+
             except json.JSONDecodeError as e:
-                self.logger.error("❌ JSON Decode Error:", e, "Raw Line:", repr(line))
+                self.logger.error("❌ JSON Decode Error:", e,
+                                  "Raw Line:", repr(line))
 
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.logger.debug("refresh_conversation was called")
-        
-        self.Input_Field.clear()
-        self.Response_Display.clear()
-        self.convo_history = [
-            {"role": "system", "content": self.system_settings}]
-        self.Response_Display.append("APOLLO: Conversation history refreshed.")
+        if self.Refresh_Button.isEnabled:
+            self.Input_Field.clear()
+            self.Response_Display.clear()
+            self.convo_history = [
+                {"role": "system", "content": self.system_settings}]
+            self.Response_Display.append(
+                "APOLLO: Conversation history refreshed.")
+        else:
+            pass
 
     def change_model(self):
         '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
         self.logger.debug("change_model was called")
         # Get the current text of the Model Chooser combo box
         chosen_model = self.Model_Chooser.currentText()
-        
+
         # Update the model, prompt, and sprite based on the selected choice
         if chosen_model == "General":
             self.model = "phi4-mini"
@@ -214,10 +238,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           You refer to the user as Sir Cotterman.
                           """
             self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
-            "Assets", "Apollo_Idle.gif"))
+                "Assets", "Apollo_Idle.gif"))
             self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
-            "Assets", "Apollo_Loading.gif"))
-            
+                "Assets", "Apollo_Loading.gif"))
+
         elif chosen_model == "Coding":
             self.model = "qwen2.5-coder:3b"
             self.system_settings = """You are APOLLO.\n
@@ -226,9 +250,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           You refer to the user as Mr Cotterman.\n
                           """
             self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
-            "Assets", "Apollo_Idle_Coding.gif"))
+                "Assets", "Apollo_Idle_Coding.gif"))
             self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
-            "Assets", "Apollo_Loading_Coding.gif"))
+                "Assets", "Apollo_Loading_Coding.gif"))
 
         elif chosen_model == "Tutoring":
             self.model = "phi4-mini"
@@ -238,42 +262,51 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           then give me examples, then give sources to help allow the user to research for themselves,\n
                           then ask me questions about it to help me build understanding.\n
                           """
-                          
+
             self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
-            "Assets", "Apollo_Idle_Tutoring.gif"))
+                "Assets", "Apollo_Idle_Tutoring.gif"))
             self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
-            "Assets", "Apollo_Loading_Tutor.gif"))
-        
-        self.logger.info(f"Model changed to {self.model}\nSystem settings changed to {self.system_settings}")
-        #? reset the system settings
-        self.convo_history[0] =  {"role": "system", "content": self.system_settings}
+                "Assets", "Apollo_Loading_Tutor.gif"))
+
+        self.logger.info(
+            f"Model changed to {self.model}\nSystem settings changed to {self.system_settings}")
+        # ? reset the system settings
+        self.convo_history[0] = {"role": "system",
+                                 "content": self.system_settings}
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
-        
+
     def save_conversation(self):
         '''Saves the current conversation to a md file'''
-        #? saves in a tuple of the text + a true boolean
+        # ? saves in a tuple of the text + a true boolean
         self.logger.debug("save_conversation was called")
-        savename, done = QInputDialog.getText(self, "File Name", "Enter File Name:")
+        if self.Save_Button.isEnabled:
+            savename, done = QInputDialog.getText(
+                self, "File Name", "Enter File Name:")
 
-        try:
-            if not savename:
-                pass
-            else:
-                convo_file = self.convo_history_directory / f"{savename}.md"
-                with open(convo_file, "w") as cf:
-                    cf.write(self.Response_Display.toPlainText())
-                self.Response_Display.append(f"APOLLO: Conversation Saved to file {savename}.md")
-                self.logger.info(f"Conversation saved to file: {savename}")
-            
-        except Exception as e:
-            self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
-            Try again and fit the requirements.""")
-            self.logger.error(f"Filename {savename} not working")
-            self.save_conversation()
-            
+            try:
+                if not savename:
+                    pass
+                else:
+                    convo_file = self.convo_history_directory / \
+                        f"{savename}.md"
+                    with open(convo_file, "w") as cf:
+                        cf.write(self.Response_Display.toPlainText())
+                    self.Response_Display.append(
+                        f"APOLLO: Conversation Saved to file {savename}.md")
+                    self.logger.info(f"Conversation saved to file: {savename}")
+
+            except Exception as e:
+                self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
+                Try again and fit the requirements.""")
+                self.logger.error(f"Filename {savename} not working")
+                self.save_conversation()
+        else:
+            pass
+
     def cancel_request(self):
         """Stops Apollo's response mid-stream by aborting the network request."""
+
         if hasattr(self, "reply") and self.reply.isRunning() and self.reply:
             self.reply.abort()  # Cancel the ongoing network request
             self.logger.info("Response cancelled")
@@ -282,19 +315,21 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Refresh_Button.setEnabled(True)
             self.Save_Button.setEnabled(True)
             self.Model_Chooser.setEnabled(True)
-            
+
             # Reset Apollo's animation to idle
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
             self.Apollo_Sprite_idle_animation.start()
-            
-            # Display cancellation message 
+
+            # Display cancellation message
             self.Response_Display.append("\nAPOLLO: Response cancelled.")
-            
-            # reset current response 
+
+            # reset current response
             self.current_response = ""
-            
+
             # remove user query from history
             self.convo_history.pop()
         else:
-            self.Response_Display.append("\nAPOLLO: No response being generated currently.")
-            self.logger.debug("cancel_request has been run when no response is being generated.")
+            self.Response_Display.append(
+                "\nAPOLLO: No response being generated currently.")
+            self.logger.debug(
+                "cancel_request has been run when no response is being generated.")
