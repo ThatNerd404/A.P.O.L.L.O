@@ -396,10 +396,10 @@ background-repeat: no-repeat;}</string>
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>860</x>
-      <y>170</y>
+      <x>870</x>
+      <y>180</y>
       <width>300</width>
-      <height>531</height>
+      <height>521</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -413,6 +413,21 @@ border-radius: 10px;}</string>
      <string/>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QLabel" name="Apollo_Sprite">
        <property name="text">
@@ -427,49 +442,119 @@ border-radius: 10px;}</string>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="Model_Chooser">
+      <widget class="QGroupBox" name="groupBox_3">
        <property name="minimumSize">
         <size>
          <width>0</width>
          <height>60</height>
         </size>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>70</height>
+        </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true">QComboBox {
+       <property name="title">
+        <string/>
+       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QComboBox" name="Model_Chooser">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>60</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QComboBox {
 background-color: #243169;
 border-color:#98c5de;
 border-style: solid;
 border-width: 5px;
 font-size:16px;
 }</string>
-       </property>
-       <property name="currentText">
-        <string>General</string>
-       </property>
-       <property name="currentIndex">
-        <number>0</number>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <item>
-        <property name="text">
-         <string>General</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Tutoring</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>Coding</string>
-        </property>
-       </item>
+          </property>
+          <property name="currentText">
+           <string>General</string>
+          </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
+          </property>
+          <item>
+           <property name="text">
+            <string>General</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Tutoring</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Coding</string>
+           </property>
+          </item>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="Add_Model_Button">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Add_Model_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Add_Model_Button_Down.png);
+background-repeat: no-repeat;}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
      </item>
     </layout>
@@ -596,7 +681,7 @@ height:44px;
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label">
+   <widget class="QLabel" name="Initials">
     <property name="geometry">
      <rect>
       <x>800</x>
@@ -612,12 +697,39 @@ height:44px;
      <pixmap>Assets/APOLLO_Initials.png</pixmap>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>38</width>
+      <height>38</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="icon">
+     <iconset>
+      <normaloff>Assets/Cog.png</normaloff>Assets/Cog.png</iconset>
+    </property>
+    <property name="iconSize">
+     <size>
+      <width>76</width>
+      <height>76</height>
+     </size>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+   </widget>
    <zorder>groupBox_2</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>Title_Label</zorder>
    <zorder>Close_Window_Button</zorder>
    <zorder>Minimize_Window_Button</zorder>
-   <zorder>label</zorder>
+   <zorder>Initials</zorder>
+   <zorder>pushButton</zorder>
   </widget>
  </widget>
  <resources/>
