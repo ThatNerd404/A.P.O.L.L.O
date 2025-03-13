@@ -279,7 +279,7 @@ class Ui_MainWindow(object):
                                          "border-color:#98c5de;\n"
                                          "border-style: solid;\n"
                                          "border-width: 5px;\n"
-                                         "font-size:16px;\n"
+                                         "font-size:32px;\n"
                                          "}")
         self.Model_Chooser.setFrame(True)
 
@@ -410,14 +410,14 @@ class Ui_MainWindow(object):
         self.Apollo_Sprite.setText("")
         self.groupBox_3.setTitle("")
         self.Model_Chooser.setItemText(
-            0, QCoreApplication.translate("MainWindow", u"General", None))
+            0, QCoreApplication.translate("MainWindow", u" General", None))
         self.Model_Chooser.setItemText(
-            1, QCoreApplication.translate("MainWindow", u"Tutoring", None))
+            1, QCoreApplication.translate("MainWindow", u" Tutoring", None))
         self.Model_Chooser.setItemText(
-            2, QCoreApplication.translate("MainWindow", u"Coding", None))
+            2, QCoreApplication.translate("MainWindow", u" Coding", None))
 
         self.Model_Chooser.setCurrentText(
-            QCoreApplication.translate("MainWindow", u"General", None))
+            QCoreApplication.translate("MainWindow", u" General", None))
         self.Add_Model_Button.setText("")
         self.Title_Label.setText("")
         self.Close_Window_Button.setText("")

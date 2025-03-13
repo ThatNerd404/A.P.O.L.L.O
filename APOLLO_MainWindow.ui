@@ -534,11 +534,11 @@ background-color: #243169;
 border-color:#98c5de;
 border-style: solid;
 border-width: 5px;
-font-size:16px;
+font-size:32px;
 }</string>
           </property>
           <property name="currentText">
-           <string>General</string>
+           <string> General</string>
           </property>
           <property name="currentIndex">
            <number>0</number>
@@ -548,17 +548,17 @@ font-size:16px;
           </property>
           <item>
            <property name="text">
-            <string>General</string>
+            <string> General</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Tutoring</string>
+            <string> Tutoring</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>Coding</string>
+            <string> Coding</string>
            </property>
           </item>
          </widget>

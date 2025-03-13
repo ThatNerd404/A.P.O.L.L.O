@@ -65,10 +65,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         Save_shortcut = QKeySequence(Qt.CTRL | Qt.Key_S)
         self.Save_SC = QShortcut(Save_shortcut, self)
         self.Save_SC.activated.connect(self.save_conversation)
+        Load_shortcut = QKeySequence(Qt.CTRL | Qt.Key_L)
+        self.Load_SC = QShortcut(Load_shortcut, self)
+        self.Load_SC.activated.connect(self.load_conversation)
         Refresh_shortcut = QKeySequence(Qt.CTRL | Qt.Key_R)
         self.Refresh_SC = QShortcut(Refresh_shortcut, self)
         self.Refresh_SC.activated.connect(self.refresh_conversation)
-
+        
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
         self.query = ""
@@ -118,7 +121,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             # Create JSON data to send to server
             self.json_data = {
                 "model": self.model,
-                # TODO: add a  {"role": "system", "content": relevant documents using rag}
                 "messages": self.convo_history,
                 # ? temperature makes the answer a bit more random
                 "options": {"temperature": 0.7},
@@ -264,7 +266,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         chosen_model = self.Model_Chooser.currentText()
 
         # Update the model, prompt, and sprite based on the selected choice
-        if chosen_model == "General":
+        if chosen_model.strip() == "General":
             self.model = "phi4-mini"
             self.system_settings = """You are a helpful AI assisant named APOLLO.\n
                           You refer to the user as Sir Cotterman.
@@ -274,7 +276,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
                 "Assets", "Apollo_Loading.gif"))
 
-        elif chosen_model == "Coding":
+        elif chosen_model.strip() == "Coding":
             self.model = "qwen2.5-coder:3b"
             self.system_settings = """You are APOLLO.\n
                           Talk in a gritty punk persona, using slang and street speak like you would hear in the game Cyberpunk 2077.\n
@@ -286,7 +288,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
                 "Assets", "Apollo_Loading_Coding.gif"))
 
-        elif chosen_model == "Tutoring":
+        elif chosen_model.strip() == "Tutoring":
             self.model = "phi4-mini"
             self.system_settings = """You are a helpful AI assisant named APOLLO.\n
                           You refer to the user as Sir Cotterman.\n
@@ -318,6 +320,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 self, "File Name", "Enter File Name:")
 
             try:
+                # if the person doesn't save to a file don't do anything
                 if not savename:
                     pass
                 else:
@@ -344,32 +347,40 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def load_conversation(self):
         """Loads past conversation history into the json requests and loads past display history"""
-        self.logger.debug("load_conversation was called")
-        Filename, ok = QFileDialog.getOpenFileName(
-            self,
-            "Select Conversation",
-            os.path.join("Conversations"),
-            "Conversations (*.md)"
-        )
-        self.logger.info(f"File opened: {Filename}")
-        self.refresh_conversation()
-        self.Response_Display.append(f"APOLLO: Conversation file:{Filename} loaded.")
-        
-        # Completely empty convo history file because the other file will already have the basic system prompt
-        self.convo_history = []
-        try:
-            with open(Filename, "r") as dh:
-                self.display_history = dh.read()
-            self.Response_Display.append(self.display_history)
-            name, ext = os.path.splitext(Filename)
+        if self.Load_Button.isEnabled:
             
-            with open(f"{name}.txt", "r") as sh:
-                self.convo_history = json.load(sh)
-            self.logger.info(f"new convo history loaded: {self.convo_history}")
+            self.logger.debug("load_conversation was called")
+            Filename, ok = QFileDialog.getOpenFileName(
+                self,
+                "Select Conversation",
+                os.path.join("Conversations"),
+                "Conversations (*.md)"
+            )
             
-        
-        except Exception as e:
-                self.Response_Display.append("""APOLLO: Filename not opening.""")
-                self.logger.error(f"Filename {Filename} not opening correctly.\n Exception: {e}")
+            # if the person doesn't select a file don't do anything
+            if not Filename:
+                pass
+            
+            else:    
+                self.logger.info(f"File opened: {Filename}")
+                self.refresh_conversation()
+                self.Response_Display.append(f"APOLLO: Conversation file:{Filename} loaded.")
                 
-        
+                # Completely empty convo history file because the other file will already have the basic system prompt
+                self.convo_history = []
+                try:
+                    with open(Filename, "r") as dh:
+                        self.display_history = dh.read()
+                    self.Response_Display.append(self.display_history)
+                    name, ext = os.path.splitext(Filename)
+                    
+                    with open(f"{name}.txt", "r") as sh:
+                        self.convo_history = json.load(sh)
+                    self.logger.info(f"new convo history loaded: {self.convo_history}")
+                    
+                
+                except Exception as e:
+                        self.Response_Display.append("""APOLLO: Filename not opening.""")
+                        self.logger.error(f"Filename {Filename} not opening correctly.\n Exception: {e}")
+        else:
+            pass
