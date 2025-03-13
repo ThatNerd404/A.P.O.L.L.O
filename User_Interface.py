@@ -1,5 +1,5 @@
 from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut
-from PySide6.QtWidgets import QMainWindow, QInputDialog
+from PySide6.QtWidgets import QMainWindow, QInputDialog, QFileDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PySide6.QtCore import QUrl, QByteArray, Qt
 from logging.handlers import RotatingFileHandler
@@ -53,6 +53,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Save_Button.clicked.connect(self.save_conversation)
+        self.Load_Button.clicked.connect(self.load_conversation)
         self.Cancel_Button.clicked.connect(self.cancel_request)
         self.Close_Window_Button.clicked.connect(self.close)
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
@@ -104,7 +105,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Refresh_Button.setEnabled(False)
             self.Save_Button.setEnabled(False)
             self.Model_Chooser.setEnabled(False)
-
+            self.Load_Button.setEnabled(False)
             # Add the user's prompt
             self.convo_history.append({"role": "user", "content": self.query})
 
@@ -197,7 +198,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     self.Refresh_Button.setEnabled(True)
                     self.Save_Button.setEnabled(True)
                     self.Model_Chooser.setEnabled(True)
-
+                    self.Load_Button.setEnabled(True)
                     # add APOLLO response to convo history
                     self.convo_history.append(
                         {"role": "assistant", "content": self.current_response})
@@ -211,7 +212,40 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             except json.JSONDecodeError as e:
                 self.logger.error("❌ JSON Decode Error:", e,
                                   "Raw Line:", repr(line))
+    
+    def cancel_request(self):
+        """Stops Apollo's response mid-stream by aborting the network request."""
 
+        if hasattr(self, "reply") and self.reply.isRunning() and self.reply:
+            self.reply.abort()  # Cancel the ongoing network request
+            self.logger.info("Response cancelled")
+            # Reset UI elements
+            self.Send_Button.setEnabled(True)
+            self.Refresh_Button.setEnabled(True)
+            self.Save_Button.setEnabled(True)
+            self.Load_Button.setEnabled(True)
+            self.Model_Chooser.setEnabled(True)
+
+            # Reset Apollo's animation to idle
+            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+            self.Apollo_Sprite_idle_animation.start()
+
+            # Display cancellation message
+            self.Response_Display.append("\nAPOLLO: Response cancelled.")
+
+            # reset current response
+            self.current_response = ""
+
+            # remove user query from history
+            self.convo_history.pop()
+        else:
+            self.Response_Display.append(
+                "\nAPOLLO: No response being generated currently.")
+            self.logger.debug(
+                "cancel_request has been run when no response is being generated.")
+
+    
+    
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.logger.debug("refresh_conversation was called")
@@ -220,8 +254,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Response_Display.clear()
             self.convo_history = [
                 {"role": "system", "content": self.system_settings}]
-            self.Response_Display.append(
-                "APOLLO: Conversation history refreshed.")
         else:
             pass
 
@@ -277,7 +309,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite_idle_animation.start()
 
     def save_conversation(self):
-        '''Saves the current conversation to a md file'''
+        '''Saves the current conversation display to a md file
+           and the conversation history to a txt file'''
         # ? saves in a tuple of the text + a true boolean
         self.logger.debug("save_conversation was called")
         if self.Save_Button.isEnabled:
@@ -288,10 +321,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 if not savename:
                     pass
                 else:
-                    convo_file = self.convo_history_directory / \
+                    display_file = self.convo_history_directory / \
                         f"{savename}.md"
+                        
+                    convo_file = self.convo_history_directory / \
+                        f"{savename}.txt"
+                    with open(display_file, "w") as df:
+                        df.write(self.Response_Display.toPlainText())
                     with open(convo_file, "w") as cf:
-                        cf.write(self.Response_Display.toPlainText())
+                        json.dump(self.convo_history,cf)
                     self.Response_Display.append(
                         f"APOLLO: Conversation Saved to file {savename}.md")
                     self.logger.info(f"Conversation saved to file: {savename}")
@@ -299,37 +337,39 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
                 Try again and fit the requirements.""")
-                self.logger.error(f"Filename {savename} not working")
+                self.logger.error(f"Filename {savename} not working.\n Exception: {e}")
                 self.save_conversation()
         else:
             pass
 
-    def cancel_request(self):
-        """Stops Apollo's response mid-stream by aborting the network request."""
-
-        if hasattr(self, "reply") and self.reply.isRunning() and self.reply:
-            self.reply.abort()  # Cancel the ongoing network request
-            self.logger.info("Response cancelled")
-            # Reset UI elements
-            self.Send_Button.setEnabled(True)
-            self.Refresh_Button.setEnabled(True)
-            self.Save_Button.setEnabled(True)
-            self.Model_Chooser.setEnabled(True)
-
-            # Reset Apollo's animation to idle
-            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
-            self.Apollo_Sprite_idle_animation.start()
-
-            # Display cancellation message
-            self.Response_Display.append("\nAPOLLO: Response cancelled.")
-
-            # reset current response
-            self.current_response = ""
-
-            # remove user query from history
-            self.convo_history.pop()
-        else:
-            self.Response_Display.append(
-                "\nAPOLLO: No response being generated currently.")
-            self.logger.debug(
-                "cancel_request has been run when no response is being generated.")
+    def load_conversation(self):
+        """Loads past conversation history into the json requests and loads past display history"""
+        self.logger.debug("load_conversation was called")
+        Filename, ok = QFileDialog.getOpenFileName(
+            self,
+            "Select Conversation",
+            os.path.join("Conversations"),
+            "Conversations (*.md)"
+        )
+        self.logger.info(f"File opened: {Filename}")
+        self.refresh_conversation()
+        self.Response_Display.append(f"APOLLO: Conversation file:{Filename} loaded.")
+        
+        # Completely empty convo history file because the other file will already have the basic system prompt
+        self.convo_history = []
+        try:
+            with open(Filename, "r") as dh:
+                self.display_history = dh.read()
+            self.Response_Display.append(self.display_history)
+            name, ext = os.path.splitext(Filename)
+            
+            with open(f"{name}.txt", "r") as sh:
+                self.convo_history = json.load(sh)
+            self.logger.info(f"new convo history loaded: {self.convo_history}")
+            
+        
+        except Exception as e:
+                self.Response_Display.append("""APOLLO: Filename not opening.""")
+                self.logger.error(f"Filename {Filename} not opening correctly.\n Exception: {e}")
+                
+        

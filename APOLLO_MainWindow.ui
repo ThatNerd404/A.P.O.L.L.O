@@ -118,13 +118,13 @@ p, li { white-space: pre-wrap; }
       <widget class="QGroupBox" name="groupBox">
        <property name="minimumSize">
         <size>
-         <width>800</width>
+         <width>840</width>
          <height>68</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>800</width>
+         <width>1000</width>
          <height>100</height>
         </size>
        </property>
@@ -164,7 +164,7 @@ border-radius: 10px;}</string>
          <widget class="QPlainTextEdit" name="Input_Field">
           <property name="minimumSize">
            <size>
-            <width>500</width>
+            <width>480</width>
             <height>0</height>
            </size>
           </property>
@@ -376,6 +376,49 @@ background-repeat: no-repeat;}</string>
           <property name="icon">
            <iconset>
             <normaloff>Assets/Save_Button.png</normaloff>Assets/Save_Button.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="flat">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="Load_Button">
+          <property name="minimumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>64</width>
+            <height>64</height>
+           </size>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);
+background-repeat: no-repeat;}</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
           <property name="iconSize">
            <size>
