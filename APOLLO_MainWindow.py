@@ -114,6 +114,7 @@ class Ui_MainWindow(object):
         self.Send_Button.setObjectName(u"Send_Button")
         self.Send_Button.setMinimumSize(QSize(64, 64))
         self.Send_Button.setMaximumSize(QSize(64, 64))
+        self.Send_Button.setToolTipDuration(-1)
         self.Send_Button.setAutoFillBackground(False)
         self.Send_Button.setStyleSheet(u"QPushButton {\n"
                                        "qproperty-icon: url(\" \");\n"
@@ -219,6 +220,7 @@ class Ui_MainWindow(object):
         self.Load_Button.setObjectName(u"Load_Button")
         self.Load_Button.setMinimumSize(QSize(64, 64))
         self.Load_Button.setMaximumSize(QSize(64, 64))
+        self.Load_Button.setAcceptDrops(False)
         self.Load_Button.setStyleSheet(u"QPushButton {\n"
                                        "qproperty-icon: url(\" \");\n"
                                        "qproperty-iconSize: 64px 64px;\n"
@@ -401,10 +403,30 @@ class Ui_MainWindow(object):
         self.groupBox.setTitle("")
         self.Input_Field.setPlaceholderText(QCoreApplication.translate(
             "MainWindow", u"Ask your question here!", None))
+# if QT_CONFIG(tooltip)
+        self.Send_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Submit", None))
+# endif // QT_CONFIG(tooltip)
         self.Send_Button.setText("")
+# if QT_CONFIG(tooltip)
+        self.Cancel_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Cancel", None))
+# endif // QT_CONFIG(tooltip)
         self.Cancel_Button.setText("")
+# if QT_CONFIG(tooltip)
+        self.Refresh_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Refresh", None))
+# endif // QT_CONFIG(tooltip)
         self.Refresh_Button.setText("")
+# if QT_CONFIG(tooltip)
+        self.Save_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Save", None))
+# endif // QT_CONFIG(tooltip)
         self.Save_Button.setText("")
+# if QT_CONFIG(tooltip)
+        self.Load_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Load", None))
+# endif // QT_CONFIG(tooltip)
         self.Load_Button.setText("")
         self.groupBox_2.setTitle("")
         self.Apollo_Sprite.setText("")

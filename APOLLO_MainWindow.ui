@@ -211,6 +211,12 @@ font-size: 16px;
             <height>64</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Submit</string>
+          </property>
+          <property name="toolTipDuration">
+           <number>-1</number>
+          </property>
           <property name="autoFillBackground">
            <bool>false</bool>
           </property>
@@ -263,6 +269,9 @@ background-repeat: no-repeat;}
             <height>64</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Cancel</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
 qproperty-icon: url(&quot; &quot;);
@@ -307,6 +316,9 @@ background-repeat: no-repeat;}
             <width>64</width>
             <height>64</height>
            </size>
+          </property>
+          <property name="toolTip">
+           <string>Refresh</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
@@ -355,6 +367,9 @@ background-repeat: no-repeat;}</string>
             <height>64</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Save</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
 qproperty-icon: url(&quot; &quot;);
@@ -401,6 +416,12 @@ background-repeat: no-repeat;}</string>
             <width>64</width>
             <height>64</height>
            </size>
+          </property>
+          <property name="acceptDrops">
+           <bool>false</bool>
+          </property>
+          <property name="toolTip">
+           <string>Load</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
