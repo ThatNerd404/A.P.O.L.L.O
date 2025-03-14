@@ -1,4 +1,4 @@
-from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut
+from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut, QTextCursor
 from PySide6.QtWidgets import QMainWindow, QInputDialog, QFileDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
 from PySide6.QtCore import QUrl, QByteArray, Qt
@@ -60,7 +60,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
         self.Input_Field.installEventFilter(self)
-
+        
+        
         # Setup keyboard shortcuts
         Save_shortcut = QKeySequence(Qt.CTRL | Qt.Key_S)
         self.Save_SC = QShortcut(Save_shortcut, self)
@@ -109,6 +110,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Save_Button.setEnabled(False)
             self.Model_Chooser.setEnabled(False)
             self.Load_Button.setEnabled(False)
+            self.Response_Display.setEnabled(False)
             # Add the user's prompt
             self.convo_history.append({"role": "user", "content": self.query})
 
@@ -144,7 +146,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             # Display response in UI element
             self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
-
+            self.cursor = self.Response_Display.textCursor()
+            self.cursor.movePosition(QTextCursor.End)
+            self.Response_Display.setTextCursor(self.cursor)
+            self.Response_Display.ensureCursorVisible()
+            
             # grab start time
             self.start_time = time.perf_counter()
         else:
@@ -178,7 +184,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 if "message" in json_obj and "content" in json_obj["message"]:
                     chunk = json_obj["message"]["content"]
                     self.current_response += chunk  # Append the chunk
+                    
+                    # scroll with the text and move text cursor all the way to the end
                     self.Response_Display.ensureCursorVisible()
+                    self.cursor = self.Response_Display.textCursor()
+                    self.cursor.movePosition(QTextCursor.End)
+                    self.Response_Display.setTextCursor(self.cursor)
                     self.Response_Display.insertPlainText(
                         chunk)  # Stream it to UI
                     self.Response_Display.ensureCursorVisible()
@@ -201,6 +212,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     self.Save_Button.setEnabled(True)
                     self.Model_Chooser.setEnabled(True)
                     self.Load_Button.setEnabled(True)
+                    self.Response_Display.setEnabled(True)
                     # add APOLLO response to convo history
                     self.convo_history.append(
                         {"role": "assistant", "content": self.current_response})
