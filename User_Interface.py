@@ -60,8 +60,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Model_Chooser.currentIndexChanged.connect(
             self.change_model)
         self.Input_Field.installEventFilter(self)
-        
-        
+
         # Setup keyboard shortcuts
         Save_shortcut = QKeySequence(Qt.CTRL | Qt.Key_S)
         self.Save_SC = QShortcut(Save_shortcut, self)
@@ -72,7 +71,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         Refresh_shortcut = QKeySequence(Qt.CTRL | Qt.Key_R)
         self.Refresh_SC = QShortcut(Refresh_shortcut, self)
         self.Refresh_SC.activated.connect(self.refresh_conversation)
-        
+
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
         self.query = ""
@@ -144,13 +143,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
             self.Apollo_Sprite_loading_animation.start()
 
-            # Display response in UI element
+            # Display response in UI element and ensure it scrolls
             self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
             self.cursor = self.Response_Display.textCursor()
             self.cursor.movePosition(QTextCursor.End)
             self.Response_Display.setTextCursor(self.cursor)
             self.Response_Display.ensureCursorVisible()
-            
+
             # grab start time
             self.start_time = time.perf_counter()
         else:
@@ -184,12 +183,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 if "message" in json_obj and "content" in json_obj["message"]:
                     chunk = json_obj["message"]["content"]
                     self.current_response += chunk  # Append the chunk
-                    
-                    # scroll with the text and move text cursor all the way to the end
+
+                    # ensure screen scrolls with the text
                     self.Response_Display.ensureCursorVisible()
-                    self.cursor = self.Response_Display.textCursor()
-                    self.cursor.movePosition(QTextCursor.End)
-                    self.Response_Display.setTextCursor(self.cursor)
                     self.Response_Display.insertPlainText(
                         chunk)  # Stream it to UI
                     self.Response_Display.ensureCursorVisible()
@@ -226,7 +222,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             except json.JSONDecodeError as e:
                 self.logger.error("❌ JSON Decode Error:", e,
                                   "Raw Line:", repr(line))
-    
+
     def cancel_request(self):
         """Stops Apollo's response mid-stream by aborting the network request."""
 
@@ -258,8 +254,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.logger.debug(
                 "cancel_request has been run when no response is being generated.")
 
-    
-    
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.logger.debug("refresh_conversation was called")
@@ -338,13 +332,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 else:
                     display_file = self.convo_history_directory / \
                         f"{savename}.md"
-                        
+
                     convo_file = self.convo_history_directory / \
                         f"{savename}.txt"
                     with open(display_file, "w") as df:
                         df.write(self.Response_Display.toPlainText())
                     with open(convo_file, "w") as cf:
-                        json.dump(self.convo_history,cf)
+                        json.dump(self.convo_history, cf)
                     self.Response_Display.append(
                         f"APOLLO: Conversation Saved to file {savename}.md")
                     self.logger.info(f"Conversation saved to file: {savename}")
@@ -352,7 +346,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             except Exception as e:
                 self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
                 Try again and fit the requirements.""")
-                self.logger.error(f"Filename {savename} not working.\n Exception: {e}")
+                self.logger.error(
+                    f"Filename {savename} not working.\n Exception: {e}")
                 self.save_conversation()
         else:
             pass
@@ -360,7 +355,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def load_conversation(self):
         """Loads past conversation history into the json requests and loads past display history"""
         if self.Load_Button.isEnabled:
-            
+
             self.logger.debug("load_conversation was called")
             Filename, ok = QFileDialog.getOpenFileName(
                 self,
@@ -368,16 +363,17 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 os.path.join("Conversations"),
                 "Conversations (*.md)"
             )
-            
+
             # if the person doesn't select a file don't do anything
             if not Filename:
                 pass
-            
-            else:    
+
+            else:
                 self.logger.info(f"File opened: {Filename}")
                 self.refresh_conversation()
-                self.Response_Display.append(f"APOLLO: Conversation file:{Filename} loaded.")
-                
+                self.Response_Display.append(
+                    f"APOLLO: Conversation file:{Filename} loaded.")
+
                 # Completely empty convo history file because the other file will already have the basic system prompt
                 self.convo_history = []
                 try:
@@ -385,14 +381,16 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         self.display_history = dh.read()
                     self.Response_Display.append(self.display_history)
                     name, ext = os.path.splitext(Filename)
-                    
+
                     with open(f"{name}.txt", "r") as sh:
                         self.convo_history = json.load(sh)
-                    self.logger.info(f"new convo history loaded: {self.convo_history}")
-                    
-                
+                    self.logger.info(
+                        f"new convo history loaded: {self.convo_history}")
+
                 except Exception as e:
-                        self.Response_Display.append("""APOLLO: Filename not opening.""")
-                        self.logger.error(f"Filename {Filename} not opening correctly.\n Exception: {e}")
+                    self.Response_Display.append(
+                        """APOLLO: Filename not opening.""")
+                    self.logger.error(
+                        f"Filename {Filename} not opening correctly.\n Exception: {e}")
         else:
             pass
