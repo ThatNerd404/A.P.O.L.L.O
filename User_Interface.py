@@ -347,7 +347,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
                 Try again and fit the requirements.""")
                 self.logger.error(
-                    f"Filename {savename} not working.\n Exception: {e}")
+                    f"Filename {self.convo_history_directory / savename}.md not working.\n Exception: {e}")
                 self.save_conversation()
         else:
             pass
