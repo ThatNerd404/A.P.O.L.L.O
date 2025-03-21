@@ -32,15 +32,20 @@ To refresh the conversation click the refresh button or use the `Crtl+R` shortcu
 1. **Standard Assistance**: 
     - User Input ("Sir Cotterman"): "Tell me about climate change."
     - APOLLO Output: Initial explanation
-    ![Default APOLLO gif](https://github.com/ThatNerd404/A.P.O.L.L.O/blob/main/Assets/Apollo_Idle.gif)
+
+        ![Default APOLLO gif](https://github.com/ThatNerd404/A.P.O.L.L.O/blob/main/Assets/Apollo_Idle.gif)
 2. **Socratic Tutor Persona**
+
     - User Input ("Sir Cotterman): "Explain quantum mechanics in detail."
     - Initial Explanation, Sources for further research, and Follow-up Questions
-    ![Tutor APOLLO gif](https://github.com/ThatNerd404/A.P.O.L.L.O/blob/main/Assets/Apollo_Idle_Tutoring.gif)
+
+        ![Tutor APOLLO gif](https://github.com/ThatNerd404/A.P.O.L.L.O/blob/main/Assets/Apollo_Idle_Tutoring.gif)
 3. **Gritty Punk Coding Assistant** 
    - User Input ("Mr Cotterman"): "What's up Choom?"
    - Grumpy yet helpful responses with references to cyberpunk and examples.
-    ![Coding APOLLO gif](https://github.com/ThatNerd404/A.P.O.L.L.O/blob/main/Assets/Apollo_Idle_Coding.gif)
+
+        ![Coding APOLLO gif](https://github.com/ThatNerd404/A.P.O.L.L.O/blob/main/Assets/Apollo_Idle_Coding.gif)
+
 ### Saving Conversations:
 
 To save your session into files for later use:
