@@ -55,6 +55,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Load_Button.clicked.connect(self.load_conversation)
         self.Cancel_Button.clicked.connect(self.cancel_request)
+        self.Edit_Model_Button.clicked.connect(self.edit_model)
         self.Close_Window_Button.clicked.connect(self.close)
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
@@ -394,3 +395,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         f"Filename {Filename} not opening correctly.\n Exception: {e}")
         else:
             pass
+    def edit_model(self):
+        """Allows user to edit the model settings"""
+        # ? not implemented yet
+        self.logger.debug("edit_model was called")
+        self.Response_Display.append("APOLLO: This feature is not yet implemented.")
