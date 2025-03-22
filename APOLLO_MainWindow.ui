@@ -585,7 +585,7 @@ font-size:32px;
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="Add_Model_Button">
+         <widget class="QPushButton" name="Edit_Model_Button">
           <property name="minimumSize">
            <size>
             <width>64</width>
@@ -598,20 +598,29 @@ font-size:32px;
             <height>64</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Edit Model</string>
+          </property>
           <property name="styleSheet">
            <string notr="true">QPushButton {
 qproperty-icon: url(&quot; &quot;);
 qproperty-iconSize: 64px 64px;
 width: 64px;
 height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Add_Model_Button.png);
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);
   background-repeat: no-repeat;}
 QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Add_Model_Button_Down.png);
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);
 background-repeat: no-repeat;}</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="checkable">
+           <bool>false</bool>
           </property>
           <property name="flat">
            <bool>true</bool>

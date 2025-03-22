@@ -287,23 +287,27 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.Model_Chooser)
 
-        self.Add_Model_Button = QPushButton(self.groupBox_3)
-        self.Add_Model_Button.setObjectName(u"Add_Model_Button")
-        self.Add_Model_Button.setMinimumSize(QSize(64, 64))
-        self.Add_Model_Button.setMaximumSize(QSize(64, 64))
-        self.Add_Model_Button.setStyleSheet(u"QPushButton {\n"
-                                            "qproperty-icon: url(\" \");\n"
-                                            "qproperty-iconSize: 64px 64px;\n"
-                                            "width: 64px;\n"
-                                            "height:64px;\n"
-                                            "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Add_Model_Button.png);\n"
-                                            "  background-repeat: no-repeat;}\n"
-                                            "QPushButton:hover {\n"
-                                            "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Add_Model_Button_Down.png);\n"
-                                            "background-repeat: no-repeat;}")
-        self.Add_Model_Button.setFlat(True)
+        self.Edit_Model_Button = QPushButton(self.groupBox_3)
+        self.Edit_Model_Button.setObjectName(u"Edit_Model_Button")
+        self.Edit_Model_Button.setMinimumSize(QSize(64, 64))
+        self.Edit_Model_Button.setMaximumSize(QSize(64, 64))
+        self.Edit_Model_Button.setStyleSheet(u"QPushButton {\n"
+                                             "qproperty-icon: url(\" \");\n"
+                                             "qproperty-iconSize: 64px 64px;\n"
+                                             "width: 64px;\n"
+                                             "height:64px;\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);\n"
+                                             "  background-repeat: no-repeat;}\n"
+                                             "QPushButton:hover {\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);\n"
+                                             "background-repeat: no-repeat;}\n"
+                                             "QPushButton:disabled {\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);\n"
+                                             "background-repeat: no-repeat;}")
+        self.Edit_Model_Button.setCheckable(False)
+        self.Edit_Model_Button.setFlat(True)
 
-        self.horizontalLayout_2.addWidget(self.Add_Model_Button)
+        self.horizontalLayout_2.addWidget(self.Edit_Model_Button)
 
         self.verticalLayout_2.addWidget(self.groupBox_3)
 
@@ -440,7 +444,11 @@ class Ui_MainWindow(object):
 
         self.Model_Chooser.setCurrentText(
             QCoreApplication.translate("MainWindow", u" General", None))
-        self.Add_Model_Button.setText("")
+# if QT_CONFIG(tooltip)
+        self.Edit_Model_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Edit Model", None))
+# endif // QT_CONFIG(tooltip)
+        self.Edit_Model_Button.setText("")
         self.Title_Label.setText("")
         self.Close_Window_Button.setText("")
         self.Minimize_Window_Button.setText("")
