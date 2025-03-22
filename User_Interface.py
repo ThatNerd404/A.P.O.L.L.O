@@ -110,6 +110,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Save_Button.setEnabled(False)
             self.Model_Chooser.setEnabled(False)
             self.Load_Button.setEnabled(False)
+            self.Edit_Model_Button.setEnabled(False)
             self.Response_Display.setEnabled(False)
             # Add the user's prompt
             self.convo_history.append({"role": "user", "content": self.query})
@@ -210,6 +211,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     self.Model_Chooser.setEnabled(True)
                     self.Load_Button.setEnabled(True)
                     self.Response_Display.setEnabled(True)
+                    self.Edit_Model_Button.setEnabled(True)
                     # add APOLLO response to convo history
                     self.convo_history.append(
                         {"role": "assistant", "content": self.current_response})
@@ -337,9 +339,18 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     convo_file = self.convo_history_directory / \
                         f"{savename}.txt"
                     with open(display_file, "w") as df:
-                        df.write(self.Response_Display.toPlainText())
+                        df.write(self.Response_Display.toPlainText().encode(
+                            'ascii', 'ignore').decode('ascii'))
                     with open(convo_file, "w") as cf:
-                        json.dump(self.convo_history, cf)
+                        # ? encode to ignore emojis so the txt file can be read
+                        for line in self.convo_history:
+                            if isinstance(line["content"], str):
+                                convo_history_no_emojis = {
+                                    "role": line["role"], "content": line["content"].encode('ascii', 'ignore').decode('ascii')}
+                            else:
+                                convo_history_no_emojis = {
+                                    "role": line["role"], "content": str(line["content"])}
+                        json.dump(convo_history_no_emojis, cf)
                     self.Response_Display.append(
                         f"APOLLO: Conversation Saved to file {savename}.md")
                     self.logger.info(f"Conversation saved to file: {savename}")
@@ -348,7 +359,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 self.Response_Display.append("""APOLLO: Filename not workable. Remember no back slashes, spaces, or special characters!
                 Try again and fit the requirements.""")
                 self.logger.error(
-                    f"Filename {self.convo_history_directory / savename}.md not working.\n Exception: {e}")
+                    f"Filename {self.convo_history_directory / savename} not working.\n Exception: {e}")
                 self.save_conversation()
         else:
             pass
@@ -378,11 +389,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 # Completely empty convo history file because the other file will already have the basic system prompt
                 self.convo_history = []
                 try:
+                    # open display history file and append to response display
                     with open(Filename, "r") as dh:
                         self.display_history = dh.read()
                     self.Response_Display.append(self.display_history)
                     name, ext = os.path.splitext(Filename)
 
+                    # open convo history file and append to convo history
                     with open(f"{name}.txt", "r") as sh:
                         self.convo_history = json.load(sh)
                     self.logger.info(
@@ -395,8 +408,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         f"Filename {Filename} not opening correctly.\n Exception: {e}")
         else:
             pass
+
     def edit_model(self):
         """Allows user to edit the model settings"""
         # ? not implemented yet
         self.logger.debug("edit_model was called")
-        self.Response_Display.append("APOLLO: This feature is not yet implemented.")
+        self.Response_Display.append(
+            "APOLLO: This feature is not yet implemented.")
