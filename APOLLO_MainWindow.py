@@ -368,15 +368,15 @@ class Ui_MainWindow(object):
         self.Initials.setObjectName(u"Initials")
         self.Initials.setGeometry(QRect(800, 130, 61, 26))
         self.Initials.setPixmap(QPixmap(u"Assets/APOLLO_Initials.png"))
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(10, 10, 38, 38))
+        self.Settings_Button = QPushButton(self.centralwidget)
+        self.Settings_Button.setObjectName(u"Settings_Button")
+        self.Settings_Button.setGeometry(QRect(10, 10, 38, 38))
         icon6 = QIcon()
         icon6.addFile(u"Assets/Cog.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
-        self.pushButton.setIcon(icon6)
-        self.pushButton.setIconSize(QSize(76, 76))
-        self.pushButton.setFlat(True)
+        self.Settings_Button.setIcon(icon6)
+        self.Settings_Button.setIconSize(QSize(76, 76))
+        self.Settings_Button.setFlat(True)
         MainWindow.setCentralWidget(self.centralwidget)
         self.groupBox_2.raise_()
         self.verticalLayoutWidget.raise_()
@@ -384,7 +384,7 @@ class Ui_MainWindow(object):
         self.Close_Window_Button.raise_()
         self.Minimize_Window_Button.raise_()
         self.Initials.raise_()
-        self.pushButton.raise_()
+        self.Settings_Button.raise_()
 
         self.retranslateUi(MainWindow)
 
@@ -453,5 +453,5 @@ class Ui_MainWindow(object):
         self.Close_Window_Button.setText("")
         self.Minimize_Window_Button.setText("")
         self.Initials.setText("")
-        self.pushButton.setText("")
+        self.Settings_Button.setText("")
     # retranslateUi

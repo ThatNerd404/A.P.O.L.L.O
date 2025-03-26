@@ -770,7 +770,7 @@ height:44px;
      <pixmap>Assets/APOLLO_Initials.png</pixmap>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="Settings_Button">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -802,7 +802,7 @@ height:44px;
    <zorder>Close_Window_Button</zorder>
    <zorder>Minimize_Window_Button</zorder>
    <zorder>Initials</zorder>
-   <zorder>pushButton</zorder>
+   <zorder>Settings_Button</zorder>
   </widget>
  </widget>
  <resources/>
