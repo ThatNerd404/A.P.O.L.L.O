@@ -31,7 +31,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
         handler = RotatingFileHandler(os.path.join(
-            'Logs', 'log.log'), maxBytes=100000, backupCount=5)
+            'Logs', 'log.log'), maxBytes=100000, backupCount=5,encoding="utf-8")
         formatter = logging.Formatter(
             '%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
@@ -142,6 +142,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             # Connect readyRead signal to handleResponse method
             self.reply.readyRead.connect(self.handle_response)
 
+            # Connect error signal to handleNetworkError method
+            self.reply.errorOccurred.connect(self.handle_network_error)
+            
             # Start loading animation
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
             self.Apollo_Sprite_loading_animation.start()
@@ -164,69 +167,95 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         Note: The code assumes that the raw data received is a JSON object with a "message" key, and an optional "done" key indicating whether the conversation is complete.
         """
+        
+        # ? read all the data from the response
+        if self.reply.isOpen():
+            raw_data = self.reply.readAll().data().decode()
+            self.partial_json_buffer += raw_data
 
-        #!error_message = self.reply.errorString()
-        #!status_code = self.reply.attribute(
-        #!    QNetworkRequest.HttpStatusCodeAttribute)
-        raw_data = self.reply.readAll().data().decode()
-        self.partial_json_buffer += raw_data
+            while "\n" in self.partial_json_buffer:
+                line, self.partial_json_buffer = self.partial_json_buffer.split(
+                    "\n", 1)
+                line = line.strip()
 
-        while "\n" in self.partial_json_buffer:
-            line, self.partial_json_buffer = self.partial_json_buffer.split(
-                "\n", 1)
-            line = line.strip()
+                if not line:
+                    continue
 
-            if not line:
-                continue
+                try:
+                    json_obj = json.loads(line)
 
-            try:
-                json_obj = json.loads(line)
+                    # ? If "response" key is present in the JSON object, insert it into the chat display
+                    if "message" in json_obj and "content" in json_obj["message"]:
+                        chunk = json_obj["message"]["content"]
+                        self.current_response += chunk  # Append the chunk
 
-                # ? If "response" key is present in the JSON object, insert it into the chat display
-                if "message" in json_obj and "content" in json_obj["message"]:
-                    chunk = json_obj["message"]["content"]
-                    self.current_response += chunk  # Append the chunk
+                        # ensure screen scrolls with the text
+                        self.Response_Display.ensureCursorVisible()
+                        self.Response_Display.insertPlainText(
+                            chunk)  # Stream it to UI
+                        self.Response_Display.ensureCursorVisible()
 
-                    # ensure screen scrolls with the text
-                    self.Response_Display.ensureCursorVisible()
-                    self.Response_Display.insertPlainText(
-                        chunk)  # Stream it to UI
-                    self.Response_Display.ensureCursorVisible()
+                    # ? If "done" key is present in the JSON object and it's set to True, finalize the response
+                    if json_obj.get("done", False):
+                        # grab end time and log it
+                        self.end_time = time.perf_counter()
+                        elasped_time = self.end_time - self.start_time
+                        self.logger.info(
+                            f"Response finished generating in {elasped_time:.4f} seconds")
 
-                # ? If "done" key is present in the JSON object and it's set to True, finalize the response
-                if json_obj.get("done", False):
-                    # grab end time and log it
-                    self.end_time = time.perf_counter()
-                    elasped_time = self.end_time - self.start_time
-                    self.logger.info(
-                        f"Response finished generating in {elasped_time:.4f} seconds")
+                        # ? decode to ignore emojis
+                        self.logger.info(
+                            f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
 
-                    # ? decode to ignore emojis
-                    self.logger.info(
-                        f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
+                        # re-enable buttons
+                        self.Send_Button.setEnabled(True)
+                        self.Refresh_Button.setEnabled(True)
+                        self.Save_Button.setEnabled(True)
+                        self.Model_Chooser.setEnabled(True)
+                        self.Load_Button.setEnabled(True)
+                        self.Response_Display.setEnabled(True)
+                        self.Edit_Model_Button.setEnabled(True)
+                        # add APOLLO response to convo history
+                        self.convo_history.append(
+                            {"role": "assistant", "content": self.current_response})
 
-                    # re-enable buttons
-                    self.Send_Button.setEnabled(True)
-                    self.Refresh_Button.setEnabled(True)
-                    self.Save_Button.setEnabled(True)
-                    self.Model_Chooser.setEnabled(True)
-                    self.Load_Button.setEnabled(True)
-                    self.Response_Display.setEnabled(True)
-                    self.Edit_Model_Button.setEnabled(True)
-                    # add APOLLO response to convo history
-                    self.convo_history.append(
-                        {"role": "assistant", "content": self.current_response})
+                        self.Apollo_Sprite.setMovie(
+                            self.Apollo_Sprite_idle_animation)
+                        self.Apollo_Sprite_idle_animation.start()
+                        self.current_response = ""
+                        
+                        #? stops error from popping up when completion is done
+                        if self.reply.isRunning():
+                            self.reply.abort()
 
-                    self.Apollo_Sprite.setMovie(
-                        self.Apollo_Sprite_idle_animation)
-                    self.Apollo_Sprite_idle_animation.start()
-                    self.current_response = ""
-                    self.reply.abort()
+                except json.JSONDecodeError as e:
+                    self.logger.error("❌ JSON Decode Error:", e,
+                                    "Raw Line:", repr(line))
+        
+    def handle_network_error(self):
+        """Handles network errors during requests to Ollama API."""
+        error_message = self.reply.errorString()
+        status_code = self.reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
+        if status_code == 200:
+            pass
+        else:
+            self.logger.error(f"❌ Network Error {status_code}: {error_message}")
+            
+            # Display error in response field
+            self.Response_Display.append(f"\n⚠️ **Network Error** {status_code}: {error_message}")
 
-            except json.JSONDecodeError as e:
-                self.logger.error("❌ JSON Decode Error:", e,
-                                  "Raw Line:", repr(line))
+            # Stop animations and re-enable UI buttons
+            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+            self.Apollo_Sprite_idle_animation.start()
 
+            self.Send_Button.setEnabled(True)
+            self.Refresh_Button.setEnabled(True)
+            self.Save_Button.setEnabled(True)
+            self.Model_Chooser.setEnabled(True)
+            self.Load_Button.setEnabled(True)
+            self.Response_Display.setEnabled(True)
+            self.Edit_Model_Button.setEnabled(True)
+        
     def cancel_request(self):
         """Stops Apollo's response mid-stream by aborting the network request."""
 
@@ -319,7 +348,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                                  "content": self.system_settings}
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
-
+    def preload_model(self):
+        """Preloads the model by sending a request to the server"""
+        pass
+    
+    def unload_model(self):
+        """Unloads the model by sending a request to the server"""
+        pass
+    
     def save_conversation(self):
         '''Saves the current conversation display to a md file
            and the conversation history to a txt file'''
@@ -414,8 +450,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         """Allows user to edit the model settings"""
         # ? not implemented yet
         self.logger.debug("edit_model was called")
-        self.Response_Display.append(
-            "APOLLO: This feature is not yet implemented.")
+        #self.Response_Display.append(
+        #    "APOLLO: This feature is not yet implemented.")
+        if self.Edit_Model_Button.isEnabled:
+            pass
     
     def settings(self):
         """Opens the settings window"""
@@ -423,3 +461,5 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.logger.debug("settings was called")
         self.Response_Display.append(
             "APOLLO: This feature is not yet implemented.")
+        QInputDialog.getText(
+                self, "File Name", "Enter File Name:")

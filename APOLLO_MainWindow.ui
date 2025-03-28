@@ -63,7 +63,7 @@ border-color: #243169;
       <height>531</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="Main_Interface">
      <property name="spacing">
       <number>0</number>
      </property>
@@ -457,7 +457,7 @@ background-repeat: no-repeat;}</string>
      </item>
     </layout>
    </widget>
-   <widget class="QGroupBox" name="groupBox_2">
+   <widget class="QGroupBox" name="Model_Box">
     <property name="geometry">
      <rect>
       <x>870</x>
@@ -796,7 +796,7 @@ height:44px;
      <bool>true</bool>
     </property>
    </widget>
-   <zorder>groupBox_2</zorder>
+   <zorder>Model_Box</zorder>
    <zorder>verticalLayoutWidget</zorder>
    <zorder>Title_Label</zorder>
    <zorder>Close_Window_Button</zorder>
