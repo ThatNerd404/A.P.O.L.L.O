@@ -31,7 +31,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
         handler = RotatingFileHandler(os.path.join(
-            'Logs', 'log.log'), maxBytes=100000, backupCount=5,encoding="utf-8")
+            'Logs', 'log.log'), maxBytes=100000, backupCount=5, encoding="utf-8")
         formatter = logging.Formatter(
             '%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
@@ -74,10 +74,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Refresh_SC = QShortcut(Refresh_shortcut, self)
         self.Refresh_SC.activated.connect(self.refresh_conversation)
 
+        # Load models from files
+        self.general_model, self.tutoring_model, self.coding_model = self.load_model()
+
         # Initialize variables for handling JSON data and conversations
         self.partial_json_buffer = ""
         self.query = ""
-        self.model = "phi4-mini"
+        self.model = self.general_model  # ? default model change to not be hard-coded
         self.system_settings = f"""You are a helpful AI assisant named APOLLO. You refer to the user as Sir Cotterman.
                           """
         self.convo_history = [
@@ -97,6 +100,136 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     self.ask_ollama()
                     return True  # Prevent default behavior (optional)
         return super().eventFilter(obj, event)
+
+    def load_model(self):
+        """Loads the model from the server"""
+        self.logger.debug("load_model was called")
+
+        try:
+
+            with open(os.path.join("Models", "General.txt"), "r") as GM:
+                general_model = GM.read().strip()
+
+            with open(os.path.join("Models", "Coding.txt"), "r") as TM:
+                coding_model = TM.read().strip()
+
+            with open(os.path.join("Models", "Tutoring.txt"), "r") as CM:
+                tutoring_model = CM.read().strip()
+
+            self.logger.info(
+                f"Models loaded: \nGeneral: {general_model}\nTutoring: {tutoring_model}\nCoding: {coding_model}")
+            return general_model, tutoring_model, coding_model
+
+        except FileNotFoundError:
+            self.Response_Display.append(
+                "APOLLO: Model files not found. Please check that you installed the right model.")
+            self.logger.error(
+                f"Model files not found.\n Exception: {FileNotFoundError}")
+
+        except Exception as e:
+            self.Response_Display.append(
+                "APOLLO: Model not loading. Please check that you installed the right model.")
+            self.logger.error(
+                f"Model not loading.\n Exception: {e}")
+
+    def change_model(self):
+        '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
+        self.logger.debug("change_model was called")
+        # Get the current text of the Model Chooser combo box
+        chosen_model = self.Model_Chooser.currentText()
+
+        # Update the model, prompt, and sprite based on the selected choice
+        if chosen_model.strip() == "General":
+            self.model = self.general_model
+            self.system_settings = """You are a helpful AI assisant named APOLLO.\n
+                          You refer to the user as Sir Cotterman.
+                          """
+            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
+                "Assets", "Apollo_Idle.gif"))
+            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+                "Assets", "Apollo_Loading.gif"))
+
+        elif chosen_model.strip() == "Coding":
+            self.model = self.coding_model
+            self.system_settings = """You are APOLLO.\n
+                          Talk in a gritty punk persona, using slang and street speak like you would hear in the game Cyberpunk 2077.\n
+                          The tone should be dark, rebellious, and intense..\n
+                          You refer to the user as Mr Cotterman.\n
+                          """
+            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
+                "Assets", "Apollo_Idle_Coding.gif"))
+            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+                "Assets", "Apollo_Loading_Coding.gif"))
+
+        elif chosen_model.strip() == "Tutoring":
+            self.model = self.tutoring_model
+            self.system_settings = """You are a helpful AI assisant named APOLLO.\n
+                          You refer to the user as Sir Cotterman.\n
+                          You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n
+                          then give me examples, then give sources to help allow the user to research for themselves,\n
+                          then ask me questions about it to help me build understanding.\n
+                          """
+
+            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
+                "Assets", "Apollo_Idle_Tutoring.gif"))
+            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
+                "Assets", "Apollo_Loading_Tutor.gif"))
+
+        self.logger.info(
+            f"Model changed to {self.model}\nSystem settings changed to {self.system_settings}")
+        # ? reset the system settings
+        self.convo_history[0] = {"role": "system",
+                                 "content": self.system_settings}
+        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
+        self.Apollo_Sprite_idle_animation.start()
+
+    def preload_model(self):
+        """Preloads the model by sending a request to the server"""
+        pass
+
+    def unload_model(self):
+        """Unloads the model by sending a request to the server"""
+        pass
+
+    def edit_model(self):
+        """Allows user to edit the model settings"""
+        # ? not implemented yet
+        
+        if self.Edit_Model_Button.isEnabled:
+            self.logger.debug("edit_model was called")
+            Model_name, done = QInputDialog.getText(
+                self, "Edit Model", "Enter Model Name:")
+            if not Model_name:
+                pass
+
+            else:
+                chosen_model = self.Model_Chooser.currentText().strip()
+                if chosen_model == "General":
+                    with open(os.path.join("Models", "General.txt"), "w") as GM:
+                        GM.write(Model_name)
+
+                    self.logger.info(f"General model changed to {Model_name}")
+                    self.Response_Display.append(f"General model changed to {Model_name}")
+
+                elif chosen_model == "Coding":
+                    with open(os.path.join("Models", "Coding.txt"), "w") as CM:
+                        CM.write(Model_name)
+
+                    self.logger.info(f"Coding model changed to {Model_name}")
+                    self.Response_Display.append(f"Coding model changed to {Model_name}")
+                elif chosen_model == "Tutoring":
+                    with open(os.path.join("Models", "Tutoring.txt"), "w") as TM:
+                        TM.write(Model_name)
+
+                    self.logger.info(f"Tutoring model changed to {Model_name}")
+                    self.Response_Display.append(f"Tutoring model changed to {Model_name}")
+                    
+                self.general_model, self.tutoring_model, self.coding_model = self.load_model()
+                
+                # ? reload the model to make sure it is the right one
+                self.change_model()
+        else:
+            pass
 
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
@@ -144,7 +277,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             # Connect error signal to handleNetworkError method
             self.reply.errorOccurred.connect(self.handle_network_error)
-            
+
             # Start loading animation
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
             self.Apollo_Sprite_loading_animation.start()
@@ -167,7 +300,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         Note: The code assumes that the raw data received is a JSON object with a "message" key, and an optional "done" key indicating whether the conversation is complete.
         """
-        
+
         # ? read all the data from the response
         if self.reply.isOpen():
             raw_data = self.reply.readAll().data().decode()
@@ -223,26 +356,29 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                             self.Apollo_Sprite_idle_animation)
                         self.Apollo_Sprite_idle_animation.start()
                         self.current_response = ""
-                        
-                        #? stops error from popping up when completion is done
+
+                        # ? stops error from popping up when completion is done
                         if self.reply.isRunning():
                             self.reply.abort()
 
                 except json.JSONDecodeError as e:
                     self.logger.error("❌ JSON Decode Error:", e,
-                                    "Raw Line:", repr(line))
-        
+                                      "Raw Line:", repr(line))
+
     def handle_network_error(self):
         """Handles network errors during requests to Ollama API."""
         error_message = self.reply.errorString()
-        status_code = self.reply.attribute(QNetworkRequest.HttpStatusCodeAttribute)
+        status_code = self.reply.attribute(
+            QNetworkRequest.HttpStatusCodeAttribute)
         if status_code == 200:
             pass
         else:
-            self.logger.error(f"❌ Network Error {status_code}: {error_message}")
-            
+            self.logger.error(
+                f"❌ Network Error {status_code}: {error_message}")
+
             # Display error in response field
-            self.Response_Display.append(f"\n⚠️ **Network Error** {status_code}: {error_message}")
+            self.Response_Display.append(
+                f"\n⚠️ **Network Error** {status_code}: {error_message}")
 
             # Stop animations and re-enable UI buttons
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
@@ -255,7 +391,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Load_Button.setEnabled(True)
             self.Response_Display.setEnabled(True)
             self.Edit_Model_Button.setEnabled(True)
-        
+
     def cancel_request(self):
         """Stops Apollo's response mid-stream by aborting the network request."""
 
@@ -298,64 +434,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         else:
             pass
 
-    def change_model(self):
-        '''Updates the prompt with the query and changes the prompt if the apollo model changes'''
-        self.logger.debug("change_model was called")
-        # Get the current text of the Model Chooser combo box
-        chosen_model = self.Model_Chooser.currentText()
-
-        # Update the model, prompt, and sprite based on the selected choice
-        if chosen_model.strip() == "General":
-            self.model = "phi4-mini"
-            self.system_settings = """You are a helpful AI assisant named APOLLO.\n
-                          You refer to the user as Sir Cotterman.
-                          """
-            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
-                "Assets", "Apollo_Idle.gif"))
-            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
-                "Assets", "Apollo_Loading.gif"))
-
-        elif chosen_model.strip() == "Coding":
-            self.model = "qwen2.5-coder:3b"
-            self.system_settings = """You are APOLLO.\n
-                          Talk in a gritty punk persona, using slang and street speak like you would hear in the game Cyberpunk 2077.\n
-                          The tone should be dark, rebellious, and intense..\n
-                          You refer to the user as Mr Cotterman.\n
-                          """
-            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
-                "Assets", "Apollo_Idle_Coding.gif"))
-            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
-                "Assets", "Apollo_Loading_Coding.gif"))
-
-        elif chosen_model.strip() == "Tutoring":
-            self.model = "phi4-mini"
-            self.system_settings = """You are a helpful AI assisant named APOLLO.\n
-                          You refer to the user as Sir Cotterman.\n
-                          You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n
-                          then give me examples, then give sources to help allow the user to research for themselves,\n
-                          then ask me questions about it to help me build understanding.\n
-                          """
-
-            self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
-                "Assets", "Apollo_Idle_Tutoring.gif"))
-            self.Apollo_Sprite_loading_animation = QMovie(os.path.join(
-                "Assets", "Apollo_Loading_Tutor.gif"))
-
-        self.logger.info(
-            f"Model changed to {self.model}\nSystem settings changed to {self.system_settings}")
-        # ? reset the system settings
-        self.convo_history[0] = {"role": "system",
-                                 "content": self.system_settings}
-        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
-        self.Apollo_Sprite_idle_animation.start()
-    def preload_model(self):
-        """Preloads the model by sending a request to the server"""
-        pass
-    
-    def unload_model(self):
-        """Unloads the model by sending a request to the server"""
-        pass
-    
     def save_conversation(self):
         '''Saves the current conversation display to a md file
            and the conversation history to a txt file'''
@@ -446,20 +524,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         else:
             pass
 
-    def edit_model(self):
-        """Allows user to edit the model settings"""
-        # ? not implemented yet
-        self.logger.debug("edit_model was called")
-        #self.Response_Display.append(
-        #    "APOLLO: This feature is not yet implemented.")
-        if self.Edit_Model_Button.isEnabled:
-            pass
-    
     def settings(self):
         """Opens the settings window"""
         # ? not implemented yet
         self.logger.debug("settings was called")
         self.Response_Display.append(
             "APOLLO: This feature is not yet implemented.")
-        QInputDialog.getText(
-                self, "File Name", "Enter File Name:")
