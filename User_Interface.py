@@ -1,7 +1,7 @@
 from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut, QTextCursor
 from PySide6.QtWidgets import QMainWindow, QInputDialog, QFileDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PySide6.QtCore import QUrl, QByteArray, Qt
+from PySide6.QtCore import QUrl, QByteArray, Qt, QPoint
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
@@ -63,6 +63,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.change_model)
         self.Input_Field.installEventFilter(self)
 
+        # Initialize dragging variables for window movement
+        self.is_dragging = False
+        self.drag_start_position = QPoint()
+        
         # Setup keyboard shortcuts
         Save_shortcut = QKeySequence(Qt.CTRL | Qt.Key_S)
         self.Save_SC = QShortcut(Save_shortcut, self)
@@ -101,6 +105,29 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     return True  # Prevent default behavior (optional)
         return super().eventFilter(obj, event)
 
+    # Mouse press event to initiate dragging
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.RightButton:
+            self.is_dragging = True
+            self.drag_start_position = event.globalPosition().toPoint() - \
+                self.frameGeometry().topLeft()
+            event.accept()
+
+    # Mouse move event to handle dragging
+    def mouseMoveEvent(self, event):
+        if self.is_dragging:
+            self.move(event.globalPosition().toPoint() -
+                      self.drag_start_position)
+            event.accept()
+
+    # Mouse release event to stop dragging
+    def mouseReleaseEvent(self, event):
+        if event.button() == Qt.RightButton:
+            self.is_dragging = False
+            event.accept()
+
+    
     def load_model(self):
         """Loads the model from the server"""
         self.logger.debug("load_model was called")
