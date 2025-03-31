@@ -288,7 +288,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 "messages": self.convo_history,
                 # ? temperature makes the answer a bit more random
                 "options": {"temperature": 0.7},
-                "keep_alive": "5m",  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
+                "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
                 "stream": True,
             }
 
