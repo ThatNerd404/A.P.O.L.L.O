@@ -1,7 +1,7 @@
 from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut, QTextCursor
 from PySide6.QtWidgets import QMainWindow, QInputDialog, QFileDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
-from PySide6.QtCore import QUrl, QByteArray, Qt, QPoint
+from PySide6.QtCore import QUrl, QByteArray, Qt, QPoint, QSettings
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
@@ -555,5 +555,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         """Opens the settings window"""
         # ? not implemented yet
         self.logger.debug("settings was called")
-        self.Response_Display.append(
-            "APOLLO: This feature is not yet implemented.")
+        if self.Settings_Button.isEnabled:
+            if self.Settings_Button.isChecked():
+                self.Main_Content.setCurrentIndex(1)
+            else:
+                self.Main_Content.setCurrentIndex(0)
+        

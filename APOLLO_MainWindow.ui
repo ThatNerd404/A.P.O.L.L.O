@@ -13,13 +13,13 @@
   <property name="minimumSize">
    <size>
     <width>1200</width>
-    <height>675</height>
+    <height>710</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1200</width>
-    <height>710</height>
+    <width>2000</width>
+    <height>2000</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -54,622 +54,10 @@ border-style: solid;
 border-color: #243169;
 }</string>
    </property>
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>170</y>
-      <width>842</width>
-      <height>531</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="Main_Interface">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <item alignment="Qt::AlignHCenter">
-      <widget class="QTextBrowser" name="Response_Display">
-       <property name="minimumSize">
-        <size>
-         <width>840</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1000</width>
-         <height>1000</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QTextBrowser {
-background-color: #243169;
-border-color:#98c5de;
-border-style: solid;
-border-width: 5px;
-font-size: 32px;
-}</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Sunken</enum>
-       </property>
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOn</enum>
-       </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
-       </property>
-       <property name="html">
-        <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:32px; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-       </property>
-       <property name="openLinks">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-      <widget class="QGroupBox" name="groupBox">
-       <property name="minimumSize">
-        <size>
-         <width>840</width>
-         <height>68</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>1000</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QGroupBox {
-border-color:#98c5de;
-border-style: solid;
-border-width: 0px;
-border-radius: 10px;}</string>
-       </property>
-       <property name="title">
-        <string/>
-       </property>
-       <property name="flat">
-        <bool>true</bool>
-       </property>
-       <property name="checkable">
-        <bool>false</bool>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QPlainTextEdit" name="Input_Field">
-          <property name="minimumSize">
-           <size>
-            <width>480</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>1000</width>
-            <height>50</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPlainTextEdit {
-background-color: #243169;
-border-color:#98c5de;
-border-style: solid;
-border-width: 5px;
-font-size: 16px;
-}</string>
-          </property>
-          <property name="horizontalScrollBarPolicy">
-           <enum>Qt::ScrollBarAlwaysOff</enum>
-          </property>
-          <property name="backgroundVisible">
-           <bool>false</bool>
-          </property>
-          <property name="centerOnScroll">
-           <bool>false</bool>
-          </property>
-          <property name="placeholderText">
-           <string>Ask your question here!</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Send_Button">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Submit</string>
-          </property>
-          <property name="toolTipDuration">
-           <number>-1</number>
-          </property>
-          <property name="autoFillBackground">
-           <bool>false</bool>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);
-background-repeat: no-repeat;}
-QPushButton:disabled {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);
-background-repeat: no-repeat;}
- 
-</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>Assets/Apollo_Send_Button.png</normaloff>Assets/Apollo_Send_Button.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="autoDefault">
-           <bool>false</bool>
-          </property>
-          <property name="default">
-           <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Cancel_Button">
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Cancel</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);
-background-repeat: no-repeat;}
- </string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>Assets/Cancel_Button.png</normaloff>Assets/Cancel_Button.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Refresh_Button">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Refresh</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);
-background-repeat: no-repeat;}
-QPushButton:disabled {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);
-background-repeat: no-repeat;}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>Assets/Refresh_Button.png</normaloff>Assets/Refresh_Button.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Save_Button">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Save</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);
-background-repeat: no-repeat;}
-QPushButton:disabled {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);
-background-repeat: no-repeat;}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>Assets/Save_Button.png</normaloff>Assets/Save_Button.png</iconset>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Load_Button">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="acceptDrops">
-           <bool>false</bool>
-          </property>
-          <property name="toolTip">
-           <string>Load</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);
-background-repeat: no-repeat;}
-QPushButton:disabled {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);
-background-repeat: no-repeat;}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="iconSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QGroupBox" name="Model_Box">
-    <property name="geometry">
-     <rect>
-      <x>870</x>
-      <y>180</y>
-      <width>300</width>
-      <height>521</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QGroupBox {
-border-color:#98c5de;
-border-style: solid;
-border-width: 0px;
-border-radius: 10px;}</string>
-    </property>
-    <property name="title">
-     <string/>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <property name="spacing">
-      <number>0</number>
-     </property>
-     <property name="leftMargin">
-      <number>0</number>
-     </property>
-     <property name="topMargin">
-      <number>0</number>
-     </property>
-     <property name="rightMargin">
-      <number>0</number>
-     </property>
-     <property name="bottomMargin">
-      <number>0</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="Apollo_Sprite">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>Assets/Apollo_Idle.gif</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QGroupBox" name="groupBox_3">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>60</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>70</height>
-        </size>
-       </property>
-       <property name="title">
-        <string/>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
-        <property name="spacing">
-         <number>0</number>
-        </property>
-        <property name="leftMargin">
-         <number>0</number>
-        </property>
-        <property name="topMargin">
-         <number>0</number>
-        </property>
-        <property name="rightMargin">
-         <number>0</number>
-        </property>
-        <property name="bottomMargin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="QComboBox" name="Model_Chooser">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>60</height>
-           </size>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QComboBox {
-background-color: #243169;
-border-color:#98c5de;
-border-style: solid;
-border-width: 5px;
-font-size:32px;
-}</string>
-          </property>
-          <property name="currentText">
-           <string> General</string>
-          </property>
-          <property name="currentIndex">
-           <number>0</number>
-          </property>
-          <property name="frame">
-           <bool>true</bool>
-          </property>
-          <item>
-           <property name="text">
-            <string> General</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string> Tutoring</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string> Coding</string>
-           </property>
-          </item>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="Edit_Model_Button">
-          <property name="minimumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>64</width>
-            <height>64</height>
-           </size>
-          </property>
-          <property name="toolTip">
-           <string>Edit Model</string>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);
-background-repeat: no-repeat;}
-QPushButton:disabled {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);
-background-repeat: no-repeat;}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="checkable">
-           <bool>false</bool>
-          </property>
-          <property name="flat">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QLabel" name="Title_Label">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>40</y>
-      <width>357</width>
-      <height>117</height>
-     </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>600</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>Assets/APOLLO_Title.png</pixmap>
-    </property>
-    <property name="scaledContents">
-     <bool>false</bool>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="margin">
-     <number>0</number>
-    </property>
-   </widget>
    <widget class="QPushButton" name="Close_Window_Button">
     <property name="geometry">
      <rect>
-      <x>1133</x>
+      <x>1134</x>
       <y>0</y>
       <width>66</width>
       <height>46</height>
@@ -713,7 +101,7 @@ height:44px;
    <widget class="QPushButton" name="Minimize_Window_Button">
     <property name="geometry">
      <rect>
-      <x>1071</x>
+      <x>1072</x>
       <y>0</y>
       <width>66</width>
       <height>46</height>
@@ -754,21 +142,669 @@ height:44px;
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="Initials">
+   <widget class="QStackedWidget" name="Main_Content">
     <property name="geometry">
      <rect>
-      <x>800</x>
-      <y>130</y>
-      <width>61</width>
-      <height>26</height>
+      <x>5</x>
+      <y>45</y>
+      <width>1190</width>
+      <height>661</height>
      </rect>
     </property>
-    <property name="text">
-     <string/>
+    <property name="midLineWidth">
+     <number>0</number>
     </property>
-    <property name="pixmap">
-     <pixmap>Assets/APOLLO_Initials.png</pixmap>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
+    <widget class="QWidget" name="Main_Page">
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>130</y>
+        <width>842</width>
+        <height>531</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="Main_Interface">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QTextBrowser" name="Response_Display">
+         <property name="minimumSize">
+          <size>
+           <width>840</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>1000</width>
+           <height>1000</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QTextBrowser {
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+font-size: 32px;
+}</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOn</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="html">
+          <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:32px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="openLinks">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+        <widget class="QGroupBox" name="groupBox">
+         <property name="minimumSize">
+          <size>
+           <width>840</width>
+           <height>68</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>1000</width>
+           <height>100</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QGroupBox {
+border-color:#98c5de;
+border-style: solid;
+border-width: 0px;
+border-radius: 10px;}</string>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPlainTextEdit" name="Input_Field">
+            <property name="minimumSize">
+             <size>
+              <width>480</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>1000</width>
+              <height>50</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPlainTextEdit {
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+font-size: 16px;
+}</string>
+            </property>
+            <property name="horizontalScrollBarPolicy">
+             <enum>Qt::ScrollBarAlwaysOff</enum>
+            </property>
+            <property name="backgroundVisible">
+             <bool>false</bool>
+            </property>
+            <property name="centerOnScroll">
+             <bool>false</bool>
+            </property>
+            <property name="placeholderText">
+             <string>Ask your question here!</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Send_Button">
+            <property name="minimumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Submit</string>
+            </property>
+            <property name="toolTipDuration">
+             <number>-1</number>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);
+background-repeat: no-repeat;}
+ 
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Assets/Apollo_Send_Button.png</normaloff>Assets/Apollo_Send_Button.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="autoDefault">
+             <bool>false</bool>
+            </property>
+            <property name="default">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Cancel_Button">
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Cancel</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);
+background-repeat: no-repeat;}
+ </string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Assets/Cancel_Button.png</normaloff>Assets/Cancel_Button.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Refresh_Button">
+            <property name="minimumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Refresh</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);
+background-repeat: no-repeat;}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Assets/Refresh_Button.png</normaloff>Assets/Refresh_Button.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Save_Button">
+            <property name="minimumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Save</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);
+background-repeat: no-repeat;}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Assets/Save_Button.png</normaloff>Assets/Save_Button.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Load_Button">
+            <property name="minimumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="acceptDrops">
+             <bool>false</bool>
+            </property>
+            <property name="toolTip">
+             <string>Load</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);
+background-repeat: no-repeat;}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QGroupBox" name="Model_Box">
+      <property name="geometry">
+       <rect>
+        <x>872</x>
+        <y>142</y>
+        <width>300</width>
+        <height>521</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QGroupBox {
+border-color:#98c5de;
+border-style: solid;
+border-width: 0px;
+border-radius: 10px;}</string>
+      </property>
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="Apollo_Sprite">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="pixmap">
+          <pixmap>Assets/Apollo_Idle.gif</pixmap>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>70</height>
+          </size>
+         </property>
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QComboBox" name="Model_Chooser">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>60</height>
+             </size>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox {
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+font-size:32px;
+}</string>
+            </property>
+            <property name="currentText">
+             <string> General</string>
+            </property>
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
+            <property name="frame">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string> General</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string> Tutoring</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string> Coding</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="Edit_Model_Button">
+            <property name="minimumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Edit Model</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 64px 64px;
+width: 64px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);
+background-repeat: no-repeat;}
+QPushButton:disabled {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);
+background-repeat: no-repeat;}</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <property name="flat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QLabel" name="Initials">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>100</y>
+        <width>61</width>
+        <height>26</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>Assets/APOLLO_Initials.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QLabel" name="Title_Label">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>10</y>
+        <width>357</width>
+        <height>117</height>
+       </rect>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>600</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>Assets/APOLLO_Title.png</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+      <property name="margin">
+       <number>0</number>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="Settings_Page">
+     <widget class="QLabel" name="Settings_Title">
+      <property name="geometry">
+       <rect>
+        <x>400</x>
+        <y>0</y>
+        <width>401</width>
+        <height>71</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>Assets/Settings_Title.png</pixmap>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QPushButton" name="Settings_Button">
     <property name="geometry">
@@ -792,17 +828,13 @@ height:44px;
       <height>76</height>
      </size>
     </property>
+    <property name="checkable">
+     <bool>true</bool>
+    </property>
     <property name="flat">
      <bool>true</bool>
     </property>
    </widget>
-   <zorder>Model_Box</zorder>
-   <zorder>verticalLayoutWidget</zorder>
-   <zorder>Title_Label</zorder>
-   <zorder>Close_Window_Button</zorder>
-   <zorder>Minimize_Window_Button</zorder>
-   <zorder>Initials</zorder>
-   <zorder>Settings_Button</zorder>
   </widget>
  </widget>
  <resources/>
