@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'APOLLO_Mainwindow.ui'
+# Form generated from reading UI file 'APOLLO_Mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.8.0
+# Created by: Qt User Interface Compiler version 6.8.0
 ##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
+# WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
+                            QMetaObject, QObject, QPoint, QRect,
+                            QSize, QTime, QUrl, Qt)
 from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QFrame, QGroupBox,
-    QHBoxLayout, QLabel, QMainWindow, QPlainTextEdit,
-    QPushButton, QSizePolicy, QStackedWidget, QTextBrowser,
-    QVBoxLayout, QWidget)
+                           QFont, QFontDatabase, QGradient, QIcon,
+                           QImage, QKeySequence, QLinearGradient, QPainter,
+                           QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
+                               QGroupBox, QHBoxLayout, QLabel, QMainWindow,
+                               QPlainTextEdit, QPushButton, QSizePolicy, QStackedWidget,
+                               QTextBrowser, QVBoxLayout, QWidget)
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -29,44 +30,45 @@ class Ui_MainWindow(object):
         MainWindow.setMaximumSize(QSize(2000, 2000))
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet(u"QMainWindow {\n"
-"background-color: #4666a3 ;\n"
-"border-color:#98c5de;\n"
-"border-style: solid;\n"
-"border-width: 5px;\n"
-"border-radius: 10px;\n"
-"}\n"
-"")
+                                 "background-color: #4666a3 ;\n"
+                                 "border-color:#98c5de;\n"
+                                 "border-style: solid;\n"
+                                 "border-width: 5px;\n"
+                                 "border-radius: 10px;\n"
+                                 "}\n"
+                                 "")
         MainWindow.setDocumentMode(False)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.centralwidget.setStyleSheet(u"QWidget {\n"
-"background-color: #4666a3 ;\n"
-"color: #98c5de;\n"
-"\n"
-"}\n"
-"QWidget #centralwidget {\n"
-"border-width: 3px;\n"
-"border-style: solid;\n"
-"border-color: #243169;\n"
-"}")
+                                         "background-color: #4666a3 ;\n"
+                                         "color: #98c5de;\n"
+                                         "\n"
+                                         "}\n"
+                                         "QWidget #centralwidget {\n"
+                                         "border-width: 3px;\n"
+                                         "border-style: solid;\n"
+                                         "border-color: #243169;\n"
+                                         "}")
         self.Close_Window_Button = QPushButton(self.centralwidget)
         self.Close_Window_Button.setObjectName(u"Close_Window_Button")
         self.Close_Window_Button.setGeometry(QRect(1134, 0, 66, 46))
         self.Close_Window_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 44px;\n"
-"width: 64px;\n"
-"height:44px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Close_Window_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Close_Window_Button_Hover.png);\n"
-"qproperty-iconSize: 64px 44px;\n"
-"width: 64px;\n"
-"height:44px;\n"
-"}")
+                                               "qproperty-icon: url(\" \");\n"
+                                               "qproperty-iconSize: 64px 44px;\n"
+                                               "width: 64px;\n"
+                                               "height:44px;\n"
+                                               "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Close_Window_Button.png);\n"
+                                               "  background-repeat: no-repeat;}\n"
+                                               "QPushButton:hover {\n"
+                                               "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Close_Window_Button_Hover.png);\n"
+                                               "qproperty-iconSize: 64px 44px;\n"
+                                               "width: 64px;\n"
+                                               "height:44px;\n"
+                                               "}")
         icon = QIcon()
-        icon.addFile(u"Assets/Close_Window_Button.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"Assets/Close_Window_Button.png", QSize(),
+                     QIcon.Mode.Normal, QIcon.State.Off)
         self.Close_Window_Button.setIcon(icon)
         self.Close_Window_Button.setIconSize(QSize(64, 44))
         self.Close_Window_Button.setFlat(True)
@@ -74,20 +76,21 @@ class Ui_MainWindow(object):
         self.Minimize_Window_Button.setObjectName(u"Minimize_Window_Button")
         self.Minimize_Window_Button.setGeometry(QRect(1072, 0, 66, 46))
         self.Minimize_Window_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 44px;\n"
-"width: 64px;\n"
-"height:44px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Minimize_Window_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Minimize_Window_Button_Hover.png);\n"
-"qproperty-iconSize: 64px 44px;\n"
-"width: 64px;\n"
-"height:44px;\n"
-"}")
+                                                  "qproperty-icon: url(\" \");\n"
+                                                  "qproperty-iconSize: 64px 44px;\n"
+                                                  "width: 64px;\n"
+                                                  "height:44px;\n"
+                                                  "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Minimize_Window_Button.png);\n"
+                                                  "  background-repeat: no-repeat;}\n"
+                                                  "QPushButton:hover {\n"
+                                                  "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Minimize_Window_Button_Hover.png);\n"
+                                                  "qproperty-iconSize: 64px 44px;\n"
+                                                  "width: 64px;\n"
+                                                  "height:44px;\n"
+                                                  "}")
         icon1 = QIcon()
-        icon1.addFile(u"Assets/Minimize_Window_Button.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon1.addFile(u"Assets/Minimize_Window_Button.png",
+                      QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.Minimize_Window_Button.setIcon(icon1)
         self.Minimize_Window_Button.setIconSize(QSize(64, 44))
         self.Minimize_Window_Button.setFlat(True)
@@ -109,16 +112,17 @@ class Ui_MainWindow(object):
         self.Response_Display.setMinimumSize(QSize(840, 0))
         self.Response_Display.setMaximumSize(QSize(1000, 1000))
         self.Response_Display.setStyleSheet(u"QTextBrowser {\n"
-"background-color: #243169;\n"
-"border-color:#98c5de;\n"
-"border-style: solid;\n"
-"border-width: 5px;\n"
-"font-size: 32px;\n"
-"}")
+                                            "background-color: #243169;\n"
+                                            "border-color:#98c5de;\n"
+                                            "border-style: solid;\n"
+                                            "border-width: 5px;\n"
+                                            "font-size: 32px;\n"
+                                            "}")
         self.Response_Display.setFrameShape(QFrame.StyledPanel)
         self.Response_Display.setFrameShadow(QFrame.Sunken)
         self.Response_Display.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.Response_Display.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.Response_Display.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarAlwaysOff)
         self.Response_Display.setOpenLinks(True)
 
         self.Main_Interface.addWidget(self.Response_Display)
@@ -128,10 +132,10 @@ class Ui_MainWindow(object):
         self.groupBox.setMinimumSize(QSize(840, 68))
         self.groupBox.setMaximumSize(QSize(1000, 100))
         self.groupBox.setStyleSheet(u"QGroupBox {\n"
-"border-color:#98c5de;\n"
-"border-style: solid;\n"
-"border-width: 0px;\n"
-"border-radius: 10px;}")
+                                    "border-color:#98c5de;\n"
+                                    "border-style: solid;\n"
+                                    "border-width: 0px;\n"
+                                    "border-radius: 10px;}")
         self.groupBox.setFlat(True)
         self.groupBox.setCheckable(False)
         self.horizontalLayout = QHBoxLayout(self.groupBox)
@@ -143,12 +147,12 @@ class Ui_MainWindow(object):
         self.Input_Field.setMinimumSize(QSize(480, 0))
         self.Input_Field.setMaximumSize(QSize(1000, 50))
         self.Input_Field.setStyleSheet(u"QPlainTextEdit {\n"
-"background-color: #243169;\n"
-"border-color:#98c5de;\n"
-"border-style: solid;\n"
-"border-width: 5px;\n"
-"font-size: 16px;\n"
-"}")
+                                       "background-color: #243169;\n"
+                                       "border-color:#98c5de;\n"
+                                       "border-style: solid;\n"
+                                       "border-width: 5px;\n"
+                                       "font-size: 16px;\n"
+                                       "}")
         self.Input_Field.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.Input_Field.setBackgroundVisible(False)
         self.Input_Field.setCenterOnScroll(False)
@@ -162,22 +166,23 @@ class Ui_MainWindow(object):
         self.Send_Button.setToolTipDuration(-1)
         self.Send_Button.setAutoFillBackground(False)
         self.Send_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 64px;\n"
-"width: 64px;\n"
-"height:64px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);\n"
-"background-repeat: no-repeat;}\n"
-"QPushButton:disabled {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);\n"
-"background-repeat: no-repeat;}\n"
-" \n"
-"")
+                                       "qproperty-icon: url(\" \");\n"
+                                       "qproperty-iconSize: 64px 64px;\n"
+                                       "width: 64px;\n"
+                                       "height:64px;\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);\n"
+                                       "  background-repeat: no-repeat;}\n"
+                                       "QPushButton:hover {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;}\n"
+                                       "QPushButton:disabled {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);\n"
+                                       "background-repeat: no-repeat;}\n"
+                                       " \n"
+                                       "")
         icon2 = QIcon()
-        icon2.addFile(u"Assets/Apollo_Send_Button.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon2.addFile(u"Assets/Apollo_Send_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
         self.Send_Button.setIcon(icon2)
         self.Send_Button.setIconSize(QSize(64, 64))
         self.Send_Button.setAutoDefault(False)
@@ -189,18 +194,19 @@ class Ui_MainWindow(object):
         self.Cancel_Button.setObjectName(u"Cancel_Button")
         self.Cancel_Button.setMaximumSize(QSize(64, 64))
         self.Cancel_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 64px;\n"
-"width: 64px;\n"
-"height:64px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);\n"
-"background-repeat: no-repeat;}\n"
-" ")
+                                         "qproperty-icon: url(\" \");\n"
+                                         "qproperty-iconSize: 64px 64px;\n"
+                                         "width: 64px;\n"
+                                         "height:64px;\n"
+                                         "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);\n"
+                                         "  background-repeat: no-repeat;}\n"
+                                         "QPushButton:hover {\n"
+                                         "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);\n"
+                                         "background-repeat: no-repeat;}\n"
+                                         " ")
         icon3 = QIcon()
-        icon3.addFile(u"Assets/Cancel_Button.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon3.addFile(u"Assets/Cancel_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
         self.Cancel_Button.setIcon(icon3)
         self.Cancel_Button.setIconSize(QSize(64, 64))
         self.Cancel_Button.setFlat(True)
@@ -212,20 +218,21 @@ class Ui_MainWindow(object):
         self.Refresh_Button.setMinimumSize(QSize(64, 64))
         self.Refresh_Button.setMaximumSize(QSize(64, 64))
         self.Refresh_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 64px;\n"
-"width: 64px;\n"
-"height:64px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
-"background-repeat: no-repeat;}\n"
-"QPushButton:disabled {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);\n"
-"background-repeat: no-repeat;}")
+                                          "qproperty-icon: url(\" \");\n"
+                                          "qproperty-iconSize: 64px 64px;\n"
+                                          "width: 64px;\n"
+                                          "height:64px;\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button.png);\n"
+                                          "  background-repeat: no-repeat;}\n"
+                                          "QPushButton:hover {\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
+                                          "background-repeat: no-repeat;}\n"
+                                          "QPushButton:disabled {\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);\n"
+                                          "background-repeat: no-repeat;}")
         icon4 = QIcon()
-        icon4.addFile(u"Assets/Refresh_Button.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon4.addFile(u"Assets/Refresh_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
         self.Refresh_Button.setIcon(icon4)
         self.Refresh_Button.setIconSize(QSize(64, 64))
         self.Refresh_Button.setFlat(True)
@@ -237,20 +244,21 @@ class Ui_MainWindow(object):
         self.Save_Button.setMinimumSize(QSize(64, 64))
         self.Save_Button.setMaximumSize(QSize(64, 64))
         self.Save_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 64px;\n"
-"width: 64px;\n"
-"height:64px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
-"background-repeat: no-repeat;}\n"
-"QPushButton:disabled {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);\n"
-"background-repeat: no-repeat;}")
+                                       "qproperty-icon: url(\" \");\n"
+                                       "qproperty-iconSize: 64px 64px;\n"
+                                       "width: 64px;\n"
+                                       "height:64px;\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button.png);\n"
+                                       "  background-repeat: no-repeat;}\n"
+                                       "QPushButton:hover {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;}\n"
+                                       "QPushButton:disabled {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);\n"
+                                       "background-repeat: no-repeat;}")
         icon5 = QIcon()
-        icon5.addFile(u"Assets/Save_Button.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon5.addFile(u"Assets/Save_Button.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
         self.Save_Button.setIcon(icon5)
         self.Save_Button.setIconSize(QSize(64, 64))
         self.Save_Button.setFlat(True)
@@ -263,34 +271,34 @@ class Ui_MainWindow(object):
         self.Load_Button.setMaximumSize(QSize(64, 64))
         self.Load_Button.setAcceptDrops(False)
         self.Load_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 64px;\n"
-"width: 64px;\n"
-"height:64px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);\n"
-"background-repeat: no-repeat;}\n"
-"QPushButton:disabled {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);\n"
-"background-repeat: no-repeat;}")
+                                       "qproperty-icon: url(\" \");\n"
+                                       "qproperty-iconSize: 64px 64px;\n"
+                                       "width: 64px;\n"
+                                       "height:64px;\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button.png);\n"
+                                       "  background-repeat: no-repeat;}\n"
+                                       "QPushButton:hover {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;}\n"
+                                       "QPushButton:disabled {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);\n"
+                                       "background-repeat: no-repeat;}")
         self.Load_Button.setIconSize(QSize(64, 64))
         self.Load_Button.setFlat(True)
 
         self.horizontalLayout.addWidget(self.Load_Button)
 
-
-        self.Main_Interface.addWidget(self.groupBox, 0, Qt.AlignHCenter|Qt.AlignTop)
+        self.Main_Interface.addWidget(
+            self.groupBox, 0, Qt.AlignHCenter | Qt.AlignTop)
 
         self.Model_Box = QGroupBox(self.Main_Page)
         self.Model_Box.setObjectName(u"Model_Box")
         self.Model_Box.setGeometry(QRect(872, 142, 300, 521))
         self.Model_Box.setStyleSheet(u"QGroupBox {\n"
-"border-color:#98c5de;\n"
-"border-style: solid;\n"
-"border-width: 0px;\n"
-"border-radius: 10px;}")
+                                     "border-color:#98c5de;\n"
+                                     "border-style: solid;\n"
+                                     "border-width: 0px;\n"
+                                     "border-radius: 10px;}")
         self.verticalLayout_2 = QVBoxLayout(self.Model_Box)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -318,12 +326,12 @@ class Ui_MainWindow(object):
         self.Model_Chooser.setMinimumSize(QSize(0, 60))
         self.Model_Chooser.setLayoutDirection(Qt.LeftToRight)
         self.Model_Chooser.setStyleSheet(u"QComboBox {\n"
-"background-color: #243169;\n"
-"border-color:#98c5de;\n"
-"border-style: solid;\n"
-"border-width: 5px;\n"
-"font-size:32px;\n"
-"}")
+                                         "background-color: #243169;\n"
+                                         "border-color:#98c5de;\n"
+                                         "border-style: solid;\n"
+                                         "border-width: 5px;\n"
+                                         "font-size:32px;\n"
+                                         "}")
         self.Model_Chooser.setFrame(True)
 
         self.horizontalLayout_2.addWidget(self.Model_Chooser)
@@ -333,23 +341,22 @@ class Ui_MainWindow(object):
         self.Edit_Model_Button.setMinimumSize(QSize(64, 64))
         self.Edit_Model_Button.setMaximumSize(QSize(64, 64))
         self.Edit_Model_Button.setStyleSheet(u"QPushButton {\n"
-"qproperty-icon: url(\" \");\n"
-"qproperty-iconSize: 64px 64px;\n"
-"width: 64px;\n"
-"height:64px;\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);\n"
-"  background-repeat: no-repeat;}\n"
-"QPushButton:hover {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);\n"
-"background-repeat: no-repeat;}\n"
-"QPushButton:disabled {\n"
-"background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);\n"
-"background-repeat: no-repeat;}")
+                                             "qproperty-icon: url(\" \");\n"
+                                             "qproperty-iconSize: 64px 64px;\n"
+                                             "width: 64px;\n"
+                                             "height:64px;\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);\n"
+                                             "  background-repeat: no-repeat;}\n"
+                                             "QPushButton:hover {\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);\n"
+                                             "background-repeat: no-repeat;}\n"
+                                             "QPushButton:disabled {\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);\n"
+                                             "background-repeat: no-repeat;}")
         self.Edit_Model_Button.setCheckable(False)
         self.Edit_Model_Button.setFlat(True)
 
         self.horizontalLayout_2.addWidget(self.Edit_Model_Button)
-
 
         self.verticalLayout_2.addWidget(self.groupBox_3)
 
@@ -371,14 +378,33 @@ class Ui_MainWindow(object):
         self.Settings_Page.setObjectName(u"Settings_Page")
         self.Settings_Title = QLabel(self.Settings_Page)
         self.Settings_Title.setObjectName(u"Settings_Title")
-        self.Settings_Title.setGeometry(QRect(400, 0, 401, 71))
+        self.Settings_Title.setGeometry(QRect(370, 10, 491, 121))
         self.Settings_Title.setPixmap(QPixmap(u"Assets/Settings_Title.png"))
+        self.checkBox = QCheckBox(self.Settings_Page)
+        self.checkBox.setObjectName(u"checkBox")
+        self.checkBox.setGeometry(QRect(20, 140, 291, 31))
+        self.checkBox_2 = QCheckBox(self.Settings_Page)
+        self.checkBox_2.setObjectName(u"checkBox_2")
+        self.checkBox_2.setGeometry(QRect(50, 210, 70, 17))
+        self.checkBox_3 = QCheckBox(self.Settings_Page)
+        self.checkBox_3.setObjectName(u"checkBox_3")
+        self.checkBox_3.setGeometry(QRect(120, 330, 70, 17))
+        self.checkBox_4 = QCheckBox(self.Settings_Page)
+        self.checkBox_4.setObjectName(u"checkBox_4")
+        self.checkBox_4.setGeometry(QRect(80, 250, 70, 17))
+        self.checkBox_5 = QCheckBox(self.Settings_Page)
+        self.checkBox_5.setObjectName(u"checkBox_5")
+        self.checkBox_5.setGeometry(QRect(270, 290, 70, 17))
+        self.pushButton = QPushButton(self.Settings_Page)
+        self.pushButton.setObjectName(u"pushButton")
+        self.pushButton.setGeometry(QRect(210, 400, 75, 23))
         self.Main_Content.addWidget(self.Settings_Page)
         self.Settings_Button = QPushButton(self.centralwidget)
         self.Settings_Button.setObjectName(u"Settings_Button")
         self.Settings_Button.setGeometry(QRect(10, 10, 38, 38))
         icon6 = QIcon()
-        icon6.addFile(u"Assets/Cog.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon6.addFile(u"Assets/Cog.png", QSize(),
+                      QIcon.Mode.Normal, QIcon.State.Off)
         self.Settings_Button.setIcon(icon6)
         self.Settings_Button.setIconSize(QSize(76, 76))
         self.Settings_Button.setCheckable(True)
@@ -393,56 +419,75 @@ class Ui_MainWindow(object):
         self.Send_Button.setDefault(False)
         self.Model_Chooser.setCurrentIndex(0)
 
-
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"A.P.O.L.L.O", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate(
+            "MainWindow", u"A.P.O.L.L.O", None))
         self.Close_Window_Button.setText("")
         self.Minimize_Window_Button.setText("")
         self.Response_Display.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:32px; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;\"><br /></p></body></html>", None))
+                                                                 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+                                                                 "p, li { white-space: pre-wrap; }\n"
+                                                                 "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:32px; font-weight:400; font-style:normal;\">\n"
+                                                                 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:30px;\"><br /></p></body></html>", None))
         self.groupBox.setTitle("")
-        self.Input_Field.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Ask your question here!", None))
-#if QT_CONFIG(tooltip)
-        self.Send_Button.setToolTip(QCoreApplication.translate("MainWindow", u"Submit", None))
-#endif // QT_CONFIG(tooltip)
+# if QT_CONFIG(tooltip)
+        self.Send_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Submit", None))
+# endif // QT_CONFIG(tooltip)
         self.Send_Button.setText("")
-#if QT_CONFIG(tooltip)
-        self.Cancel_Button.setToolTip(QCoreApplication.translate("MainWindow", u"Cancel", None))
-#endif // QT_CONFIG(tooltip)
+# if QT_CONFIG(tooltip)
+        self.Cancel_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Cancel", None))
+# endif // QT_CONFIG(tooltip)
         self.Cancel_Button.setText("")
-#if QT_CONFIG(tooltip)
-        self.Refresh_Button.setToolTip(QCoreApplication.translate("MainWindow", u"Refresh", None))
-#endif // QT_CONFIG(tooltip)
+# if QT_CONFIG(tooltip)
+        self.Refresh_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Refresh", None))
+# endif // QT_CONFIG(tooltip)
         self.Refresh_Button.setText("")
-#if QT_CONFIG(tooltip)
-        self.Save_Button.setToolTip(QCoreApplication.translate("MainWindow", u"Save", None))
-#endif // QT_CONFIG(tooltip)
+# if QT_CONFIG(tooltip)
+        self.Save_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Save", None))
+# endif // QT_CONFIG(tooltip)
         self.Save_Button.setText("")
-#if QT_CONFIG(tooltip)
-        self.Load_Button.setToolTip(QCoreApplication.translate("MainWindow", u"Load", None))
-#endif // QT_CONFIG(tooltip)
+# if QT_CONFIG(tooltip)
+        self.Load_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Load", None))
+# endif // QT_CONFIG(tooltip)
         self.Load_Button.setText("")
         self.Model_Box.setTitle("")
         self.Apollo_Sprite.setText("")
         self.groupBox_3.setTitle("")
-        self.Model_Chooser.setItemText(0, QCoreApplication.translate("MainWindow", u" General", None))
-        self.Model_Chooser.setItemText(1, QCoreApplication.translate("MainWindow", u" Tutoring", None))
-        self.Model_Chooser.setItemText(2, QCoreApplication.translate("MainWindow", u" Coding", None))
+        self.Model_Chooser.setItemText(
+            0, QCoreApplication.translate("MainWindow", u" General", None))
+        self.Model_Chooser.setItemText(
+            1, QCoreApplication.translate("MainWindow", u" Tutoring", None))
+        self.Model_Chooser.setItemText(
+            2, QCoreApplication.translate("MainWindow", u" Coding", None))
 
-        self.Model_Chooser.setCurrentText(QCoreApplication.translate("MainWindow", u" General", None))
-#if QT_CONFIG(tooltip)
-        self.Edit_Model_Button.setToolTip(QCoreApplication.translate("MainWindow", u"Edit Model", None))
-#endif // QT_CONFIG(tooltip)
+        self.Model_Chooser.setCurrentText(
+            QCoreApplication.translate("MainWindow", u" General", None))
+# if QT_CONFIG(tooltip)
+        self.Edit_Model_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Edit Model", None))
+# endif // QT_CONFIG(tooltip)
         self.Edit_Model_Button.setText("")
         self.Initials.setText("")
         self.Title_Label.setText("")
         self.Settings_Title.setText("")
+        self.checkBox.setText("")
+        self.checkBox_2.setText(QCoreApplication.translate(
+            "MainWindow", u"CheckBox", None))
+        self.checkBox_3.setText(QCoreApplication.translate(
+            "MainWindow", u"CheckBox", None))
+        self.checkBox_4.setText(QCoreApplication.translate(
+            "MainWindow", u"CheckBox", None))
+        self.checkBox_5.setText(QCoreApplication.translate(
+            "MainWindow", u"CheckBox", None))
+        self.pushButton.setText(QCoreApplication.translate(
+            "MainWindow", u"PushButton", None))
         self.Settings_Button.setText("")
     # retranslateUi
-

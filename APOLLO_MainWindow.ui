@@ -296,9 +296,6 @@ font-size: 16px;
             <property name="centerOnScroll">
              <bool>false</bool>
             </property>
-            <property name="placeholderText">
-             <string>Ask your question here!</string>
-            </property>
            </widget>
           </item>
           <item>
@@ -791,10 +788,10 @@ background-repeat: no-repeat;}</string>
      <widget class="QLabel" name="Settings_Title">
       <property name="geometry">
        <rect>
-        <x>400</x>
-        <y>0</y>
-        <width>401</width>
-        <height>71</height>
+        <x>370</x>
+        <y>10</y>
+        <width>491</width>
+        <height>121</height>
        </rect>
       </property>
       <property name="text">
@@ -802,6 +799,84 @@ background-repeat: no-repeat;}</string>
       </property>
       <property name="pixmap">
        <pixmap>Assets/Settings_Title.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>140</y>
+        <width>291</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>210</y>
+        <width>70</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CheckBox</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_3">
+      <property name="geometry">
+       <rect>
+        <x>120</x>
+        <y>330</y>
+        <width>70</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CheckBox</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_4">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>250</y>
+        <width>70</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CheckBox</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_5">
+      <property name="geometry">
+       <rect>
+        <x>270</x>
+        <y>290</y>
+        <width>70</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>CheckBox</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>400</y>
+        <width>75</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>PushButton</string>
       </property>
      </widget>
     </widget>

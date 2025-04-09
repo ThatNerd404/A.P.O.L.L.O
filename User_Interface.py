@@ -289,7 +289,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 # ? temperature makes the answer a bit more random
                 "options": {"temperature": 0.7},
                 "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
-                "stream": True,
+                "stream": True, # ? stream the response in chunks
             }
 
             self.logger.info(
@@ -431,7 +431,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Save_Button.setEnabled(True)
             self.Load_Button.setEnabled(True)
             self.Model_Chooser.setEnabled(True)
-
+            self.Response_Display.setEnabled(True)
+            self.Edit_Model_Button.setEnabled(True)
+            
             # Reset Apollo's animation to idle
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
             self.Apollo_Sprite_idle_animation.start()
@@ -553,10 +555,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def settings(self):
         """Opens the settings window"""
-        # ? not implemented yet
+        
         self.logger.debug("settings was called")
         if self.Settings_Button.isEnabled:
+            
             if self.Settings_Button.isChecked():
+                
                 self.Main_Content.setCurrentIndex(1)
             else:
                 self.Main_Content.setCurrentIndex(0)
