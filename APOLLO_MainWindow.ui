@@ -155,7 +155,7 @@ height:44px;
      <number>0</number>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Main_Page">
      <widget class="QWidget" name="verticalLayoutWidget">
@@ -801,82 +801,125 @@ background-repeat: no-repeat;}</string>
        <pixmap>Assets/Settings_Title.png</pixmap>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QFrame" name="Checkbox_Frame">
       <property name="geometry">
        <rect>
-        <x>20</x>
+        <x>360</x>
         <y>140</y>
-        <width>291</width>
-        <height>31</height>
+        <width>511</width>
+        <height>400</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QFrame {
+background-color: #243169;
+border-color:#98c5de;
+border-style: solid;
+border-width: 5px;
+}
+
+QCheckBox {
+background-color: #243169;
+}
+
+QPushButton {
+background-color: #243169;
+}</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QCheckBox" name="Font_Setting_CheckBox">
+         <property name="text">
+          <string>Larger Font</string>
+         </property>
+         <property name="tristate">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="Autosave_CheckBox">
+         <property name="text">
+          <string>Automatically save last conversation when application closes</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_2">
+         <property name="text">
+          <string>Nothing yet</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_5">
+         <property name="text">
+          <string>Nothing yet</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="checkBox_3">
+         <property name="text">
+          <string>Nothing yet</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="Apply_Changes_Button">
+      <property name="geometry">
+       <rect>
+        <x>480</x>
+        <y>540</y>
+        <width>256</width>
+        <height>64</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>256</width>
+        <height>64</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>256</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+qproperty-icon: url(&quot; &quot;);
+qproperty-iconSize: 256px 64px;
+width: 256px;
+height:64px;
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apply_Changes_Button.png);
+  background-repeat: no-repeat;}
+QPushButton:hover {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apply_Changes_Button_Down.png);
+background-repeat: no-repeat;}</string>
       </property>
       <property name="text">
        <string/>
       </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="geometry">
-       <rect>
-        <x>50</x>
-        <y>210</y>
-        <width>70</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CheckBox</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_3">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>330</y>
-        <width>70</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CheckBox</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_4">
-      <property name="geometry">
-       <rect>
-        <x>80</x>
-        <y>250</y>
-        <width>70</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CheckBox</string>
-      </property>
-     </widget>
-     <widget class="QCheckBox" name="checkBox_5">
-      <property name="geometry">
-       <rect>
-        <x>270</x>
-        <y>290</y>
-        <width>70</width>
-        <height>17</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>CheckBox</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton">
-      <property name="geometry">
-       <rect>
-        <x>210</x>
-        <y>400</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>PushButton</string>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>

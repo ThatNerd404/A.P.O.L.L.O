@@ -18,7 +18,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("A.P.O.L.L.O")
         self.setWindowFlags(Qt.FramelessWindowHint)
+        
+        # Set up settings
+        self.settings = QSettings("APOLLO", "Settings")
 
+        
         # Setup cool pixel font
         font = QFontDatabase.addApplicationFont(
             os.path.join("Assets", "PixelPurl.ttf"))
@@ -56,7 +60,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Load_Button.clicked.connect(self.load_conversation)
         self.Cancel_Button.clicked.connect(self.cancel_request)
         self.Edit_Model_Button.clicked.connect(self.edit_model)
-        self.Settings_Button.clicked.connect(self.settings)
+        self.Settings_Button.clicked.connect(lambda: (self.logger.debug("Settings button clicked"), self.Settings_Button.isChecked()
+            and self.Main_Content.setCurrentIndex(1)
+            or not self.Settings_Button.isChecked()
+            and self.Main_Content.setCurrentIndex(0)
+    ))
         self.Close_Window_Button.clicked.connect(self.close)
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
@@ -398,6 +406,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         status_code = self.reply.attribute(
             QNetworkRequest.HttpStatusCodeAttribute)
         if status_code == 200:
+        #? 200 is a success code, so we don't need to do anything
+            pass
+        elif status_code == None:
+        #? None is a code for operation cancelling, so we don't need to do anything
             pass
         else:
             self.logger.error(
@@ -553,15 +565,3 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         else:
             pass
 
-    def settings(self):
-        """Opens the settings window"""
-        
-        self.logger.debug("settings was called")
-        if self.Settings_Button.isEnabled:
-            
-            if self.Settings_Button.isChecked():
-                
-                self.Main_Content.setCurrentIndex(1)
-            else:
-                self.Main_Content.setCurrentIndex(0)
-        
