@@ -18,15 +18,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowTitle("A.P.O.L.L.O")
         self.setWindowFlags(Qt.FramelessWindowHint)
-        
-        # Set up settings
-        self.settings = QSettings("APOLLO", "Settings")
 
-        
         # Setup cool pixel font
-        font = QFontDatabase.addApplicationFont(
+        self.font = QFontDatabase.addApplicationFont(
             os.path.join("Assets", "PixelPurl.ttf"))
-        pixel_family = QFontDatabase.applicationFontFamilies(font)
+        pixel_family = QFontDatabase.applicationFontFamilies(self.font)
         self.Model_Chooser.setFont(pixel_family[0])
         self.Input_Field.setFont(pixel_family[0])
         self.Response_Display.setFont(pixel_family[0])
@@ -40,6 +36,26 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             '%(asctime)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
         self.logger.addHandler(handler)
+
+        # Set up settings
+        self.settings = QSettings("APOLLO", "Settings")
+        # ? second value sets a default value if the key doesn't exist
+        
+        self.settings.value("Larger Font", False)
+        self.settings.value("AutoSave", False)
+        if self.settings.value("Larger Font") == "true":
+            self.Font_Setting_CheckBox.setChecked(True)
+
+        else:
+            self.Font_Setting_CheckBox.setChecked(False)
+
+        if self.settings.value("AutoSave") == "true":
+            self.Autosave_CheckBox.setChecked(True)
+
+        else:
+            self.Autosave_CheckBox.setChecked(False)
+
+        self.apply_settings()
 
         # Initialize network manager
         self.network_manager = QNetworkAccessManager(self)
@@ -61,10 +77,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Cancel_Button.clicked.connect(self.cancel_request)
         self.Edit_Model_Button.clicked.connect(self.edit_model)
         self.Settings_Button.clicked.connect(lambda: (self.logger.debug("Settings button clicked"), self.Settings_Button.isChecked()
-            and self.Main_Content.setCurrentIndex(1)
-            or not self.Settings_Button.isChecked()
-            and self.Main_Content.setCurrentIndex(0)
-    ))
+                                                      and self.Main_Content.setCurrentIndex(1)
+                                                      or not self.Settings_Button.isChecked()
+                                                      and self.Main_Content.setCurrentIndex(0)
+                                                      ))
+        self.Apply_Changes_Button.clicked.connect(self.apply_settings)
         self.Close_Window_Button.clicked.connect(self.close)
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
@@ -74,7 +91,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Initialize dragging variables for window movement
         self.is_dragging = False
         self.drag_start_position = QPoint()
-        
+
         # Setup keyboard shortcuts
         Save_shortcut = QKeySequence(Qt.CTRL | Qt.Key_S)
         self.Save_SC = QShortcut(Save_shortcut, self)
@@ -114,7 +131,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         return super().eventFilter(obj, event)
 
     # Mouse press event to initiate dragging
-
     def mousePressEvent(self, event):
         if event.button() == Qt.RightButton:
             self.is_dragging = True
@@ -135,7 +151,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.is_dragging = False
             event.accept()
 
-    
+    def closeEvent(self, event):
+        """Handles the close event of the window"""
+        self.logger.debug("closeEvent was called")
+        if self.Autosave_CheckBox.isChecked():
+            self.save_conversation()
+        else:
+            pass
+        event.accept()
+        
     def load_model(self):
         """Loads the model from the server"""
         self.logger.debug("load_model was called")
@@ -229,7 +253,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def edit_model(self):
         """Allows user to edit the model settings"""
         # ? not implemented yet
-        
+
         if self.Edit_Model_Button.isEnabled:
             self.logger.debug("edit_model was called")
             Model_name, done = QInputDialog.getText(
@@ -244,23 +268,26 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         GM.write(Model_name)
 
                     self.logger.info(f"General model changed to {Model_name}")
-                    self.Response_Display.append(f"General model changed to {Model_name}")
+                    self.Response_Display.append(
+                        f"General model changed to {Model_name}")
 
                 elif chosen_model == "Coding":
                     with open(os.path.join("Models", "Coding.txt"), "w") as CM:
                         CM.write(Model_name)
 
                     self.logger.info(f"Coding model changed to {Model_name}")
-                    self.Response_Display.append(f"Coding model changed to {Model_name}")
+                    self.Response_Display.append(
+                        f"Coding model changed to {Model_name}")
                 elif chosen_model == "Tutoring":
                     with open(os.path.join("Models", "Tutoring.txt"), "w") as TM:
                         TM.write(Model_name)
 
                     self.logger.info(f"Tutoring model changed to {Model_name}")
-                    self.Response_Display.append(f"Tutoring model changed to {Model_name}")
-                    
+                    self.Response_Display.append(
+                        f"Tutoring model changed to {Model_name}")
+
                 self.general_model, self.tutoring_model, self.coding_model = self.load_model()
-                
+
                 # ? reload the model to make sure it is the right one
                 self.change_model()
         else:
@@ -297,7 +324,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 # ? temperature makes the answer a bit more random
                 "options": {"temperature": 0.7},
                 "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
-                "stream": True, # ? stream the response in chunks
+                "stream": True,  # ? stream the response in chunks
             }
 
             self.logger.info(
@@ -406,10 +433,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         status_code = self.reply.attribute(
             QNetworkRequest.HttpStatusCodeAttribute)
         if status_code == 200:
-        #? 200 is a success code, so we don't need to do anything
+            # ? 200 is a success code, so we don't need to do anything
             pass
         elif status_code == None:
-        #? None is a code for operation cancelling, so we don't need to do anything
+            # ? None is a code for operation cancelling, so we don't need to do anything
             pass
         else:
             self.logger.error(
@@ -445,7 +472,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Model_Chooser.setEnabled(True)
             self.Response_Display.setEnabled(True)
             self.Edit_Model_Button.setEnabled(True)
-            
+
             # Reset Apollo's animation to idle
             self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
             self.Apollo_Sprite_idle_animation.start()
@@ -565,3 +592,35 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         else:
             pass
 
+    def apply_settings(self):
+        """Applies settings to the UI"""
+
+        self.logger.debug("apply_settings was called")
+
+        # Check for larger font setting and apply it
+        self.settings.setValue(
+            "Larger Font", self.Font_Setting_CheckBox.isChecked())
+
+        # ? for some reason the settings value is a string so we have to check if it is true or false by checking the string value
+        if self.settings.value("Larger Font") == "true":
+            self.Input_Field.setStyleSheet(
+                "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 32px;")
+            self.Response_Display.setStyleSheet(
+                "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 48px;")
+            self.logger.info("Larger font setting applied")
+
+        else:
+            self.Input_Field.setStyleSheet(
+                " background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 16px;")
+            self.Response_Display.setStyleSheet(
+                "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 32px;")
+            self.logger.info("Larger font setting removed")
+
+        # Check for auto save setting and apply it
+        self.settings.setValue("AutoSave", self.Autosave_CheckBox.isChecked())
+
+        if self.settings.value("AutoSave") == "true":
+            self.logger.info("Auto save setting applied")
+            
+        else:
+            self.logger.info("Auto save setting removed")
