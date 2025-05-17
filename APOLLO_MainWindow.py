@@ -412,10 +412,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addWidget(self.Autosave_CheckBox)
 
-        self.checkBox_2 = QCheckBox(self.Checkbox_Frame)
-        self.checkBox_2.setObjectName(u"checkBox_2")
+        self.Memory_CheckBox = QCheckBox(self.Checkbox_Frame)
+        self.Memory_CheckBox.setObjectName(u"Memory_CheckBox")
+        self.Memory_CheckBox.setChecked(True)
 
-        self.verticalLayout.addWidget(self.checkBox_2)
+        self.verticalLayout.addWidget(self.Memory_CheckBox)
 
         self.checkBox_5 = QCheckBox(self.Checkbox_Frame)
         self.checkBox_5.setObjectName(u"checkBox_5")
@@ -527,8 +528,8 @@ class Ui_MainWindow(object):
             QCoreApplication.translate("MainWindow", u"Larger Font", None))
         self.Autosave_CheckBox.setText(QCoreApplication.translate(
             "MainWindow", u"Automatically save last conversation when application closes", None))
-        self.checkBox_2.setText(QCoreApplication.translate(
-            "MainWindow", u"Nothing yet", None))
+        self.Memory_CheckBox.setText(QCoreApplication.translate(
+            "MainWindow", u"Save conversations to memory", None))
         self.checkBox_5.setText(QCoreApplication.translate(
             "MainWindow", u"Nothing yet", None))
         self.checkBox_3.setText(QCoreApplication.translate(

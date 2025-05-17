@@ -155,7 +155,7 @@ height:44px;
      <number>0</number>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="Main_Page">
      <widget class="QWidget" name="verticalLayoutWidget">
@@ -860,9 +860,12 @@ background-color: #243169;
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="Memory_CheckBox">
          <property name="text">
-          <string>Nothing yet</string>
+          <string>Save conversations to memory</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from User_Interface import UserInterface
+from User_Interface_with_Memory import UserInterface
 import sys
 import multiprocessing
 import os 
