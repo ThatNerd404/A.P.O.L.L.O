@@ -1,12 +1,3 @@
 [
-  {
-    "user": "hello, APOLLO! My name is Brayden Cotterman and you shall refer to me as such!",
-    "assistant": "Hello Brayden Cotterman (or simply \"Brayden\"! It's always good for us humans - even in our digital conversations) from your end too! I'm ready whenever you're. How may I assist or entertain today?",
-    "content": "User: hello, APOLLO! My name is Brayden Cotterman and you shall refer to me as such!\nAPOLLO: Hello Brayden Cotterman (or simply \"Brayden\"! It's always good for us humans - even in our digital conversations) from your end too! I'm ready whenever you're. How may I assist or entertain today?"
-  },
-  {
-    "user": "what is my name?",
-    "assistant": "Your name, as you've introduced yourself to me and I'll remember it now\u2014it's Brayden Cotterman (or just \"Brayden\" if you prefer). How can I further help you with your needs for the day!",
-    "content": "User: what is my name?\nAPOLLO: Your name, as you've introduced yourself to me and I'll remember it now\u2014it's Brayden Cotterman (or just \"Brayden\" if you prefer). How can I further help you with your needs for the day!"
-  }
+  
 ]

@@ -43,28 +43,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.settings = QSettings("APOLLO", "Settings")
         
         # ? second value sets a default value if the key doesn't exist
-        self.settings.value("Larger Font", False)
-        self.settings.value("AutoSave", False)
-        self.settings.value("Memory", True)
-        if self.settings.value("Larger Font", False,type=bool):
-            self.Font_Setting_CheckBox.setChecked(True)
+        
+        # Set checkboxes from saved values
+        self.Font_Setting_CheckBox.setChecked(self.settings.value("Larger Font", False, type=bool))
+        self.Autosave_CheckBox.setChecked(self.settings.value("AutoSave", False, type=bool))
+        self.Memory_CheckBox.setChecked(self.settings.value("Memory", True, type=bool)) 
+      
 
-        else:
-            self.Font_Setting_CheckBox.setChecked(False)
-
-        if self.settings.value("AutoSave", False,type=bool):
-            self.Autosave_CheckBox.setChecked(True)
-
-        else:
-            self.Autosave_CheckBox.setChecked(False)
-            
-        if self.settings.value("Memory", False,type=bool):
-            self.Autosave_CheckBox.setChecked(True)
-
-        else:
-            self.Autosave_CheckBox.setChecked(False)
-
-        self.apply_settings()
+        
 
         # Initialize network manager
         self.network_manager = QNetworkAccessManager(self)
@@ -90,7 +76,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                                                       or not self.Settings_Button.isChecked()
                                                       and self.Main_Content.setCurrentIndex(0)
                                                       ))
-        self.Apply_Changes_Button.clicked.connect(self.apply_settings)
+        self.Apply_Changes_Button.clicked.connect(self.save_settings_and_apply)
         self.Close_Window_Button.clicked.connect(self.close)
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
@@ -683,11 +669,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.logger.debug("apply_settings was called")
 
         # Check for larger font setting and apply it
-        self.settings.setValue(
-            "Larger Font", self.Font_Setting_CheckBox.isChecked())
+        
 
         # ? for some reason the settings value is a string so we have to check if it is true or false by checking the string value
-        if self.settings.value("Larger Font") == "true":
+        if self.settings.value("Larger Font", False, type=bool):
             self.Input_Field.setStyleSheet(
                 "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 32px;")
             self.Response_Display.setStyleSheet(
@@ -701,10 +686,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 32px;")
             self.logger.info("Larger font setting removed")
 
-        # Check for auto save setting and apply it
-        self.settings.setValue("AutoSave", self.Autosave_CheckBox.isChecked())
+        
 
-        if self.settings.value("AutoSave") == "true":
+        if self.settings.value("AutoSave", False, type=bool):
             self.logger.info("Auto save setting applied")
             
         else:
@@ -712,9 +696,24 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             
         # Check for memory setting and apply it
         
-        self.settings.setValue("Memory", self.Memory_CheckBox.isChecked())
-        if self.settings.value("Memory") == "true":
+        
+        if self.settings.value("Memory", False, type=bool):
             self.logger.info("Memory setting applied")
             
         else:
             self.logger.info("Memory setting removed")
+
+    def save_settings_and_apply(self):
+        self.logger.debug("save_settings_and_apply was called")
+
+        # Save the current checkbox states
+        self.settings.setValue("Larger Font", self.Font_Setting_CheckBox.isChecked())
+        self.settings.setValue("AutoSave", self.Autosave_CheckBox.isChecked())
+        self.settings.setValue("Memory", self.Memory_CheckBox.isChecked())  # optional
+
+        self.logger.debug(f"Saved settings: Font={self.Font_Setting_CheckBox.isChecked()}, "
+                        f"AutoSave={self.Autosave_CheckBox.isChecked()}, "
+                        f"Memory={self.Memory_CheckBox.isChecked()}")
+
+        # Then apply them
+        self.apply_settings()

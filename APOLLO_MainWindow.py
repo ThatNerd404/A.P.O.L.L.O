@@ -409,7 +409,7 @@ class Ui_MainWindow(object):
 
         self.Autosave_CheckBox = QCheckBox(self.Checkbox_Frame)
         self.Autosave_CheckBox.setObjectName(u"Autosave_CheckBox")
-
+        self.Autosave_CheckBox.setTristate(False)
         self.verticalLayout.addWidget(self.Autosave_CheckBox)
 
         self.Memory_CheckBox = QCheckBox(self.Checkbox_Frame)
