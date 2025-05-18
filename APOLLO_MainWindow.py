@@ -159,25 +159,63 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.Input_Field)
 
-        self.Send_Button = QPushButton(self.groupBox)
+        self.Send_Button = QCheckBox(self.groupBox)
         self.Send_Button.setObjectName(u"Send_Button")
-        self.Send_Button.setMinimumSize(QSize(64, 64))
+        self.Send_Button.setMinimumSize(QSize(0, 0))
         self.Send_Button.setMaximumSize(QSize(64, 64))
         self.Send_Button.setToolTipDuration(-1)
         self.Send_Button.setAutoFillBackground(False)
-        self.Send_Button.setStyleSheet(u"QPushButton {\n"
-                                       "qproperty-icon: url(\" \");\n"
-                                       "qproperty-iconSize: 64px 64px;\n"
-                                       "width: 64px;\n"
+        self.Send_Button.setStyleSheet(u"QCheckBox::indicator {\n"
+                                       "min-width: 64px;\n"
+                                       "min-height:64px;\n"
+                                       "max-width: 64px;\n"
+                                       "max-height:64px;\n"
+                                       "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);\n"
+                                       "background:transparent;\n"
+                                       "border:none;\n"
+                                       "margin:0px;\n"
+                                       "padding:0px;\n"
+                                       "}\n"
+                                       "QCheckBox::indicator:hover {\n"
+                                       "min-width: 64px;\n"
+                                       "min-height:64px;\n"
+                                       "max-width: 64px;\n"
+                                       "max-height:64px;\n"
+                                       "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);\n"
+                                       "background:transparent;\n"
+                                       "border:none;\n"
+                                       "margin:0px;\n"
+                                       "padding:0px;\n"
+                                       "}\n"
+                                       "QCheckBox::indicator:checked {\n"
+                                       "min-width: 64px;\n"
+                                       "min-height:64px;\n"
+                                       "max-width: 64px;\n"
+                                       "max-height:64px;\n"
+                                       "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);\n"
+                                       "background:transparent;\n"
+                                       "border:none;\n"
+                                       "margin:0px;\n"
+                                       "padding:0px;\n"
+                                       "}\n"
+                                       "QCheckBox::indicator:hover:checked {\n"
+                                       "min-width: 64px;\n"
+                                       "min-height:64px;\n"
+                                       "max-width: 64px;\n"
+                                       "max-"
                                        "height:64px;\n"
-                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);\n"
-                                       "  background-repeat: no-repeat;}\n"
-                                       "QPushButton:hover {\n"
-                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);\n"
-                                       "background-repeat: no-repeat;}\n"
-                                       "QPushButton:disabled {\n"
-                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);\n"
-                                       "background-repeat: no-repeat;}\n"
+                                       "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);\n"
+                                       "background:transparent;\n"
+                                       "border:none;\n"
+                                       "margin:0px;\n"
+                                       "padding:0px;\n"
+                                       "}\n"
+                                       "\n"
+                                       "\n"
+                                       "\n"
+                                       " \n"
+                                       "\n"
+                                       "\n"
                                        " \n"
                                        "")
         icon2 = QIcon()
@@ -185,33 +223,9 @@ class Ui_MainWindow(object):
                       QIcon.Mode.Normal, QIcon.State.Off)
         self.Send_Button.setIcon(icon2)
         self.Send_Button.setIconSize(QSize(64, 64))
-        self.Send_Button.setAutoDefault(False)
-        self.Send_Button.setFlat(True)
+        self.Send_Button.setCheckable(True)
 
         self.horizontalLayout.addWidget(self.Send_Button)
-
-        self.Cancel_Button = QPushButton(self.groupBox)
-        self.Cancel_Button.setObjectName(u"Cancel_Button")
-        self.Cancel_Button.setMaximumSize(QSize(64, 64))
-        self.Cancel_Button.setStyleSheet(u"QPushButton {\n"
-                                         "qproperty-icon: url(\" \");\n"
-                                         "qproperty-iconSize: 64px 64px;\n"
-                                         "width: 64px;\n"
-                                         "height:64px;\n"
-                                         "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);\n"
-                                         "  background-repeat: no-repeat;}\n"
-                                         "QPushButton:hover {\n"
-                                         "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);\n"
-                                         "background-repeat: no-repeat;}\n"
-                                         " ")
-        icon3 = QIcon()
-        icon3.addFile(u"Assets/Cancel_Button.png", QSize(),
-                      QIcon.Mode.Normal, QIcon.State.Off)
-        self.Cancel_Button.setIcon(icon3)
-        self.Cancel_Button.setIconSize(QSize(64, 64))
-        self.Cancel_Button.setFlat(True)
-
-        self.horizontalLayout.addWidget(self.Cancel_Button)
 
         self.Refresh_Button = QPushButton(self.groupBox)
         self.Refresh_Button.setObjectName(u"Refresh_Button")
@@ -227,13 +241,21 @@ class Ui_MainWindow(object):
                                           "QPushButton:hover {\n"
                                           "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
                                           "background-repeat: no-repeat;}\n"
+                                          "QPushButton:pressed {\n"
+                                          "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);\n"
+                                          "background-repeat: no-repeat;\n"
+                                          "padding: 0px;\n"
+                                          "margin: 0px;\n"
+                                          "border: none;\n"
+                                          "background-position:center;\n"
+                                          "outline:none;}\n"
                                           "QPushButton:disabled {\n"
                                           "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);\n"
                                           "background-repeat: no-repeat;}")
-        icon4 = QIcon()
-        icon4.addFile(u"Assets/Refresh_Button.png", QSize(),
+        icon3 = QIcon()
+        icon3.addFile(u"Assets/Refresh_Button.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
-        self.Refresh_Button.setIcon(icon4)
+        self.Refresh_Button.setIcon(icon3)
         self.Refresh_Button.setIconSize(QSize(64, 64))
         self.Refresh_Button.setFlat(True)
 
@@ -253,13 +275,21 @@ class Ui_MainWindow(object):
                                        "QPushButton:hover {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
                                        "background-repeat: no-repeat;}\n"
+                                       "QPushButton:pressed {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;\n"
+                                       "padding: 0px;\n"
+                                       "margin: 0px;\n"
+                                       "border: none;\n"
+                                       "background-position:center;\n"
+                                       "outline:none;}\n"
                                        "QPushButton:disabled {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);\n"
                                        "background-repeat: no-repeat;}")
-        icon5 = QIcon()
-        icon5.addFile(u"Assets/Save_Button.png", QSize(),
+        icon4 = QIcon()
+        icon4.addFile(u"Assets/Save_Button.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
-        self.Save_Button.setIcon(icon5)
+        self.Save_Button.setIcon(icon4)
         self.Save_Button.setIconSize(QSize(64, 64))
         self.Save_Button.setFlat(True)
 
@@ -280,6 +310,14 @@ class Ui_MainWindow(object):
                                        "QPushButton:hover {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);\n"
                                        "background-repeat: no-repeat;}\n"
+                                       "QPushButton:pressed {\n"
+                                       "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);\n"
+                                       "background-repeat: no-repeat;\n"
+                                       "padding: 0px;\n"
+                                       "margin: 0px;\n"
+                                       "border: none;\n"
+                                       "background-position:center;\n"
+                                       "outline:none;}\n"
                                        "QPushButton:disabled {\n"
                                        "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);\n"
                                        "background-repeat: no-repeat;}")
@@ -409,7 +447,7 @@ class Ui_MainWindow(object):
 
         self.Autosave_CheckBox = QCheckBox(self.Checkbox_Frame)
         self.Autosave_CheckBox.setObjectName(u"Autosave_CheckBox")
-        self.Autosave_CheckBox.setTristate(False)
+
         self.verticalLayout.addWidget(self.Autosave_CheckBox)
 
         self.Memory_CheckBox = QCheckBox(self.Checkbox_Frame)
@@ -448,10 +486,10 @@ class Ui_MainWindow(object):
         self.Settings_Button = QPushButton(self.centralwidget)
         self.Settings_Button.setObjectName(u"Settings_Button")
         self.Settings_Button.setGeometry(QRect(10, 10, 38, 38))
-        icon6 = QIcon()
-        icon6.addFile(u"Assets/Cog.png", QSize(),
+        icon5 = QIcon()
+        icon5.addFile(u"Assets/Cog.png", QSize(),
                       QIcon.Mode.Normal, QIcon.State.Off)
-        self.Settings_Button.setIcon(icon6)
+        self.Settings_Button.setIcon(icon5)
         self.Settings_Button.setIconSize(QSize(76, 76))
         self.Settings_Button.setCheckable(True)
         self.Settings_Button.setFlat(True)
@@ -462,7 +500,6 @@ class Ui_MainWindow(object):
         self.Close_Window_Button.setDefault(False)
         self.Minimize_Window_Button.setDefault(False)
         self.Main_Content.setCurrentIndex(0)
-        self.Send_Button.setDefault(False)
         self.Model_Chooser.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -484,11 +521,6 @@ class Ui_MainWindow(object):
             QCoreApplication.translate("MainWindow", u"Submit", None))
 # endif // QT_CONFIG(tooltip)
         self.Send_Button.setText("")
-# if QT_CONFIG(tooltip)
-        self.Cancel_Button.setToolTip(
-            QCoreApplication.translate("MainWindow", u"Cancel", None))
-# endif // QT_CONFIG(tooltip)
-        self.Cancel_Button.setText("")
 # if QT_CONFIG(tooltip)
         self.Refresh_Button.setToolTip(
             QCoreApplication.translate("MainWindow", u"Refresh", None))

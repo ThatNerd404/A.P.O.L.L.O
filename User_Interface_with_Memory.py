@@ -49,9 +49,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Autosave_CheckBox.setChecked(self.settings.value("AutoSave", False, type=bool))
         self.Memory_CheckBox.setChecked(self.settings.value("Memory", True, type=bool)) 
       
-
-        
-
         # Initialize network manager
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
@@ -65,11 +62,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite_idle_animation.start()
 
         # Connect signals or conditions to slots or functions
-        self.Send_Button.clicked.connect(self.ask_ollama)
+        #self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Load_Button.clicked.connect(self.load_conversation)
-        self.Cancel_Button.clicked.connect(self.cancel_request)
+        
         self.Edit_Model_Button.clicked.connect(self.edit_model)
         self.Settings_Button.clicked.connect(lambda: (self.logger.debug("Settings button clicked"), self.Settings_Button.isChecked()
                                                       and self.Main_Content.setCurrentIndex(1)
@@ -301,14 +298,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
 
-    def preload_model(self):
-        """Preloads the model by sending a request to the server"""
-        pass
-
-    def unload_model(self):
-        """Unloads the model by sending a request to the server"""
-        pass
-
     def edit_model(self):
         """Allows user to edit the model settings"""
         # ? not implemented yet
@@ -360,7 +349,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             # Get user's prompt and disable buttons
             self.query = self.Input_Field.toPlainText()
             self.Input_Field.clear()
-            self.Send_Button.setEnabled(False)
+            
             self.Refresh_Button.setEnabled(False)
             self.Save_Button.setEnabled(False)
             self.Model_Chooser.setEnabled(False)

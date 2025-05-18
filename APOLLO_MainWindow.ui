@@ -155,7 +155,7 @@ height:44px;
      <number>0</number>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="Main_Page">
      <widget class="QWidget" name="verticalLayoutWidget">
@@ -299,11 +299,11 @@ font-size: 16px;
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="Send_Button">
+           <widget class="QCheckBox" name="Send_Button">
             <property name="minimumSize">
              <size>
-              <width>64</width>
-              <height>64</height>
+              <width>0</width>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -322,19 +322,56 @@ font-size: 16px;
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);
-background-repeat: no-repeat;}
-QPushButton:disabled {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down_Disabled.png);
-background-repeat: no-repeat;}
+             <string notr="true">QCheckBox::indicator {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+QCheckBox::indicator:hover {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apollo_Send_Button_Down.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+QCheckBox::indicator:checked {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+QCheckBox::indicator:hover:checked {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+
+
+
+ 
+
+
  
 </string>
             </property>
@@ -351,55 +388,7 @@ background-repeat: no-repeat;}
               <height>64</height>
              </size>
             </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="Cancel_Button">
-            <property name="maximumSize">
-             <size>
-              <width>64</width>
-              <height>64</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Cancel</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button.png);
-  background-repeat: no-repeat;}
-QPushButton:hover {
-background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Cancel_Button_Down.png);
-background-repeat: no-repeat;}
- </string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="icon">
-             <iconset>
-              <normaloff>Assets/Cancel_Button.png</normaloff>Assets/Cancel_Button.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>64</width>
-              <height>64</height>
-             </size>
-            </property>
-            <property name="flat">
+            <property name="checkable">
              <bool>true</bool>
             </property>
            </widget>
@@ -432,6 +421,14 @@ background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O
 QPushButton:hover {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);
 background-repeat: no-repeat;}
+QPushButton:pressed {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down.png);
+background-repeat: no-repeat;
+padding: 0px;
+margin: 0px;
+border: none;
+background-position:center;
+outline:none;}
 QPushButton:disabled {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Refresh_Button_Down_Disabled.png);
 background-repeat: no-repeat;}</string>
@@ -482,6 +479,14 @@ background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O
 QPushButton:hover {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);
 background-repeat: no-repeat;}
+QPushButton:pressed {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down.png);
+background-repeat: no-repeat;
+padding: 0px;
+margin: 0px;
+border: none;
+background-position:center;
+outline:none;}
 QPushButton:disabled {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Save_Button_Down_Disabled.png);
 background-repeat: no-repeat;}</string>
@@ -535,6 +540,14 @@ background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O
 QPushButton:hover {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);
 background-repeat: no-repeat;}
+QPushButton:pressed {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down.png);
+background-repeat: no-repeat;
+padding: 0px;
+margin: 0px;
+border: none;
+background-position:center;
+outline:none;}
 QPushButton:disabled {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Load_Button_Down_Disabled.png);
 background-repeat: no-repeat;}</string>
