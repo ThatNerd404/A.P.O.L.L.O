@@ -13,6 +13,9 @@ This repository contains an AI-powered conversation assistant that can adapt to 
 - **Save/Load Functionality**:
   - Saves current conversation display and history into a .md file for later access or sharing with others.
 
+- **Long-term Memory**:
+  - Saves data from every conversation to build a memory bank to improve conversational context.
+   
 ## Usage Instructions
 
 ### Initial Setup:
