@@ -32,7 +32,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Model_Chooser.setFont(pixel_family[0])
         self.Input_Field.setFont(pixel_family[0])
         self.Response_Display.setFont(pixel_family[0])
-
+        self.Font_Setting_CheckBox.setFont(pixel_family[0])
+        self.Autosave_CheckBox.setFont(pixel_family[0])
+        self.Memory_CheckBox.setFont(pixel_family[0])
         # Setup logger and rotating file handler
         self.logger = logging.getLogger("logger")
         self.logger.setLevel(logging.DEBUG)
@@ -48,11 +50,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         
         # ? second value sets a default value if the key doesn't exist
         
-        # Set checkboxes from saved values
+        # Set checkboxes from saved values and initialize settings
         self.Font_Setting_CheckBox.setChecked(self.settings.value("Larger Font", False, type=bool))
         self.Autosave_CheckBox.setChecked(self.settings.value("AutoSave", False, type=bool))
         self.Memory_CheckBox.setChecked(self.settings.value("Memory", True, type=bool)) 
-      
+        self.apply_settings()
+        
         # Initialize network manager
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)

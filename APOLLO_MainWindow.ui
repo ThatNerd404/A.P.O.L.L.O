@@ -939,6 +939,7 @@ border-width: 5px;
 
 QCheckBox {
 background-color: #243169;
+font-size: 24px;
 }
 
 QPushButton {
@@ -974,7 +975,7 @@ background-color: #243169;
        <item>
         <widget class="QCheckBox" name="Autosave_CheckBox">
          <property name="text">
-          <string>Automatically save last conversation when application closes</string>
+          <string>Automatically save last conversation when closing</string>
          </property>
         </widget>
        </item>

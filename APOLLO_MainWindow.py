@@ -504,6 +504,7 @@ class Ui_MainWindow(object):
                                           "\n"
                                           "QCheckBox {\n"
                                           "background-color: #243169;\n"
+                                          "font-size: 24px;\n"
                                           "}\n"
                                           "\n"
                                           "QPushButton {\n"
@@ -646,7 +647,7 @@ class Ui_MainWindow(object):
         self.Font_Setting_CheckBox.setText(
             QCoreApplication.translate("MainWindow", u"Larger Font", None))
         self.Autosave_CheckBox.setText(QCoreApplication.translate(
-            "MainWindow", u"Automatically save last conversation when application closes", None))
+            "MainWindow", u"Automatically save last conversation when closing", None))
         self.Memory_CheckBox.setText(QCoreApplication.translate(
             "MainWindow", u"Save conversations to memory", None))
         self.checkBox_5.setText(QCoreApplication.translate(
