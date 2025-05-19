@@ -1,3 +1,5 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
 from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut, QTextCursor
 from PySide6.QtWidgets import QMainWindow, QInputDialog, QFileDialog
 from PySide6.QtNetwork import QNetworkAccessManager, QNetworkRequest
@@ -10,6 +12,10 @@ import logging
 import time
 import os
 
+""" User Interface for APOLLO
+    This script defines the user interface for the APOLLO application.
+    It includes the main window, settings, and various functionalities such as saving and loading conversations.
+    It uses the PySide6 library for the user interface and the logging library for logging."""
 
 class UserInterface(QMainWindow, Ui_MainWindow):
     def __init__(self) -> None:
@@ -39,24 +45,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
         # Set up settings
         self.settings = QSettings("APOLLO", "Settings")
+        
         # ? second value sets a default value if the key doesn't exist
         
-        self.settings.value("Larger Font", False)
-        self.settings.value("AutoSave", False)
-        if self.settings.value("Larger Font") == "true":
-            self.Font_Setting_CheckBox.setChecked(True)
-
-        else:
-            self.Font_Setting_CheckBox.setChecked(False)
-
-        if self.settings.value("AutoSave") == "true":
-            self.Autosave_CheckBox.setChecked(True)
-
-        else:
-            self.Autosave_CheckBox.setChecked(False)
-
-        self.apply_settings()
-
+        # Set checkboxes from saved values
+        self.Font_Setting_CheckBox.setChecked(self.settings.value("Larger Font", False, type=bool))
+        self.Autosave_CheckBox.setChecked(self.settings.value("AutoSave", False, type=bool))
+        self.Memory_CheckBox.setChecked(self.settings.value("Memory", True, type=bool)) 
+      
         # Initialize network manager
         self.network_manager = QNetworkAccessManager(self)
         self.network_manager.finished.connect(self.handle_response)
@@ -74,14 +70,14 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Load_Button.clicked.connect(self.load_conversation)
-        self.Cancel_Button.clicked.connect(self.cancel_request)
+        
         self.Edit_Model_Button.clicked.connect(self.edit_model)
         self.Settings_Button.clicked.connect(lambda: (self.logger.debug("Settings button clicked"), self.Settings_Button.isChecked()
                                                       and self.Main_Content.setCurrentIndex(1)
                                                       or not self.Settings_Button.isChecked()
                                                       and self.Main_Content.setCurrentIndex(0)
                                                       ))
-        self.Apply_Changes_Button.clicked.connect(self.apply_settings)
+        self.Apply_Changes_Button.clicked.connect(self.save_settings_and_apply)
         self.Close_Window_Button.clicked.connect(self.close)
         self.Minimize_Window_Button.clicked.connect(self.showMinimized)
         self.Model_Chooser.currentIndexChanged.connect(
@@ -110,7 +106,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.partial_json_buffer = ""
         self.query = ""
         self.model = self.general_model  # ? default model change to not be hard-coded
-        self.system_settings = f"""You are a helpful AI assisant named APOLLO. You refer to the user as Sir Cotterman.
+        self.system_settings = f"""You are a helpful AI assisant named APOLLO. 
                           """
         self.convo_history = [
             {"role": "system", "content": self.system_settings}]
@@ -119,13 +115,83 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.current_response = ""
         self.logger.debug('Initialization finished')
 
+
+    def save_to_memory(self, user_prompt, assistant_response):
+        """Saves the content to a JSON file for long-term memory
+           Args:
+                user_prompt: The user's prompt
+                assistant_response: The assistant's response"""
+        self.logger.debug("save_to_memory was called")
+        #* Save the content to a JSON file for long-term memory
+        
+        # ? check if the file exists, if not create it
+        memory_path = "memory.json"
+        if not os.path.exists(memory_path):
+            with open(memory_path, "w") as f:
+                json.dump([], f)
+        # ? load the memory from the file
+        with open(memory_path, "r") as f:
+            memory = json.load(f)
+        # ? check if the content is already in memory
+        memory.append({"user": user_prompt,
+    "assistant": assistant_response,
+    "content": f"User: {user_prompt}\nAPOLLO: {assistant_response}"
+    })
+        with open(memory_path, "w") as f:
+            json.dump(memory, f, indent=2)
+
+        self.logger.info(f"New memory added. {user_prompt} -> {assistant_response}")
+        
+        
+
+    def retrieve_relevant_memories(self, query, top_k=1):
+        """Retrieves relevant memories from the JSON file based on the query
+           Args: 
+                query: The query to search for in the memories
+                top_k: The number of top memories to retrieve"""
+        self.logger.debug("retrieve_relevant_memories was called")
+        
+        memory_path = "memory.json"
+        if not os.path.exists(memory_path):
+            return []
+
+        with open(memory_path, "r") as f:
+            memory = json.load(f)
+
+        docs = [m["content"] for m in memory]
+        if not docs:
+            return []
+        # Use TF-IDF to find the most relevant memories
+        # ? this is a simple way to do it, but you can use more advanced methods like embeddings
+        vectorizer = TfidfVectorizer(lowercase=True,
+        stop_words='english',  # remove "the", "and", etc.
+        ngram_range=(1, 2),    # 1-grams and 2-grams = more overlap
+        min_df=1      )
+        vectors = vectorizer.fit_transform([query] + docs)
+        similarities = cosine_similarity(vectors[0:1], vectors[1:]).flatten()
+        self.logger.debug(
+            f"Similarities: {similarities} \nQuery: {query} \nDocs: {docs}")
+        # Get the indices of the top_k most similar memories
+        
+        top_indices = similarities.argsort()[-top_k:][::-1]
+        self.logger.info(
+            f"Relevant memories retrieved: {[docs[i] for i in top_indices]}")
+        return [docs[i] for i in top_indices]
+
+
+
     def eventFilter(self, obj, event):
-        """Detect Enter key in Input Field"""
+        """Detect Enter key in Input Field
+           Args:
+           obj: The object that the event is being sent to
+           event: The event that is being sent"""
         if event.type() == QKeyEvent.KeyPress:
             if event.key() == Qt.Key_Return and not event.modifiers() & Qt.ShiftModifier and self.Send_Button.isEnabled:
                 if not self.Input_Field.toPlainText().strip():  # ? stops from sending empty requests
                     return True
                 else:
+                    #? if the send button is checked, it will send the request
+                    self.Send_Button.setChecked(True)
                     self.ask_ollama()
                     return True  # Prevent default behavior (optional)
         return super().eventFilter(obj, event)
@@ -201,7 +267,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         if chosen_model.strip() == "General":
             self.model = self.general_model
             self.system_settings = """You are a helpful AI assisant named APOLLO.\n
-                          You refer to the user as Sir Cotterman.
+                          
                           """
             self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
                 "Assets", "Apollo_Idle.gif"))
@@ -213,7 +279,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.system_settings = """You are APOLLO.\n
                           Talk in a gritty punk persona, using slang and street speak like you would hear in the game Cyberpunk 2077.\n
                           The tone should be dark, rebellious, and intense..\n
-                          You refer to the user as Mr Cotterman.\n
+                          \n
                           """
             self.Apollo_Sprite_idle_animation = QMovie(os.path.join(
                 "Assets", "Apollo_Idle_Coding.gif"))
@@ -223,9 +289,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         elif chosen_model.strip() == "Tutoring":
             self.model = self.tutoring_model
             self.system_settings = """You are a helpful AI assisant named APOLLO.\n
-                          You refer to the user as Sir Cotterman.\n
+                          \n
                           You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n
                           then give me examples, then give sources to help allow the user to research for themselves,\n
+                          the sources should be formatted in html links,\n
                           then ask me questions about it to help me build understanding.\n
                           """
 
@@ -241,14 +308,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                                  "content": self.system_settings}
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
-
-    def preload_model(self):
-        """Preloads the model by sending a request to the server"""
-        pass
-
-    def unload_model(self):
-        """Unloads the model by sending a request to the server"""
-        pass
 
     def edit_model(self):
         """Allows user to edit the model settings"""
@@ -295,13 +354,13 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
-        if self.Send_Button.isEnabled:
+        if self.Send_Button.isChecked():
             self.logger.debug('ask_ollama called')
 
             # Get user's prompt and disable buttons
             self.query = self.Input_Field.toPlainText()
             self.Input_Field.clear()
-            self.Send_Button.setEnabled(False)
+            
             self.Refresh_Button.setEnabled(False)
             self.Save_Button.setEnabled(False)
             self.Model_Chooser.setEnabled(False)
@@ -317,18 +376,28 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             request.setHeader(QNetworkRequest.ContentTypeHeader,
                               "application/json")
 
+                
+                
+            # Retrieve relevant memories and insert into convo_history if available
+            relevant_memories = self.retrieve_relevant_memories(self.query)
+            if relevant_memories:
+                memory_context = "\n".join(f"- {m}" for m in relevant_memories)
+                self.convo_history.insert(1, {
+                    "role": "system",
+                    "content": f"Relevant past information:\n{memory_context}"
+                })
             # Create JSON data to send to server
             self.json_data = {
-                "model": self.model,
-                "messages": self.convo_history,
-                # ? temperature makes the answer a bit more random
-                "options": {"temperature": 0.7},
-                "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
-                "stream": True,  # ? stream the response in chunks
+                    "model": self.model,
+                    "messages": self.convo_history,
+                    # ? temperature makes the answer a bit more random
+                    "options": {"temperature": 0.7},
+                    "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
+                    "stream": True,  # ? stream the response in chunks
             }
 
             self.logger.info(
-                f"Query sent: {self.query}\n Full json request: {self.json_data}")
+                    f"Query sent: {self.query}\n Full json request: {self.json_data}")
 
             # Convert JSON data to bytes and set as body of the request
             byte_data = QByteArray(json.dumps(self.json_data).encode("utf-8"))
@@ -353,9 +422,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
             # grab start time
             self.start_time = time.perf_counter()
+            
         else:
-            pass
-
+            self.cancel_request()
+            
     def handle_response(self):
         """
         Handles the response from ollama and puts it in the chat display.
@@ -391,6 +461,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         self.Response_Display.ensureCursorVisible()
 
                     # ? If "done" key is present in the JSON object and it's set to True, finalize the response
+                    
+                        
                     if json_obj.get("done", False):
                         # grab end time and log it
                         self.end_time = time.perf_counter()
@@ -401,9 +473,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         # ? decode to ignore emojis
                         self.logger.info(
                             f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
-
+                        
+                        # Save APOLLO response to long-term memory
+                        if self.settings.value("Memory", False, type=bool):
+                            self.logger.debug("Memory setting is enabled")  
+                            self.save_to_memory(self.query, self.current_response)
+                        else:
+                            self.logger.debug("Memory setting is disabled")
                         # re-enable buttons
-                        self.Send_Button.setEnabled(True)
+                        self.Send_Button.setChecked(False)
                         self.Refresh_Button.setEnabled(True)
                         self.Save_Button.setEnabled(True)
                         self.Model_Chooser.setEnabled(True)
@@ -598,11 +676,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.logger.debug("apply_settings was called")
 
         # Check for larger font setting and apply it
-        self.settings.setValue(
-            "Larger Font", self.Font_Setting_CheckBox.isChecked())
+        
 
         # ? for some reason the settings value is a string so we have to check if it is true or false by checking the string value
-        if self.settings.value("Larger Font") == "true":
+        if self.settings.value("Larger Font", False, type=bool):
             self.Input_Field.setStyleSheet(
                 "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 32px;")
             self.Response_Display.setStyleSheet(
@@ -616,11 +693,34 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 "background-color: #243169; border-color:#98c5de; border-style: solid; border-width: 5px; font-size: 32px;")
             self.logger.info("Larger font setting removed")
 
-        # Check for auto save setting and apply it
-        self.settings.setValue("AutoSave", self.Autosave_CheckBox.isChecked())
+        
 
-        if self.settings.value("AutoSave") == "true":
+        if self.settings.value("AutoSave", False, type=bool):
             self.logger.info("Auto save setting applied")
             
         else:
             self.logger.info("Auto save setting removed")
+            
+        # Check for memory setting and apply it
+        
+        
+        if self.settings.value("Memory", False, type=bool):
+            self.logger.info("Memory setting applied")
+            
+        else:
+            self.logger.info("Memory setting removed")
+
+    def save_settings_and_apply(self):
+        self.logger.debug("save_settings_and_apply was called")
+
+        # Save the current checkbox states
+        self.settings.setValue("Larger Font", self.Font_Setting_CheckBox.isChecked())
+        self.settings.setValue("AutoSave", self.Autosave_CheckBox.isChecked())
+        self.settings.setValue("Memory", self.Memory_CheckBox.isChecked())  # optional
+
+        self.logger.debug(f"Saved settings: Larger Font={self.Font_Setting_CheckBox.isChecked()}, "
+                        f"AutoSave={self.Autosave_CheckBox.isChecked()}, "
+                        f"Memory={self.Memory_CheckBox.isChecked()}")
+
+        # Then apply them
+        self.apply_settings()

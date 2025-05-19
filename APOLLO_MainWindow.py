@@ -228,6 +228,71 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout.addWidget(self.Send_Button)
 
+        self.Web_Search_Button = QCheckBox(self.groupBox)
+        self.Web_Search_Button.setObjectName(u"Web_Search_Button")
+        self.Web_Search_Button.setMinimumSize(QSize(0, 0))
+        self.Web_Search_Button.setMaximumSize(QSize(64, 64))
+        self.Web_Search_Button.setToolTipDuration(-1)
+        self.Web_Search_Button.setAutoFillBackground(False)
+        self.Web_Search_Button.setStyleSheet(u"QCheckBox::indicator {\n"
+                                             "min-width: 64px;\n"
+                                             "min-height:64px;\n"
+                                             "max-width: 64px;\n"
+                                             "max-height:64px;\n"
+                                             "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button.png);\n"
+                                             "background:transparent;\n"
+                                             "border:none;\n"
+                                             "margin:0px;\n"
+                                             "padding:0px;\n"
+                                             "}\n"
+                                             "QCheckBox::indicator:hover {\n"
+                                             "min-width: 64px;\n"
+                                             "min-height:64px;\n"
+                                             "max-width: 64px;\n"
+                                             "max-height:64px;\n"
+                                             "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button_Down.png);\n"
+                                             "background:transparent;\n"
+                                             "border:none;\n"
+                                             "margin:0px;\n"
+                                             "padding:0px;\n"
+                                             "}\n"
+                                             "QCheckBox::indicator:checked {\n"
+                                             "min-width: 64px;\n"
+                                             "min-height:64px;\n"
+                                             "max-width: 64px;\n"
+                                             "max-height:64px;\n"
+                                             "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button_Down.png);\n"
+                                             "background:transparent;\n"
+                                             "border:none;\n"
+                                             "margin:0px;\n"
+                                             "padding:0px;\n"
+                                             "}\n"
+                                             "QCheckBox::indicator:hover:checked {\n"
+                                             "min-width: 64px;\n"
+                                             "min-height:64px;\n"
+                                             "max-width: 64px;\n"
+                                             ""
+                                             "max-height:64px;\n"
+                                             "image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button_Down.png);\n"
+                                             "background:transparent;\n"
+                                             "border:none;\n"
+                                             "margin:0px;\n"
+                                             "padding:0px;\n"
+                                             "}\n"
+                                             "\n"
+                                             "\n"
+                                             "\n"
+                                             " \n"
+                                             "\n"
+                                             "\n"
+                                             " \n"
+                                             "")
+        self.Web_Search_Button.setIcon(icon2)
+        self.Web_Search_Button.setIconSize(QSize(64, 64))
+        self.Web_Search_Button.setCheckable(True)
+
+        self.horizontalLayout.addWidget(self.Web_Search_Button)
+
         self.Refresh_Button = QPushButton(self.groupBox)
         self.Refresh_Button.setObjectName(u"Refresh_Button")
         self.Refresh_Button.setMinimumSize(QSize(64, 64))
@@ -538,6 +603,11 @@ class Ui_MainWindow(object):
             QCoreApplication.translate("MainWindow", u"Submit", None))
 # endif // QT_CONFIG(tooltip)
         self.Send_Button.setText("")
+# if QT_CONFIG(tooltip)
+        self.Web_Search_Button.setToolTip(
+            QCoreApplication.translate("MainWindow", u"Web Search", None))
+# endif // QT_CONFIG(tooltip)
+        self.Web_Search_Button.setText("")
 # if QT_CONFIG(tooltip)
         self.Refresh_Button.setToolTip(
             QCoreApplication.translate("MainWindow", u"Refresh", None))

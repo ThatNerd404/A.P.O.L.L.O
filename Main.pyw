@@ -1,9 +1,14 @@
 from PySide6 import QtWidgets
-from User_Interface_with_Memory import UserInterface
+from User_Interface import UserInterface
 import sys
 import multiprocessing
 import os 
 import subprocess
+
+""" Main script for APOLLO
+    This script serves as the entry point for the APOLLO application.
+    It initializes the user interface and starts the Ollama server in a separate process.
+"""
 
 def start_ollama():
     subprocess.Popen(

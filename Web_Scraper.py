@@ -1,9 +1,21 @@
-from PySide6.QtCore import QObject, QThread
+from PySide6.QtCore import QObject, Signal
+""" Web Scraper for APOLLO
+    This script is designed to scrape web pages for specific content and summarize it using a pre-trained model from hugging face.
+    It uses the PySide6 library for the user interface and the transformers library for text summarization.
+"""
 
-
-
-
-
+class WebScraper(QObject):
+    """
+    WebScraper class for scraping web pages and summarizing content.
+    
+    Attributes:
+        url (str): The URL of the web page to scrape.
+        summary (str): The summarized content of the web page.
+    """
+    
+    
+    
+    
 
 
 
