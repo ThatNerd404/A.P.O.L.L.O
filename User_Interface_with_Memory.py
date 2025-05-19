@@ -62,7 +62,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Apollo_Sprite_idle_animation.start()
 
         # Connect signals or conditions to slots or functions
-        #self.Send_Button.clicked.connect(self.ask_ollama)
+        self.Send_Button.clicked.connect(self.ask_ollama)
         self.Refresh_Button.clicked.connect(self.refresh_conversation)
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Load_Button.clicked.connect(self.load_conversation)
@@ -142,7 +142,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             
         
 
-    def retrieve_relevant_memories(self, query, top_k=3):
+    def retrieve_relevant_memories(self, query, top_k=1):
         """Retrieves relevant memories from the JSON file based on the query"""
         self.logger.debug("retrieve_relevant_memories was called")
         
@@ -182,6 +182,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 if not self.Input_Field.toPlainText().strip():  # ? stops from sending empty requests
                     return True
                 else:
+                    #? if the send button is checked, it will send the request
+                    self.Send_Button.setChecked(True)
                     self.ask_ollama()
                     return True  # Prevent default behavior (optional)
         return super().eventFilter(obj, event)
@@ -343,7 +345,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
     def ask_ollama(self):
         """Grabs prompt from input field and sends it to the ollama server"""
-        if self.Send_Button.isEnabled:
+        if self.Send_Button.isChecked():
             self.logger.debug('ask_ollama called')
 
             # Get user's prompt and disable buttons
@@ -365,53 +367,56 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             request.setHeader(QNetworkRequest.ContentTypeHeader,
                               "application/json")
 
+                
+                
+            # Retrieve relevant memories and insert into convo_history if available
+            relevant_memories = self.retrieve_relevant_memories(self.query)
+            if relevant_memories:
+                memory_context = "\n".join(f"- {m}" for m in relevant_memories)
+                self.convo_history.insert(1, {
+                    "role": "system",
+                    "content": f"Relevant past information:\n{memory_context}"
+                })
             # Create JSON data to send to server
+            self.json_data = {
+                    "model": self.model,
+                    "messages": self.convo_history,
+                    # ? temperature makes the answer a bit more random
+                    "options": {"temperature": 0.7},
+                    "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
+                    "stream": True,  # ? stream the response in chunks
+            }
+
+            self.logger.info(
+                    f"Query sent: {self.query}\n Full json request: {self.json_data}")
+
+            # Convert JSON data to bytes and set as body of the request
+            byte_data = QByteArray(json.dumps(self.json_data).encode("utf-8"))
+            self.reply = self.network_manager.post(request, byte_data)
+
+            # Connect readyRead signal to handleResponse method
+            self.reply.readyRead.connect(self.handle_response)
+
+            # Connect error signal to handleNetworkError method
+            self.reply.errorOccurred.connect(self.handle_network_error)
+
+            # Start loading animation
+            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
+            self.Apollo_Sprite_loading_animation.start()
+
+            # Display response in UI element and ensure it scrolls
+            self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
+            self.cursor = self.Response_Display.textCursor()
+            self.cursor.movePosition(QTextCursor.End)
+            self.Response_Display.setTextCursor(self.cursor)
+            self.Response_Display.ensureCursorVisible()
+
+            # grab start time
+            self.start_time = time.perf_counter()
             
-        # Retrieve relevant memories and insert into convo_history if available
-        relevant_memories = self.retrieve_relevant_memories(self.query)
-        if relevant_memories:
-            memory_context = "\n".join(f"- {m}" for m in relevant_memories)
-            self.convo_history.insert(1, {
-                "role": "system",
-                "content": f"Relevant past information:\n{memory_context}"
-            })
-        self.json_data = {
-                "model": self.model,
-                "messages": self.convo_history,
-                # ? temperature makes the answer a bit more random
-                "options": {"temperature": 0.7},
-                "keep_alive": -1,  # ? '0' or 0 instantly deloads model after completion of request -1 or "-1" loads the model indefinitely
-                "stream": True,  # ? stream the response in chunks
-        }
-
-        self.logger.info(
-                f"Query sent: {self.query}\n Full json request: {self.json_data}")
-
-        # Convert JSON data to bytes and set as body of the request
-        byte_data = QByteArray(json.dumps(self.json_data).encode("utf-8"))
-        self.reply = self.network_manager.post(request, byte_data)
-
-        # Connect readyRead signal to handleResponse method
-        self.reply.readyRead.connect(self.handle_response)
-
-        # Connect error signal to handleNetworkError method
-        self.reply.errorOccurred.connect(self.handle_network_error)
-
-        # Start loading animation
-        self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
-        self.Apollo_Sprite_loading_animation.start()
-
-        # Display response in UI element and ensure it scrolls
-        self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
-        self.cursor = self.Response_Display.textCursor()
-        self.cursor.movePosition(QTextCursor.End)
-        self.Response_Display.setTextCursor(self.cursor)
-        self.Response_Display.ensureCursorVisible()
-
-        # grab start time
-        self.start_time = time.perf_counter()
-        
-
+        else:
+            self.cancel_request()
+            
     def handle_response(self):
         """
         Handles the response from ollama and puts it in the chat display.
@@ -463,7 +468,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         # Save APOLLO response to long-term memory
                         self.save_to_memory(self.query, self.current_response)
                         # re-enable buttons
-                        self.Send_Button.setEnabled(True)
+                        self.Send_Button.setChecked(False)
                         self.Refresh_Button.setEnabled(True)
                         self.Save_Button.setEnabled(True)
                         self.Model_Chooser.setEnabled(True)
