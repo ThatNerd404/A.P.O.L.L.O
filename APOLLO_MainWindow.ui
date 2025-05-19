@@ -726,6 +726,14 @@ background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O
 QPushButton:hover {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);
 background-repeat: no-repeat;}
+QPushButton:pressed {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);
+background-repeat: no-repeat;
+padding: 0px;
+margin: 0px;
+border: none;
+background-position:center;
+outline:none;}
 QPushButton:disabled {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);
 background-repeat: no-repeat;}</string>
@@ -929,7 +937,15 @@ background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O
   background-repeat: no-repeat;}
 QPushButton:hover {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apply_Changes_Button_Down.png);
-background-repeat: no-repeat;}</string>
+background-repeat: no-repeat;}
+QPushButton:pressed {
+background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apply_Changes_Button_Down.png);
+background-repeat: no-repeat;
+padding: 0px;
+margin: 0px;
+border: none;
+background-position:center;
+outline:none;}</string>
       </property>
       <property name="text">
        <string/>

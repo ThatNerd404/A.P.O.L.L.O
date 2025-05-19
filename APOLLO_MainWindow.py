@@ -388,6 +388,14 @@ class Ui_MainWindow(object):
                                              "QPushButton:hover {\n"
                                              "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);\n"
                                              "background-repeat: no-repeat;}\n"
+                                             "QPushButton:pressed {\n"
+                                             "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down.png);\n"
+                                             "background-repeat: no-repeat;\n"
+                                             "padding: 0px;\n"
+                                             "margin: 0px;\n"
+                                             "border: none;\n"
+                                             "background-position:center;\n"
+                                             "outline:none;}\n"
                                              "QPushButton:disabled {\n"
                                              "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);\n"
                                              "background-repeat: no-repeat;}")
@@ -480,7 +488,15 @@ class Ui_MainWindow(object):
                                                 "  background-repeat: no-repeat;}\n"
                                                 "QPushButton:hover {\n"
                                                 "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apply_Changes_Button_Down.png);\n"
-                                                "background-repeat: no-repeat;}")
+                                                "background-repeat: no-repeat;}\n"
+                                                "QPushButton:pressed {\n"
+                                                "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Apply_Changes_Button_Down.png);\n"
+                                                "background-repeat: no-repeat;\n"
+                                                "padding: 0px;\n"
+                                                "margin: 0px;\n"
+                                                "border: none;\n"
+                                                "background-position:center;\n"
+                                                "outline:none;}")
         self.Apply_Changes_Button.setFlat(True)
         self.Main_Content.addWidget(self.Settings_Page)
         self.Settings_Button = QPushButton(self.centralwidget)

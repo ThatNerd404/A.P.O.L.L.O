@@ -113,37 +113,38 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
 
     def save_to_memory(self, user_prompt, assistant_response):
-        """Saves the content to a JSON file for long-term memory"""
+        """Saves the content to a JSON file for long-term memory
+           Args:
+                user_prompt: The user's prompt
+                assistant_response: The assistant's response"""
         self.logger.debug("save_to_memory was called")
-        if self.settings.value("Memory") == "true":
-            
-            self.logger.debug("Memory setting is enabled")
-            #* Save the content to a JSON file for long-term memory
-            
-            # ? check if the file exists, if not create it
-            memory_path = "memory.json"
-            if not os.path.exists(memory_path):
-                with open(memory_path, "w") as f:
-                    json.dump([], f)
-            # ? load the memory from the file
-            with open(memory_path, "r") as f:
-                memory = json.load(f)
-            # ? check if the content is already in memory
-            memory.append({"user": user_prompt,
-        "assistant": assistant_response,
-        "content": f"User: {user_prompt}\nAPOLLO: {assistant_response}"
-        })
+        #* Save the content to a JSON file for long-term memory
+        
+        # ? check if the file exists, if not create it
+        memory_path = "memory.json"
+        if not os.path.exists(memory_path):
             with open(memory_path, "w") as f:
-                json.dump(memory, f, indent=2)
+                json.dump([], f)
+        # ? load the memory from the file
+        with open(memory_path, "r") as f:
+            memory = json.load(f)
+        # ? check if the content is already in memory
+        memory.append({"user": user_prompt,
+    "assistant": assistant_response,
+    "content": f"User: {user_prompt}\nAPOLLO: {assistant_response}"
+    })
+        with open(memory_path, "w") as f:
+            json.dump(memory, f, indent=2)
 
-            self.logger.info(f"New memory added. {user_prompt} -> {assistant_response}")
-        else:
-            self.logger.debug("Memory setting is disabled")
-            
+        self.logger.info(f"New memory added. {user_prompt} -> {assistant_response}")
+        
         
 
     def retrieve_relevant_memories(self, query, top_k=1):
-        """Retrieves relevant memories from the JSON file based on the query"""
+        """Retrieves relevant memories from the JSON file based on the query
+           Args: 
+                query: The query to search for in the memories
+                top_k: The number of top memories to retrieve"""
         self.logger.debug("retrieve_relevant_memories was called")
         
         memory_path = "memory.json"
@@ -176,7 +177,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
 
 
     def eventFilter(self, obj, event):
-        """Detect Enter key in Input Field"""
+        """Detect Enter key in Input Field
+           Args:
+           obj: The object that the event is being sent to
+           event: The event that is being sent"""
         if event.type() == QKeyEvent.KeyPress:
             if event.key() == Qt.Key_Return and not event.modifiers() & Qt.ShiftModifier and self.Send_Button.isEnabled:
                 if not self.Input_Field.toPlainText().strip():  # ? stops from sending empty requests
@@ -466,7 +470,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                             f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
                         
                         # Save APOLLO response to long-term memory
-                        self.save_to_memory(self.query, self.current_response)
+                        if self.settings.value("Memory", False, type=bool):
+                            self.logger.debug("Memory setting is enabled")  
+                            self.save_to_memory(self.query, self.current_response)
+                        else:
+                            self.logger.debug("Memory setting is disabled")
                         # re-enable buttons
                         self.Send_Button.setChecked(False)
                         self.Refresh_Button.setEnabled(True)
@@ -705,7 +713,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.settings.setValue("AutoSave", self.Autosave_CheckBox.isChecked())
         self.settings.setValue("Memory", self.Memory_CheckBox.isChecked())  # optional
 
-        self.logger.debug(f"Saved settings: Font={self.Font_Setting_CheckBox.isChecked()}, "
+        self.logger.debug(f"Saved settings: Larger Font={self.Font_Setting_CheckBox.isChecked()}, "
                         f"AutoSave={self.Autosave_CheckBox.isChecked()}, "
                         f"Memory={self.Memory_CheckBox.isChecked()}")
 
