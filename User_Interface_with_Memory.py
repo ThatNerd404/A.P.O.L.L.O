@@ -288,6 +288,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                           \n
                           You will act as a Socratic tutor and first give me a very in-depth explanation of my question\n
                           then give me examples, then give sources to help allow the user to research for themselves,\n
+                          the sources should be formatted in html links,\n
                           then ask me questions about it to help me build understanding.\n
                           """
 

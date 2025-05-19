@@ -123,6 +123,7 @@ class Ui_MainWindow(object):
         self.Response_Display.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.Response_Display.setHorizontalScrollBarPolicy(
             Qt.ScrollBarAlwaysOff)
+        self.Response_Display.setOpenExternalLinks(True)
         self.Response_Display.setOpenLinks(True)
 
         self.Main_Interface.addWidget(self.Response_Display)
