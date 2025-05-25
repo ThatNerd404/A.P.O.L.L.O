@@ -117,6 +117,7 @@ class Ui_MainWindow(object):
                                             "border-style: solid;\n"
                                             "border-width: 5px;\n"
                                             "font-size: 32px;\n"
+                                            "line-height: 100%;\n"
                                             "}")
         self.Response_Display.setFrameShape(QFrame.StyledPanel)
         self.Response_Display.setFrameShadow(QFrame.Sunken)

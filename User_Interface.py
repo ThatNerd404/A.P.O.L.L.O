@@ -458,7 +458,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         self.current_response += chunk  # Append the chunk
 
                         # ensure screen scrolls with the text
-                        
+                        self.Response_Display.moveCursor(QTextCursor.End)
+                        if chunk.endswith('\n') or chunk.endswith(' '):
+                            chunk = chunk.rstrip('\n ').rstrip()
                         self.Response_Display.insertPlainText(
                             chunk)  # Stream it to UI
                         
@@ -467,7 +469,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     
                         
                     if json_obj.get("done", False):
+                        
                         # grab end time and log it
+
                         self.end_time = time.perf_counter()
                         elasped_time = self.end_time - self.start_time
                         self.logger.info(
@@ -499,7 +503,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                             self.Apollo_Sprite_idle_animation)
                         self.Apollo_Sprite_idle_animation.start()
                         self.current_response = ""
-                        self.Response_Display.ensureCursorVisible()
+                        self.Response_Display.moveCursor(QTextCursor.End)
                         # ? stops error from popping up when completion is done
                         if self.reply.isRunning():
                             self.reply.abort()
