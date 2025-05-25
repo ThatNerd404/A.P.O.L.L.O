@@ -421,7 +421,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.cursor = self.Response_Display.textCursor()
             self.cursor.movePosition(QTextCursor.End)
             self.Response_Display.setTextCursor(self.cursor)
-            self.Response_Display.ensureCursorVisible()
+            
 
             # grab start time
             self.start_time = time.perf_counter()
@@ -458,10 +458,10 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         self.current_response += chunk  # Append the chunk
 
                         # ensure screen scrolls with the text
-                        self.Response_Display.ensureCursorVisible()
+                        
                         self.Response_Display.insertPlainText(
                             chunk)  # Stream it to UI
-                        self.Response_Display.ensureCursorVisible()
+                        
 
                     # ? If "done" key is present in the JSON object and it's set to True, finalize the response
                     
@@ -471,8 +471,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                         self.end_time = time.perf_counter()
                         elasped_time = self.end_time - self.start_time
                         self.logger.info(
-                            f"Response finished generating in {elasped_time:.4f} seconds")
-
+                            f"Response finished generating in {elasped_time:.2f} seconds")
+                        
                         # ? decode to ignore emojis
                         self.logger.info(
                             f"Full APOLLO response: {self.current_response.encode('ascii', 'ignore').decode('ascii')}")
@@ -499,7 +499,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                             self.Apollo_Sprite_idle_animation)
                         self.Apollo_Sprite_idle_animation.start()
                         self.current_response = ""
-
+                        self.Response_Display.ensureCursorVisible()
                         # ? stops error from popping up when completion is done
                         if self.reply.isRunning():
                             self.reply.abort()

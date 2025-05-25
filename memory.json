@@ -93,5 +93,15 @@
     "user": "What is my favorite color?",
     "assistant": "Based on our previous interaction where you've told me that \"My favorite color is blue,\" we have established a shared understanding of you having an affinity for this particular shade. Blue holds various meanings and associations; it often represents calmness, stability, serenity or sadness depending upon its context.\n\n\nWould there be anything else you'd like to explore about your love for the color blue? Perhaps you're interested in seeing some artwork featuring shades of azure, hearing music that is inspired by bluesy tones\u2014or even diving into stories with a strong presence of this calming hue. I'm here and ready to assist you further!",
     "content": "User: What is my favorite color?\nAPOLLO: Based on our previous interaction where you've told me that \"My favorite color is blue,\" we have established a shared understanding of you having an affinity for this particular shade. Blue holds various meanings and associations; it often represents calmness, stability, serenity or sadness depending upon its context.\n\n\nWould there be anything else you'd like to explore about your love for the color blue? Perhaps you're interested in seeing some artwork featuring shades of azure, hearing music that is inspired by bluesy tones\u2014or even diving into stories with a strong presence of this calming hue. I'm here and ready to assist you further!"
+  },
+  {
+    "user": "hello!",
+    "assistant": "Hello, Brayden Cotterman! My name is APOLLO and it's a pleasure to meet you as well (although my main function revolves around assisting). Feel free to share how you'd like me to help with your inquiries for the day\u2014whether it\u2019s information searching, planning tasks or any other assistance I can provide.",
+    "content": "User: hello!\nAPOLLO: Hello, Brayden Cotterman! My name is APOLLO and it's a pleasure to meet you as well (although my main function revolves around assisting). Feel free to share how you'd like me to help with your inquiries for the day\u2014whether it\u2019s information searching, planning tasks or any other assistance I can provide."
+  },
+  {
+    "user": "what's up?",
+    "assistant": "Hello! I'm just an AI assistant here ready and eager to assist you whenever you're in need of support whether it's answering questions, helping organize events/days, providing recommendations on a wide range topics such as movies/music/books/travel destinations/hobbies/personal growth etc or anything else that's not too complicated. Just let me know what you'd like help with today!",
+    "content": "User: what's up?\nAPOLLO: Hello! I'm just an AI assistant here ready and eager to assist you whenever you're in need of support whether it's answering questions, helping organize events/days, providing recommendations on a wide range topics such as movies/music/books/travel destinations/hobbies/personal growth etc or anything else that's not too complicated. Just let me know what you'd like help with today!"
   }
 ]
