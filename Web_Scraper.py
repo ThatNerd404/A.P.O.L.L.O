@@ -1,11 +1,13 @@
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QThread, Signal
 import time
+import requests
+from bs4 import BeautifulSoup
 """ Web Scraper for APOLLO
     This script is designed to scrape web pages for specific content and summarize it using a pre-trained model from hugging face.
     It uses the PySide6 library for the user interface and the transformers library for text summarization.
 """
 
-class WebScraper(QObject):
+class WebScraper(QThread):
     """
     WebScraper class for scraping web pages and summarizing content.
     
@@ -13,8 +15,25 @@ class WebScraper(QObject):
         url (str): The URL of the web page to scrape.
         summary (str): The summarized content of the web page.
     """
+    finished = Signal(str)
+    error = Signal(str)
     
-    
+    def __init__(self, query):
+        """
+        Initialize the WebScraper with a query.
+        
+        Args:
+            query (str): The search query to use for scraping.
+        """
+        super().__init__()
+        self.query = query
+        #self.url = 
+        
+    def run(self):
+        """
+        Run the web scraper.
+        """
+        pass
     
     
 
@@ -40,6 +59,7 @@ def summarize_text(text):
     trimmed_text = text[:1024]
     summary = summarizer(trimmed_text, max_length=150, min_length=30, do_sample=False)
     return summary[0]['summary_text']
+
 if __name__ == "__main__":
     # Example usage
     # This is just a placeholder. You can replace it with actual web scraping logic.
