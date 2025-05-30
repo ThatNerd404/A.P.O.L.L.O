@@ -398,7 +398,7 @@ class Ui_MainWindow(object):
 
         self.Model_Box = QGroupBox(self.Main_Page)
         self.Model_Box.setObjectName(u"Model_Box")
-        self.Model_Box.setGeometry(QRect(872, 142, 300, 521))
+        self.Model_Box.setGeometry(QRect(870, 140, 300, 521))
         self.Model_Box.setStyleSheet(u"QGroupBox {\n"
                                      "border-color:#98c5de;\n"
                                      "border-style: solid;\n"
@@ -407,7 +407,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QVBoxLayout(self.Model_Box)
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setContentsMargins(0, 10, 10, 0)
         self.Apollo_Sprite = QLabel(self.Model_Box)
         self.Apollo_Sprite.setObjectName(u"Apollo_Sprite")
         self.Apollo_Sprite.setPixmap(QPixmap(u"Assets/Apollo_Idle.gif"))
@@ -415,23 +415,15 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.Apollo_Sprite)
 
-        self.groupBox_3 = QGroupBox(self.Model_Box)
-        self.groupBox_3.setObjectName(u"groupBox_3")
-        self.groupBox_3.setMinimumSize(QSize(0, 60))
-        self.groupBox_3.setMaximumSize(QSize(16777215, 70))
-        self.horizontalLayout_2 = QHBoxLayout(self.groupBox_3)
-        self.horizontalLayout_2.setSpacing(0)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.horizontalLayout_2.setContentsMargins(0, 0, 10, 0)
-        self.Change_Model_Button = QPushButton(self.groupBox_3)
+        self.Change_Model_Button = QPushButton(self.Model_Box)
         self.Change_Model_Button.setObjectName(u"Change_Model_Button")
-        self.Change_Model_Button.setMinimumSize(QSize(64, 64))
-        self.Change_Model_Button.setMaximumSize(QSize(64, 64))
+        self.Change_Model_Button.setMinimumSize(QSize(128, 128))
+        self.Change_Model_Button.setMaximumSize(QSize(128, 128))
         self.Change_Model_Button.setStyleSheet(u"QPushButton {\n"
                                                "qproperty-icon: url(\" \");\n"
-                                               "qproperty-iconSize: 64px 64px;\n"
-                                               "width: 64px;\n"
-                                               "height:64px;\n"
+                                               "qproperty-iconSize: 128px 128px;\n"
+                                               "width: 128px;\n"
+                                               "height:128px;\n"
                                                "background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);\n"
                                                "  background-repeat: no-repeat;}\n"
                                                "QPushButton:hover {\n"
@@ -451,9 +443,8 @@ class Ui_MainWindow(object):
         self.Change_Model_Button.setCheckable(False)
         self.Change_Model_Button.setFlat(True)
 
-        self.horizontalLayout_2.addWidget(self.Change_Model_Button)
-
-        self.verticalLayout_2.addWidget(self.groupBox_3)
+        self.verticalLayout_2.addWidget(
+            self.Change_Model_Button, 0, Qt.AlignHCenter)
 
         self.Initials = QLabel(self.Main_Page)
         self.Initials.setObjectName(u"Initials")
@@ -608,7 +599,6 @@ class Ui_MainWindow(object):
         self.Load_Button.setText("")
         self.Model_Box.setTitle("")
         self.Apollo_Sprite.setText("")
-        self.groupBox_3.setTitle("")
 # if QT_CONFIG(tooltip)
         self.Change_Model_Button.setToolTip(
             QCoreApplication.translate("MainWindow", u"Change Model", None))
