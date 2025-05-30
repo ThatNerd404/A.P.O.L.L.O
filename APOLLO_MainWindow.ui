@@ -752,52 +752,6 @@ border-radius: 10px;}</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QComboBox" name="Model_Chooser">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QComboBox {
-background-color: #243169;
-border-color:#98c5de;
-border-style: solid;
-border-width: 5px;
-font-size:32px;
-}</string>
-            </property>
-            <property name="currentText">
-             <string> General</string>
-            </property>
-            <property name="currentIndex">
-             <number>0</number>
-            </property>
-            <property name="frame">
-             <bool>true</bool>
-            </property>
-            <item>
-             <property name="text">
-              <string> General</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string> Tutoring</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string> Coding</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="Edit_Model_Button">
             <property name="minimumSize">
              <size>

@@ -1,9 +1,6 @@
 from PySide6 import QtWidgets
 from User_Interface_CPP import UserInterface
 import sys
-import multiprocessing
-import os 
-import subprocess
 
 """ Main script for APOLLO
     This script serves as the entry point for the APOLLO application.

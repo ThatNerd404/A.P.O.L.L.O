@@ -15,10 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
                            QFont, QFontDatabase, QGradient, QIcon,
                            QImage, QKeySequence, QLinearGradient, QPainter,
                            QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QCheckBox, QComboBox, QFrame,
-                               QGroupBox, QHBoxLayout, QLabel, QMainWindow,
-                               QPlainTextEdit, QPushButton, QSizePolicy, QStackedWidget,
-                               QTextBrowser, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QFrame, QGroupBox,
+                               QHBoxLayout, QLabel, QMainWindow, QPlainTextEdit,
+                               QPushButton, QSizePolicy, QStackedWidget, QTextBrowser,
+                               QVBoxLayout, QWidget)
 
 
 class Ui_MainWindow(object):
@@ -423,24 +423,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.setSpacing(0)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
         self.horizontalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.Model_Chooser = QComboBox(self.groupBox_3)
-        self.Model_Chooser.addItem("")
-        self.Model_Chooser.addItem("")
-        self.Model_Chooser.addItem("")
-        self.Model_Chooser.setObjectName(u"Model_Chooser")
-        self.Model_Chooser.setMinimumSize(QSize(0, 60))
-        self.Model_Chooser.setLayoutDirection(Qt.LeftToRight)
-        self.Model_Chooser.setStyleSheet(u"QComboBox {\n"
-                                         "background-color: #243169;\n"
-                                         "border-color:#98c5de;\n"
-                                         "border-style: solid;\n"
-                                         "border-width: 5px;\n"
-                                         "font-size:32px;\n"
-                                         "}")
-        self.Model_Chooser.setFrame(True)
-
-        self.horizontalLayout_2.addWidget(self.Model_Chooser)
-
         self.Edit_Model_Button = QPushButton(self.groupBox_3)
         self.Edit_Model_Button.setObjectName(u"Edit_Model_Button")
         self.Edit_Model_Button.setMinimumSize(QSize(64, 64))
@@ -584,7 +566,6 @@ class Ui_MainWindow(object):
         self.Close_Window_Button.setDefault(False)
         self.Minimize_Window_Button.setDefault(False)
         self.Main_Content.setCurrentIndex(0)
-        self.Model_Chooser.setCurrentIndex(0)
 
         QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
@@ -628,15 +609,6 @@ class Ui_MainWindow(object):
         self.Model_Box.setTitle("")
         self.Apollo_Sprite.setText("")
         self.groupBox_3.setTitle("")
-        self.Model_Chooser.setItemText(
-            0, QCoreApplication.translate("MainWindow", u" General", None))
-        self.Model_Chooser.setItemText(
-            1, QCoreApplication.translate("MainWindow", u" Tutoring", None))
-        self.Model_Chooser.setItemText(
-            2, QCoreApplication.translate("MainWindow", u" Coding", None))
-
-        self.Model_Chooser.setCurrentText(
-            QCoreApplication.translate("MainWindow", u" General", None))
 # if QT_CONFIG(tooltip)
         self.Edit_Model_Button.setToolTip(
             QCoreApplication.translate("MainWindow", u"Edit Model", None))
