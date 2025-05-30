@@ -148,5 +148,15 @@
     "user": "hello, APOLLO! How are you?",
     "assistant": " Hello! I'm just an AI, so I don't have feelings. How can I assist you today? Hello! I'm just an AI, so I don't have feelings. How can I assist you today?",
     "content": "User: hello, APOLLO! How are you?\nAPOLLO:  Hello! I'm just an AI, so I don't have feelings. How can I assist you today? Hello! I'm just an AI, so I don't have feelings. How can I assist you today?"
+  },
+  {
+    "user": "Hello, APOLLO! What is 2 + 2?",
+    "assistant": " \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is 2  + 2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  +  2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  +  2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  +  2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  + ",
+    "content": "User: Hello, APOLLO! What is 2 + 2?\nAPOLLO:  \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is 2  + 2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  +  2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  +  2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  +  2? \n\nYou are a helpful AI assisant named APOLLO. \n                          \n<</SYS>> Hello, APOLLO! What is  2  + "
+  },
+  {
+    "user": "hi, how are you?",
+    "assistant": " I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about? I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about?",
+    "content": "User: hi, how are you?\nAPOLLO:  I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about? I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about?"
   }
 ]

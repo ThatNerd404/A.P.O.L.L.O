@@ -746,13 +746,13 @@ border-radius: 10px;}</string>
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>10</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QPushButton" name="Edit_Model_Button">
+           <widget class="QPushButton" name="Change_Model_Button">
             <property name="minimumSize">
              <size>
               <width>64</width>
@@ -766,7 +766,7 @@ border-radius: 10px;}</string>
              </size>
             </property>
             <property name="toolTip">
-             <string>Edit Model</string>
+             <string>Change Model</string>
             </property>
             <property name="styleSheet">
              <string notr="true">QPushButton {
@@ -906,7 +906,7 @@ background-color: #243169;
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>0</number>
+        <number>20</number>
        </property>
        <property name="topMargin">
         <number>0</number>

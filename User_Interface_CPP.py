@@ -69,7 +69,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.clicked.connect(self.save_conversation)
         self.Load_Button.clicked.connect(self.load_conversation)
         
-        self.Edit_Model_Button.clicked.connect(self.change_model)
+        self.Change_Model_Button.clicked.connect(self.change_model)
         self.Settings_Button.clicked.connect(lambda: (self.logger.debug("Settings button clicked"), self.Settings_Button.isChecked()
                                                       and self.Main_Content.setCurrentIndex(1)
                                                       or not self.Settings_Button.isChecked()
@@ -99,7 +99,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         
         # Initialize variables for handling JSON data and conversations
         self.query = ""
-        self.model = "mistral-7b-instruct-v0.2-code-ft.Q4_0.gguf"  # ? default model change to not be hard-coded
+        self.model = "mistral-7b-instruct-v0.2.Q2_K.gguf"  # ? default model change to not be hard-coded
         self.system_settings = f"""You are a helpful AI assisant named APOLLO. 
                           """
         self.convo_history = [
@@ -261,7 +261,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.Refresh_Button.setEnabled(False)
             self.Save_Button.setEnabled(False)
             self.Load_Button.setEnabled(False)
-            self.Edit_Model_Button.setEnabled(False)
+            self.Change_Model_Button.setEnabled(False)
             self.Response_Display.setEnabled(False)
             
             # Add the user's prompt
@@ -278,7 +278,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             
             self.logger.info(
                     f"Query sent: {self.query}\n Full request: {self.convo_history}")
-
+            self.logger.debug(
+                f"Model being used: {self.model}"
+            )
+            
+            # Initialize the LlamaWorker with the model path and conversation history
             self.llama_worker = LlamaWorker(
                 model_path=os.path.join("Models",self.model), 
                 messages=self.convo_history,  # Use the conversation history as messages
@@ -332,7 +336,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.setEnabled(True)
         self.Load_Button.setEnabled(True)
         self.Response_Display.setEnabled(True)
-        self.Edit_Model_Button.setEnabled(True)
+        self.Change_Model_Button.setEnabled(True)
 
         # Reset Apollo's animation to idle
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
@@ -354,7 +358,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.setEnabled(True)
         self.Load_Button.setEnabled(True)
         self.Response_Display.setEnabled(True)
-        self.Edit_Model_Button.setEnabled(True)
+        self.Change_Model_Button.setEnabled(True)
 
         # Reset Apollo's animation to idle
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
@@ -372,7 +376,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def llama_cpp_error(self, error):
         """Handles errors from the LlamaWorker."""
         self.logger.error(f"LlamaWorker encountered an error: {error}")
-        self.Response_Display.append("APOLLO: An error occurred while processing your request.")
+        self.Response_Display.append(f"APOLLO: An error occurred while processing your request.\nError: {error}")
         
         # Reset UI elements
         self.Send_Button.setEnabled(True)
@@ -380,7 +384,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.Save_Button.setEnabled(True)
         self.Load_Button.setEnabled(True)
         self.Response_Display.setEnabled(True)
-        self.Edit_Model_Button.setEnabled(True)
+        self.Change_Model_Button.setEnabled(True)
 
         # Reset Apollo's animation to idle
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
@@ -520,8 +524,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.logger.info("Auto save setting removed")
             
         # Check for memory setting and apply it
-        
-        
         if self.settings.value("Memory", False, type=bool):
             self.logger.info("Memory setting applied")
             
