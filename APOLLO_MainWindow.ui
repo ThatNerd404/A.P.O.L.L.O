@@ -673,8 +673,8 @@ background-repeat: no-repeat;}</string>
      <widget class="QGroupBox" name="Model_Box">
       <property name="geometry">
        <rect>
-        <x>872</x>
-        <y>142</y>
+        <x>870</x>
+        <y>140</y>
         <width>300</width>
         <height>521</height>
        </rect>
@@ -697,10 +697,10 @@ border-radius: 10px;}</string>
         <number>0</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>10</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -718,62 +718,29 @@ border-radius: 10px;}</string>
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QGroupBox" name="groupBox_3">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QPushButton" name="Change_Model_Button">
          <property name="minimumSize">
           <size>
-           <width>0</width>
-           <height>60</height>
+           <width>128</width>
+           <height>128</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
-           <height>70</height>
+           <width>128</width>
+           <height>128</height>
           </size>
          </property>
-         <property name="title">
-          <string/>
+         <property name="toolTip">
+          <string>Change Model</string>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>10</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QPushButton" name="Change_Model_Button">
-            <property name="minimumSize">
-             <size>
-              <width>64</width>
-              <height>64</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>64</width>
-              <height>64</height>
-             </size>
-            </property>
-            <property name="toolTip">
-             <string>Change Model</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
 qproperty-icon: url(&quot; &quot;);
-qproperty-iconSize: 64px 64px;
-width: 64px;
-height:64px;
+qproperty-iconSize: 128px 128px;
+width: 128px;
+height:128px;
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button.png);
   background-repeat: no-repeat;}
 QPushButton:hover {
@@ -790,19 +757,16 @@ outline:none;}
 QPushButton:disabled {
 background-image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Edit_Model_Button_Down_Disabled.png);
 background-repeat: no-repeat;}</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="checkable">
-             <bool>false</bool>
-            </property>
-            <property name="flat">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="checkable">
+          <bool>false</bool>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
       </layout>

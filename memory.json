@@ -110,34 +110,19 @@
     "content": "User: Hey APOLLO! What is the circumference of the sun.\nAPOLLO: The Sun's equatorial diameter measures approximately 1,392,700 kilometers across which would make its approximate circumferential distance about 43,436 miles per day (given by \\( C = \\pi d \\) where \\( C \\) stands for Circumference and \\( d \\) is the Diameter). However, this measurement refers to a straight line around half of an imaginary circle. If you are asking how long it would take light from one side of our star to reach us on Earth (a simple approximation), it's about 8 minutes because sunlight travels at approximately 299,792 kilometers per second.\n\nIf you're looking for the Sun's circumference in terms of its spherical shape rather than a straight line along an equatorial diameter:\n\nCircumference \\( C = \\pi d \\) where\n\\( d \u2248 1,392,700 km (equatorial radius doubled to obtain full diameter).\n\nThus,\n\n\\[ \nC \u2248 \u03c0 \u00d7 1,392,700 km \u2248 4.371 x 10^6 kilometers.\n\\]\n\nThis is a rough approximation because the Sun isn't perfectly spherical; its equator bulges out more than it does at poles due to rotation.\n\nWould you like further information on astronomical measurements or any other topic?"
   },
   {
-    "user": "hello",
-    "assistant": " Hello! How can I assist you today? Hello! How can I assist you today?",
-    "content": "User: hello\nAPOLLO:  Hello! How can I assist you today? Hello! How can I assist you today?"
-  },
-  {
     "user": "What is my name? or what have I told you to address me as?",
     "assistant": " As a language AI, I don't have personal experiences or a physical body, so I don't have a name or any specific way you should address me. However, you can call me AI or simply let me know how you'd like to address me during our interaction. For instance, you can call me \"Assistant\" or any other term you find comfortable. How would you like to address me? As a language AI, I don't have personal experiences or a physical body, so I don't have a name or any specific way you should address me. However, you can call me AI or simply let me know how you'd like to address me during our interaction. For instance, you can call me \"Assistant\" or any other term you find comfortable. How would you like to address me?",
     "content": "User: What is my name? or what have I told you to address me as?\nAPOLLO:  As a language AI, I don't have personal experiences or a physical body, so I don't have a name or any specific way you should address me. However, you can call me AI or simply let me know how you'd like to address me during our interaction. For instance, you can call me \"Assistant\" or any other term you find comfortable. How would you like to address me? As a language AI, I don't have personal experiences or a physical body, so I don't have a name or any specific way you should address me. However, you can call me AI or simply let me know how you'd like to address me during our interaction. For instance, you can call me \"Assistant\" or any other term you find comfortable. How would you like to address me?"
   },
   {
-    "user": "hello",
-    "assistant": " Hello! How can I assist you today? Hello! How can I assist you today?",
-    "content": "User: hello\nAPOLLO:  Hello! How can I assist you today? Hello! How can I assist you today?"
-  },
-  {
-    "user": "hello",
-    "assistant": " Hello! How can I assist you today? Hello! How can I assist you today?",
-    "content": "User: hello\nAPOLLO:  Hello! How can I assist you today? Hello! How can I assist you today?"
-  },
-  {
     "user": "what's up?",
-    "assistant": " Hello! How can I assist you today? Hello! How can I assist you today? Not much, just here to help answer any questions you may have. How can I assist you today? Hello! How can I assist you today? Not much, just here to help answer any questions you may have. How can I assist you today? Hello! How can I assist you today?",
+    "assistant": "Hello! How can I assist you today? Not much, just here to help answer any questions you may have. How can I assist you today? Hello! How can I assist you today? Not much, just here to help answer any questions you may have. How can I assist you today? Hello! How can I assist you today?",
     "content": "User: what's up?\nAPOLLO:  Hello! How can I assist you today? Hello! How can I assist you today? Not much, just here to help answer any questions you may have. How can I assist you today? Hello! How can I assist you today? Not much, just here to help answer any questions you may have. How can I assist you today? Hello! How can I assist you today?"
   },
   {
     "user": "hi",
-    "assistant": " Hello! How can I assist you today? Hello! How can I assist you today?",
-    "content": "User: hi\nAPOLLO:  Hello! How can I assist you today? Hello! How can I assist you today?"
+    "assistant": " Hello! How can I assist you today? Hello!",
+    "content": "User: hi\nAPOLLO:  Hello! How can I assist you today?"
   },
   {
     "user": "what is your model name?",
