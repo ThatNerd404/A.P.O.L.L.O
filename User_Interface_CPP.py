@@ -238,7 +238,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.logger.info(f"Model Chosen: {Filename}")
             self.model = os.path.basename(Filename)
             self.Response_Display.append(
-                f"APOLLO: Model file:{self.model} loaded.")
+                f"APOLLO: Model file: {self.model} loaded.")
             
         
         self.logger.info(
@@ -276,13 +276,12 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     "content": f"This is a relevant past memory you have had. Use it to improve your response:\n{memory_context}"
                 })
             
-            messages = [{"role": "system", "content": self.system_settings}] + self.convo_history
             self.logger.info(
-                    f"Query sent: {self.query}\n Full request: {messages}")
+                    f"Query sent: {self.query}\n Full request: {self.convo_history}")
 
             self.llama_worker = LlamaWorker(
                 model_path=os.path.join("Models",self.model), 
-                messages=messages,
+                messages=self.convo_history,  # Use the conversation history as messages
                 threads=6,  # Number of threads to use
                 context=0,  # Use the model's default context size
                 gpu_layers=0  # Number of GPU layers to use
