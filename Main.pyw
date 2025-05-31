@@ -1,5 +1,5 @@
 from PySide6 import QtWidgets
-from User_Interface_CPP import UserInterface
+from User_Interface import UserInterface
 import sys
 
 """ Main script for APOLLO
