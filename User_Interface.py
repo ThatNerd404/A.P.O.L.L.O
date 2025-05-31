@@ -315,6 +315,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             # Terminate the tts worker if it is running
             if self.tts_worker and self.tts_worker.isRunning():
                 self.tts_worker.stop()
+                self.tts_worker.wait()
             self.cancel_request()
             
     def update_response(self, chunk):
@@ -329,8 +330,8 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def finish_response(self, response_text):
         """Handles the completion of the response from the LlamaWorker."""
         self.logger.debug("finish_response was called")
-        self.current_response += response_text
-        if self.TTS_button.isChecked(): #! make the button as it don't exist yet
+
+        if self.TTS_Button.isChecked(): #! make the button as it don't exist yet
             self.tts_worker = TTSWorker(
                 self.current_response, voice_id=None)  # Optional: specify a voice ID
             

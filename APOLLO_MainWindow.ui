@@ -272,7 +272,7 @@ border-radius: 10px;}</string>
            <widget class="QPlainTextEdit" name="Input_Field">
             <property name="minimumSize">
              <size>
-              <width>480</width>
+              <width>400</width>
               <height>0</height>
              </size>
             </property>
@@ -413,6 +413,101 @@ padding:0px;
             </property>
             <property name="toolTip">
              <string>Web Search</string>
+            </property>
+            <property name="toolTipDuration">
+             <number>-1</number>
+            </property>
+            <property name="autoFillBackground">
+             <bool>false</bool>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QCheckBox::indicator {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+QCheckBox::indicator:hover {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button_Down.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+QCheckBox::indicator:checked {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button_Down.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+QCheckBox::indicator:hover:checked {
+min-width: 64px;
+min-height:64px;
+max-width: 64px;
+max-height:64px;
+image: url(C:/Users/MyCom/Desktop/.vscode/Github_Projects/A.P.O.L.L.O/Assets/Web_Search_Button_Down.png);
+background:transparent;
+border:none;
+margin:0px;
+padding:0px;
+}
+
+
+
+ 
+
+
+ 
+</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normaloff>Assets/Apollo_Send_Button.png</normaloff>Assets/Apollo_Send_Button.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="TTS_Button">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>64</width>
+              <height>64</height>
+             </size>
+            </property>
+            <property name="toolTip">
+             <string>Text-to-Speech</string>
             </property>
             <property name="toolTipDuration">
              <number>-1</number>

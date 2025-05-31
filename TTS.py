@@ -35,9 +35,11 @@ class TTSWorker(QThread):
         try:
             self.engine.say(self.text)
             if self._should_stop:
+                engine.stop()
                 return
             self.engine.runAndWait()
             if self._should_stop:
+                engine.stop()
                 return
             self.finished.emit("Speech synthesis completed successfully.")
         except Exception as e:

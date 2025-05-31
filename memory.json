@@ -143,5 +143,10 @@
     "user": "hi, how are you?",
     "assistant": " I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about? I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about?",
     "content": "User: hi, how are you?\nAPOLLO:  I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about? I'm just a computer program, so I don't have the ability to feel emotions or have a mood. I'm here to help answer any questions you might have to the best of my ability. Is there a specific topic or question you'd like to know more about?"
+  },
+  {
+    "user": "hi",
+    "assistant": " Hello! How can I help you today? If you have any specific questions or topics you'd like to discuss, feel free to ask. Otherwise, I'm here to provide information and answer any inquiries you might have. Let me know how I can be of assistance.",
+    "content": "User: hi\nAPOLLO:  Hello! How can I help you today? If you have any specific questions or topics you'd like to discuss, feel free to ask. Otherwise, I'm here to provide information and answer any inquiries you might have. Let me know how I can be of assistance."
   }
 ]
