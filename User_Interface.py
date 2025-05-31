@@ -327,11 +327,11 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.cursor.movePosition(QTextCursor.End)
         self.Response_Display.setTextCursor(self.cursor)
         
-    def finish_response(self, response_text):
+    def finish_response(self):
         """Handles the completion of the response from the LlamaWorker."""
         self.logger.debug("finish_response was called")
 
-        if self.TTS_Button.isChecked(): #! make the button as it don't exist yet
+        if self.TTS_Button.isChecked():
             self.tts_worker = TTSWorker(
                 self.current_response, voice_id=None)  # Optional: specify a voice ID
             
