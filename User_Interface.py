@@ -8,6 +8,7 @@ from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
 from LlamaCPP import LlamaWorker
 from TTS import TTSWorker
+from Web_Scraper import WebScraper
 import json
 import logging
 import time
@@ -276,7 +277,16 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     "role": "system",
                     "content": f"This is a relevant past memory you have had. Use it to improve your response:\n{memory_context}"
                 })
-            
+            # retrive web search results if the web search button is checked and 
+            if self.Web_Search_Button.isChecked():
+                self.logger.debug("Web Search Button is checked")
+                self.web_scraper = WebScraper(self.query)
+                self.web_scraper.finished.connect(
+                    lambda msg: self.convo_history.append({"role": "system", "content": f" Web search has given you this data: {msg}"}))
+                self.web_scraper.error.connect(
+                    lambda err: self.logger.error(f"Web Scraper Error: {err}"))
+                self.web_scraper.start()
+                
             self.logger.info(
                     f"Query sent: {self.query}\n Full request: {self.convo_history}")
             self.logger.debug(

@@ -38,7 +38,7 @@ class WebScraper(QThread):
         "q": self.query,
         "format": "json",
         "no_html": 1,
-        "skip_disambig": 1
+        "skip_disambig": 1  # Set to 1 to skip disambiguation pages
     }
         try: 
             if self.stop_flag:
@@ -51,8 +51,8 @@ class WebScraper(QThread):
             abstract_text = data.get("AbstractText", "No instant answer found.")
             self.finished.emit(abstract_text)
                 
-        except requests.RequestException as e:
-            self.error.emit(f"Request failed: {str(e)}")
+        except Exception as e:
+            self.error.emit(e)
             
     def stop(self):
         """
@@ -60,7 +60,7 @@ class WebScraper(QThread):
         """
         self.stop_flag = True
         self.finished.emit("Web scraping stopped.")
-        
+
 if __name__ == "__main__":
     # Example usage
     start_time = time.perf_counter()
@@ -73,7 +73,7 @@ if __name__ == "__main__":
     }
     response = requests.get(url, params=params)
     data = response.json()
-    print(f"Raw data received: {data}")
+    print(f"raw data: {data}")
     print(data.get("AbstractText", "No instant answer found.")) 
     # AbstractText is the key for the instant answer and second option is the fallback if it doesn't exist
     print(f"Request completed in {time.perf_counter() - start_time:.2f} seconds")

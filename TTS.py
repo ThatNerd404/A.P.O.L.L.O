@@ -43,7 +43,7 @@ class TTSWorker(QThread):
                 return
             self.finished.emit("Speech synthesis completed successfully.")
         except Exception as e:
-            self.error.emit(f"There has been an error: {str(e)}")
+            self.error.emit(e)
     
     def stop(self):
         """
