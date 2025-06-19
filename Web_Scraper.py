@@ -48,7 +48,7 @@ class WebScraper(QThread):
             with DDGS() as ddgs:
                 results = ddgs.text(self.query, max_results=1)
                 
-            response = requests.get(results[0]['href'], timeout=10, headers=headers)
+            response = requests.get(results[0]['href'], timeout=10, headers=self.headers)
             response.raise_for_status()  # Ensure the request was successful
             extracted_data = trafilatura.extract(response.text, include_comments=False, include_tables=False)
             
@@ -58,7 +58,7 @@ class WebScraper(QThread):
             self.finished.emit(extracted_data)
                 
         except Exception as e:
-            self.error.emit(e)
+            self.error.emit(str(e))
             
     def stop(self):
         """

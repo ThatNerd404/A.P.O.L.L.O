@@ -328,10 +328,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.start_time = time.perf_counter()
             
         else:
-            # Terminate the tts worker if it is running
-            if self.tts_worker and self.tts_worker.isRunning():
-                self.tts_worker.stop()
-                self.tts_worker.wait()
+            
             self.cancel_request()
             
     def update_response(self, chunk):
