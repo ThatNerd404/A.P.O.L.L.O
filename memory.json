@@ -148,5 +148,10 @@
     "user": "hi",
     "assistant": " Hello! How can I help you today? If you have any specific questions or topics you'd like to discuss, feel free to ask. Otherwise, I'm here to provide information and answer any inquiries you might have. Let me know how I can be of assistance.",
     "content": "User: hi\nAPOLLO:  Hello! How can I help you today? If you have any specific questions or topics you'd like to discuss, feel free to ask. Otherwise, I'm here to provide information and answer any inquiries you might have. Let me know how I can be of assistance."
+  },
+  {
+    "user": "What is the weather in Clarksville, Tennessee currently?",
+    "assistant": " I'd be happy to help you with that! However, I'll need to use a reliable weather source to provide you with the most accurate and up-to-date information. I recommend checking a trusted weather website or app like Weather.com or OpenWeatherMap, and searching for the current weather conditions in Clarksville, Tennessee. They gather their data from various sources and provide real-time weather information. Alternatively, you can also use a local news or television station's website that covers the Clarksville area for weather updates.",
+    "content": "User: What is the weather in Clarksville, Tennessee currently?\nAPOLLO:  I'd be happy to help you with that! However, I'll need to use a reliable weather source to provide you with the most accurate and up-to-date information. I recommend checking a trusted weather website or app like Weather.com or OpenWeatherMap, and searching for the current weather conditions in Clarksville, Tennessee. They gather their data from various sources and provide real-time weather information. Alternatively, you can also use a local news or television station's website that covers the Clarksville area for weather updates."
   }
 ]

@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from PySide6.QtGui import QMovie, QKeyEvent, QFontDatabase, QKeySequence, QShortcut, QTextCursor
 from PySide6.QtWidgets import QMainWindow, QInputDialog, QFileDialog
-from PySide6.QtCore import QUrl, QByteArray, Qt, QPoint, QSettings
+from PySide6.QtCore import Qt, QPoint, QSettings, QEventLoop
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
 from APOLLO_MainWindow import Ui_MainWindow
@@ -277,15 +277,21 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                     "role": "system",
                     "content": f"This is a relevant past memory you have had. Use it to improve your response:\n{memory_context}"
                 })
+                
             # retrive web search results if the web search button is checked and 
             if self.Web_Search_Button.isChecked():
                 self.logger.debug("Web Search Button is checked")
                 self.web_scraper = WebScraper(self.query)
+                
+                self.web_scraper_loop = QEventLoop()
+                
                 self.web_scraper.finished.connect(
-                    lambda msg: self.convo_history.append({"role": "system", "content": f" Web search has given you this data: {msg}"}))
+                    self.finish_WebSearch)#lambda msg: self.convo_history.append({"role": "system", "content": f"<web search information>{msg}</web search information>"}))
                 self.web_scraper.error.connect(
-                    lambda err: self.logger.error(f"Web Scraper Error: {err}"))
+                   self.web_scraper_error)
                 self.web_scraper.start()
+                
+                self.web_scraper_loop.exec()  # Wait for the web scraper to finish
                 
             self.logger.info(
                     f"Query sent: {self.query}\n Full request: {self.convo_history}")
@@ -401,7 +407,23 @@ class UserInterface(QMainWindow, Ui_MainWindow):
     def llama_cpp_error(self, error):
         """Handles errors from the LlamaWorker."""
         self.logger.error(f"LlamaWorker encountered an error: {error}")
-        self.Response_Display.append(f"APOLLO: An error occurred while processing your request.\nError: {error}")
+        self.Response_Display.append(f"APOLLO: An error occurred while processing your search request.\nError: {error}\nMoving forward without the response.")
+        self.web_scraper_loop.quit()  # Stop the web scraper loop if it is running
+    
+    def finish_WebSearch(self, msg):
+        """Handles the completion of the web search."""
+        self.logger.debug("finish_WebSearch was called")
+        self.logger.info(f"Web search completed with message: {msg}")
+        # Add web search results to conversation history
+        self.convo_history.append({"role": "system", "content": f"<web search information>{msg}</web search information>"})
+        self.web_scraper_loop.quit()  # Stop the web scraper loop if it is running
+        
+    
+            
+    def web_scraper_error(self, error):
+        """Handles errors from the WebScraper."""
+        self.logger.error(f"WebScraper encountered an error: {error}")
+        self.Response_Display.append(f"APOLLO: An error occurred while performing the web search.\nError: {error}")
         
         # Reset UI elements
         self.Send_Button.setEnabled(True)
@@ -414,8 +436,6 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         # Reset Apollo's animation to idle
         self.Apollo_Sprite.setMovie(self.Apollo_Sprite_idle_animation)
         self.Apollo_Sprite_idle_animation.start()
-            
-
     def refresh_conversation(self):
         '''Clears the response display and empties the conversation history for speed and readability purposes'''
         self.logger.debug("refresh_conversation was called")
