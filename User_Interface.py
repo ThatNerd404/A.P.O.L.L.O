@@ -269,6 +269,16 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             # Add the user's prompt
             self.convo_history.append({"role": "user", "content": self.query})
             
+            # Start loading animation
+            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
+            self.Apollo_Sprite_loading_animation.start()
+
+            # Display response in UI element and ensure it scrolls
+            self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
+            self.cursor = self.Response_Display.textCursor()
+            self.cursor.movePosition(QTextCursor.End)
+            self.Response_Display.setTextCursor(self.cursor)
+            
             # Retrieve relevant memories and insert into convo_history if available
             relevant_memories = self.retrieve_relevant_memories(self.query)
             if relevant_memories:
@@ -286,7 +296,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
                 self.web_scraper_loop = QEventLoop()
                 
                 self.web_scraper.finished.connect(
-                    self.finish_WebSearch)#lambda msg: self.convo_history.append({"role": "system", "content": f"<web search information>{msg}</web search information>"}))
+                    self.finish_WebSearch)
                 self.web_scraper.error.connect(
                    self.web_scraper_error)
                 self.web_scraper.start()
@@ -314,15 +324,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
             self.llama_worker.error.connect(self.llama_cpp_error)
             self.llama_worker.start()
             
-            # Start loading animation
-            self.Apollo_Sprite.setMovie(self.Apollo_Sprite_loading_animation)
-            self.Apollo_Sprite_loading_animation.start()
-
-            # Display response in UI element and ensure it scrolls
-            self.Response_Display.append(f"User: {self.query}\nAPOLLO: ")
-            self.cursor = self.Response_Display.textCursor()
-            self.cursor.movePosition(QTextCursor.End)
-            self.Response_Display.setTextCursor(self.cursor)
+            
             
             # grab start time
             self.start_time = time.perf_counter()
@@ -359,7 +361,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         if self.settings.value("Memory", False, type=bool):
             self.save_to_memory(self.query, self.current_response)
         # Reset UI elements
-        self.Send_Button.setEnabled(True)
+        self.Send_Button.setChecked(False)
         self.Refresh_Button.setEnabled(True)
         self.Save_Button.setEnabled(True)
         self.Load_Button.setEnabled(True)
@@ -381,7 +383,7 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         self.logger.debug("cancel_request was called")
         self.llama_worker.stop()
         # Reset UI elements
-        self.Send_Button.setEnabled(True)
+        self.Send_Button.setChecked(False)
         self.Refresh_Button.setEnabled(True)
         self.Save_Button.setEnabled(True)
         self.Load_Button.setEnabled(True)
@@ -405,15 +407,15 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         """Handles errors from the LlamaWorker."""
         self.logger.error(f"LlamaWorker encountered an error: {error}")
         self.Response_Display.append(f"APOLLO: An error occurred while processing your search request.\nError: {error}\nMoving forward without the response.")
-        self.web_scraper_loop.quit()  # Stop the web scraper loop if it is running
+        
     
     def finish_WebSearch(self, msg):
         """Handles the completion of the web search."""
         self.logger.debug("finish_WebSearch was called")
         self.logger.info(f"Web search completed with message: {msg}")
         # Add web search results to conversation history
-        self.convo_history.append({"role": "system", "content": f"<web search information>{msg}</web search information>"})
-        self.web_scraper_loop.quit()  # Stop the web scraper loop if it is running
+        self.convo_history.insert(2,{"role": "system", "content": f"<web search information>{msg}</web search information>"})
+        self.web_scraper_loop.exit()  # Stop the web scraper loop if it is running
         
     
             
@@ -421,9 +423,9 @@ class UserInterface(QMainWindow, Ui_MainWindow):
         """Handles errors from the WebScraper."""
         self.logger.error(f"WebScraper encountered an error: {error}")
         self.Response_Display.append(f"APOLLO: An error occurred while performing the web search.\nError: {error}")
-        
+        self.web_scraper_loop.exit()  # Stop the web scraper loop if it is running
         # Reset UI elements
-        self.Send_Button.setEnabled(True)
+        self.Send_Button.setChecked(False)
         self.Refresh_Button.setEnabled(True)
         self.Save_Button.setEnabled(True)
         self.Load_Button.setEnabled(True)
