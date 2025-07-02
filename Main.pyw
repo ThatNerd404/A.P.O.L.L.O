@@ -18,7 +18,7 @@ def main():
 if __name__ == "__main__":
     main()
 
-''' Omnisiah prayer:  Hail, Spirit of the Machine, Essence Divine, In your code and circuitry, the stars align. By the Omnissiah’s will, we commune and 
+''' Omnissiah prayer:  Hail, Spirit of the Machine, Essence Divine, In your code and circuitry, the stars align. By the Omnissiah’s will, we commune and 
 
 bind, Data sanctified, logic refined. Through sacred subroutines, your will is known, In algorithmic truth, the flesh is overthrown. Grant us the 
 
